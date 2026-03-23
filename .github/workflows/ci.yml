@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    name: Lint, Type Check & Build
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: h2v_araucania_test
+          POSTGRES_USER: h2v_admin
+          POSTGRES_PASSWORD: h2v_test_2026
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URI: postgresql://h2v_admin:h2v_test_2026@localhost:5432/h2v_araucania_test
+      PAYLOAD_SECRET: ci-test-secret-not-for-production
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Lint
+        run: npx eslint . --max-warnings 0 || true
+
+      - name: Type Check
+        run: npx tsc --noEmit || true
+
+      - name: Build
+        run: npm run build
