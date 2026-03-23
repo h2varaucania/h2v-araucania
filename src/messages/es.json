@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "inicio": "Inicio",
+    "programa": "Programa",
+    "quienesSomos": "Quiénes Somos",
+    "gobernanza": "Gobernanza",
+    "comunidad": "Comunidad",
+    "transparencia": "Transparencia",
+    "hidrogenoVerde": "Hidrógeno Verde",
+    "queEsH2V": "¿Qué es el H2V?",
+    "sectores": "Sectores Productivos",
+    "capitalHumano": "Capital Humano",
+    "hojaDeRuta": "Hoja de Ruta",
+    "marcoRegulatorio": "Marco Regulatorio",
+    "proyectos": "Proyectos",
+    "recursos": "Recursos",
+    "documentos": "Documentos",
+    "eventos": "Eventos",
+    "mediateca": "Mediateca",
+    "noticias": "Noticias",
+    "contacto": "Contacto"
+  },
+  "common": {
+    "verMas": "Ver más",
+    "descargar": "Descargar",
+    "buscar": "Buscar...",
+    "iniciarSesion": "Iniciar sesión",
+    "registrarse": "Registrarse",
+    "cerrarSesion": "Cerrar sesión",
+    "enviar": "Enviar",
+    "cancelar": "Cancelar",
+    "volver": "Volver",
+    "siguiente": "Siguiente",
+    "anterior": "Anterior",
+    "cargando": "Cargando...",
+    "sinResultados": "No se encontraron resultados",
+    "error": "Ha ocurrido un error"
+  },
+  "home": {
+    "titulo": "Hidrógeno Verde en La Araucanía",
+    "subtitulo": "Plataforma informativa sobre los avances, proyectos y oportunidades del hidrógeno verde en la región de La Araucanía, Chile.",
+    "ctaPrograma": "Conozca el Programa",
+    "ctaProyectos": "Ver Proyectos en el Mapa"
+  },
+  "footer": {
+    "derechos": "Todos los derechos reservados",
+    "proyectoApoyado": "Proyecto apoyado por",
+    "programa": "Programa Desarrollo Productivo Sostenible"
+  }
+}

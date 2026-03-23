@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "inicio": "Home",
+    "programa": "Program",
+    "quienesSomos": "About Us",
+    "gobernanza": "Governance",
+    "comunidad": "Community",
+    "transparencia": "Transparency",
+    "hidrogenoVerde": "Green Hydrogen",
+    "queEsH2V": "What is Green H2?",
+    "sectores": "Productive Sectors",
+    "capitalHumano": "Human Capital",
+    "hojaDeRuta": "Roadmap",
+    "marcoRegulatorio": "Regulatory Framework",
+    "proyectos": "Projects",
+    "recursos": "Resources",
+    "documentos": "Documents",
+    "eventos": "Events",
+    "mediateca": "Media Library",
+    "noticias": "News",
+    "contacto": "Contact"
+  },
+  "common": {
+    "verMas": "Read more",
+    "descargar": "Download",
+    "buscar": "Search...",
+    "iniciarSesion": "Sign in",
+    "registrarse": "Sign up",
+    "cerrarSesion": "Sign out",
+    "enviar": "Send",
+    "cancelar": "Cancel",
+    "volver": "Back",
+    "siguiente": "Next",
+    "anterior": "Previous",
+    "cargando": "Loading...",
+    "sinResultados": "No results found",
+    "error": "An error occurred"
+  },
+  "home": {
+    "titulo": "Green Hydrogen in La Araucanía",
+    "subtitulo": "Information platform about the advances, projects and opportunities of green hydrogen in the Araucanía region, Chile.",
+    "ctaPrograma": "Learn about the Program",
+    "ctaProyectos": "View Projects on Map"
+  },
+  "footer": {
+    "derechos": "All rights reserved",
+    "proyectoApoyado": "Project supported by",
+    "programa": "Sustainable Productive Development Program"
+  }
+}
