@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { features } from '@/lib/features';
+import SearchDialog from '@/components/ui/SearchDialog';
 
 type NavItem = {
   label: string;
@@ -116,8 +117,9 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Auth buttons - desktop */}
+          {/* Search + Auth - desktop */}
           <div className="hidden lg:flex items-center gap-2">
+            <SearchDialog />
             <Link
               href="/login"
               className="px-4 py-1.5 text-sm text-white/80 hover:text-white transition-colors"
