@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { features } from '@/lib/features';
 import SearchDialog from '@/components/ui/SearchDialog';
 
 type NavItem = {
@@ -11,43 +10,40 @@ type NavItem = {
   children?: NavItem[];
 };
 
-function getNavItems(): NavItem[] {
-  const programaChildren: NavItem[] = [
-    { label: 'Quiénes Somos', href: '/programa/quienes-somos' },
-    { label: 'Gobernanza', href: '/programa/gobernanza' },
-  ];
-  if (features.comunidad) programaChildren.push({ label: 'Comunidad', href: '/programa/comunidad' });
-  if (features.transparencia) programaChildren.push({ label: 'Transparencia', href: '/programa/transparencia' });
-
-  const h2vChildren: NavItem[] = [];
-  if (features.hidrogenoVerde) h2vChildren.push({ label: '¿Qué es el H2V?', href: '/hidrogeno-verde' });
-  if (features.sectores) h2vChildren.push({ label: 'Sectores Productivos', href: '/hidrogeno-verde/sectores' });
-  if (features.capitalHumano) h2vChildren.push({ label: 'Capital Humano', href: '/hidrogeno-verde/capital-humano' });
-  if (features.hojaDeRuta) h2vChildren.push({ label: 'Hoja de Ruta', href: '/hidrogeno-verde/hoja-de-ruta' });
-  if (features.marcoRegulatorio) h2vChildren.push({ label: 'Marco Regulatorio', href: '/hidrogeno-verde/marco-regulatorio' });
-
-  const recursosChildren: NavItem[] = [
-    { label: 'Documentos', href: '/recursos/documentos' },
-  ];
-  if (features.eventos) recursosChildren.push({ label: 'Eventos', href: '/recursos/eventos' });
-  if (features.mediateca) recursosChildren.push({ label: 'Mediateca', href: '/recursos/mediateca' });
-
-  const items: NavItem[] = [
-    { label: 'Inicio', href: '/' },
-    { label: 'Programa', href: '/programa/quienes-somos', children: programaChildren },
-  ];
-
-  if (h2vChildren.length > 0) {
-    items.push({ label: 'Hidrógeno Verde', href: '/hidrogeno-verde', children: h2vChildren });
-  }
-
-  items.push({ label: 'Proyectos', href: '/proyectos' });
-  items.push({ label: 'Recursos', href: '/recursos/documentos', children: recursosChildren });
-  items.push({ label: 'Noticias', href: '/noticias' });
-  items.push({ label: 'Contacto', href: '/contacto' });
-
-  return items;
-}
+// Navigation items — static to avoid hydration mismatch
+const navItems: NavItem[] = [
+  { label: 'Inicio', href: '/' },
+  {
+    label: 'Programa', href: '/programa/quienes-somos',
+    children: [
+      { label: 'Quiénes Somos', href: '/programa/quienes-somos' },
+      { label: 'Gobernanza', href: '/programa/gobernanza' },
+      { label: 'Comunidad', href: '/programa/comunidad' },
+      { label: 'Transparencia', href: '/programa/transparencia' },
+    ],
+  },
+  {
+    label: 'Hidrógeno Verde', href: '/hidrogeno-verde',
+    children: [
+      { label: '¿Qué es el H2V?', href: '/hidrogeno-verde' },
+      { label: 'Sectores Productivos', href: '/hidrogeno-verde/sectores' },
+      { label: 'Capital Humano', href: '/hidrogeno-verde/capital-humano' },
+      { label: 'Hoja de Ruta', href: '/hidrogeno-verde/hoja-de-ruta' },
+      { label: 'Marco Regulatorio', href: '/hidrogeno-verde/marco-regulatorio' },
+    ],
+  },
+  { label: 'Proyectos', href: '/proyectos' },
+  {
+    label: 'Recursos', href: '/recursos/documentos',
+    children: [
+      { label: 'Documentos', href: '/recursos/documentos' },
+      { label: 'Eventos', href: '/recursos/eventos' },
+      { label: 'Mediateca', href: '/recursos/mediateca' },
+    ],
+  },
+  { label: 'Noticias', href: '/noticias' },
+  { label: 'Contacto', href: '/contacto' },
+];
 
 function DropdownItem({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false);
@@ -100,7 +96,6 @@ function DropdownItem({ item }: { item: NavItem }) {
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navItems = getNavItems();
 
   return (
     <header className="bg-[#1B3A5C] sticky top-0 z-40 shadow-md" role="banner">

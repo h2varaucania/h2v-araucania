@@ -1,6 +1,7 @@
 import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import sharp from 'sharp';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -72,5 +73,5 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'src/payload-types.ts'),
   },
-  sharp: true,
+  sharp,
 });

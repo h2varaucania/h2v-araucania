@@ -1,4 +1,9 @@
 import type { CollectionConfig } from 'payload';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -8,11 +13,21 @@ export const Media: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'alt',
-    description: 'Sube imágenes (JPG, PNG, WebP) y documentos (PDF, Word). Estos archivos se usan en noticias, documentos y otras secciones del sitio.',
+    description: 'Sube imágenes (JPG, PNG, WebP) y documentos (PDF, Word). Estos archivos se usan en noticias, documentos y otras secciones del sitio. NO subas archivos de texto plano (.txt) — solo imágenes y PDFs.',
   },
   upload: {
-    staticDir: '../public/uploads',
-    mimeTypes: ['image/*', 'application/pdf', 'application/vnd.openxmlformats-officedocument.*'],
+    staticDir: path.resolve(dirname, '../../..', 'public/uploads'),
+    mimeTypes: [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/gif',
+      'image/svg+xml',
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ],
     imageSizes: [
       { name: 'thumbnail', width: 400, height: 300, position: 'centre' },
       { name: 'card', width: 768, height: 512, position: 'centre' },
@@ -26,7 +41,7 @@ export const Media: CollectionConfig = {
       required: true,
       label: 'Descripción del archivo',
       admin: {
-        description: 'Describe brevemente el contenido del archivo. Ej: "Logo CORFO", "Foto reunión Consejo Directivo marzo 2026". Este texto aparece cuando la imagen no carga y es leído por lectores de pantalla.',
+        description: 'Describe brevemente el contenido. Ej: "Logo CORFO", "Foto reunión marzo 2026".',
       },
     },
   ],
