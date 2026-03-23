@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { getPayload } from '@/lib/payload/getPayload';
 
 export const metadata: Metadata = {
   title: 'Quiénes Somos',
@@ -13,10 +14,48 @@ const instituciones = [
   { nombre: 'Seremi de Energía Araucanía', rol: 'Mandante — Subsecretaría de Energía', logo: '/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png' },
 ];
 
-export default function QuienesSomos() {
+export default async function QuienesSomos() {
+  const payload = await getPayload();
+
+  const { docs: consejo } = await payload.find({
+    collection: 'miembros',
+    where: { instancia: { equals: 'consejo' } },
+    sort: 'orden',
+    limit: 50,
+  });
+
+  const { docs: comite } = await payload.find({
+    collection: 'miembros',
+    where: { instancia: { equals: 'comite' } },
+    sort: 'orden',
+    limit: 50,
+  });
+
+  const { docs: unidad } = await payload.find({
+    collection: 'miembros',
+    where: { instancia: { equals: 'unidad' } },
+    sort: 'orden',
+    limit: 50,
+  });
+
+  // Fallback data when CMS is empty
+  const consejoFallback = [
+    { inst: 'Asociaciones empresariales', cargo: 'Presidente', titular: 'Por definir', aporte: 'Vinculación con el sector y orientación estratégica' },
+    { inst: 'Ministerio de Energía', cargo: 'Director', titular: 'Por definir', aporte: 'Orientación en políticas públicas' },
+    { inst: 'Ministerio de Medio Ambiente', cargo: 'Director', titular: 'Por definir', aporte: 'Articulación con instituciones del Estado' },
+    { inst: 'Ministerio de Economía', cargo: 'Director', titular: 'Por definir', aporte: 'Articulación con instituciones del Estado' },
+    { inst: 'Gobierno Regional', cargo: 'Director', titular: 'Por definir', aporte: 'Desarrollo productivo e innovación tecnológica' },
+    { inst: 'Comunidades Indígenas', cargo: 'Consejero', titular: 'Por definir', aporte: 'Mirada en decisiones sobre proyectos energéticos' },
+    { inst: 'Universidades Locales', cargo: 'Consejero', titular: 'Por definir', aporte: 'Vinculación, orientación e información de tendencias' },
+    { inst: 'Experto Nacional/Internacional', cargo: 'Experto', titular: 'Por definir', aporte: 'Retroalimentación técnica y vinculación con la industria' },
+  ];
+
+  const consejoData = consejo.length > 0
+    ? consejo.map((m: any) => ({ inst: m.institucion, cargo: m.cargo, titular: m.nombre, aporte: m.aporte || '' }))
+    : consejoFallback;
+
   return (
     <div>
-      {/* Page header */}
       <section className="bg-[#1B3A5C] text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Quiénes Somos</h1>
@@ -46,13 +85,7 @@ export default function QuienesSomos() {
             {instituciones.map((inst) => (
               <div key={inst.nombre} className="bg-white rounded-xl p-6 shadow-sm text-center border border-gray-100">
                 <div className="h-16 flex items-center justify-center mb-4">
-                  <Image
-                    src={inst.logo}
-                    alt={inst.nombre}
-                    width={120}
-                    height={60}
-                    className="h-12 w-auto object-contain"
-                  />
+                  <Image src={inst.logo} alt={inst.nombre} width={120} height={60} className="h-12 w-auto object-contain" />
                 </div>
                 <h3 className="font-semibold text-[#1B3A5C] mb-1">{inst.nombre}</h3>
                 <p className="text-sm text-gray-500">{inst.rol}</p>
@@ -67,7 +100,7 @@ export default function QuienesSomos() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl font-bold text-[#1B3A5C] mb-4">Consejo de Dirección del Hidrógeno Verde de Araucanía</h2>
           <p className="text-gray-600 mb-8">
-            El Consejo de Dirección es la instancia estratégica del programa, encargada de definir la visión, aprobar planes de desarrollo y supervisar el progreso del proyecto.
+            Instancia estratégica encargada de definir la visión, aprobar planes de desarrollo y supervisar el progreso del proyecto.
           </p>
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <table className="w-full text-left">
@@ -80,16 +113,7 @@ export default function QuienesSomos() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {[
-                  { inst: 'Asociaciones empresariales', cargo: 'Presidente', titular: 'Por definir', aporte: 'Vinculación con el sector y orientación estratégica' },
-                  { inst: 'Ministerio de Energía', cargo: 'Director', titular: 'Por definir', aporte: 'Orientación en políticas públicas' },
-                  { inst: 'Ministerio de Medio Ambiente', cargo: 'Director', titular: 'Por definir', aporte: 'Articulación con instituciones del Estado' },
-                  { inst: 'Ministerio de Economía', cargo: 'Director', titular: 'Por definir', aporte: 'Articulación con instituciones del Estado' },
-                  { inst: 'Gobierno Regional', cargo: 'Director', titular: 'Por definir', aporte: 'Desarrollo productivo e innovación tecnológica' },
-                  { inst: 'Comunidades Indígenas', cargo: 'Consejero', titular: 'Por definir', aporte: 'Mirada en decisiones sobre proyectos energéticos' },
-                  { inst: 'Universidades Locales', cargo: 'Consejero', titular: 'Por definir', aporte: 'Vinculación, orientación e información de tendencias' },
-                  { inst: 'Experto Nacional/Internacional', cargo: 'Experto', titular: 'Por definir', aporte: 'Retroalimentación técnica y vinculación con la industria' },
-                ].map((row, i) => (
+                {consejoData.map((row: any, i: number) => (
                   <tr key={i} className={i % 2 === 1 ? 'bg-gray-50' : ''}>
                     <td className="px-6 py-3 text-sm font-medium text-gray-900">{row.inst}</td>
                     <td className="px-6 py-3 text-sm text-gray-600">{row.cargo}</td>
@@ -101,7 +125,7 @@ export default function QuienesSomos() {
             </table>
           </div>
           <p className="text-sm text-gray-400 mt-4 italic">
-            Los integrantes serán confirmados por la Unidad de Coordinación y Gestión y ratificados en reunión del Consejo Estratégico.
+            {consejo.length === 0 && 'Los integrantes serán confirmados por la Unidad de Coordinación y ratificados en reunión del Consejo.'}
           </p>
         </div>
       </section>
@@ -111,26 +135,60 @@ export default function QuienesSomos() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-[#1B3A5C] mb-4">Comité Consultivo Técnico Científico</h2>
           <p className="text-gray-600 mb-4">
-            Integrado por miembros de la sociedad civil, ONGs y otros actores relevantes, este comité tiene como objetivo mantener informado al Consejo Estratégico de las necesidades y requerimientos de la ciudadanía, así como fiscalizar y transparentar el desarrollo del proyecto.
+            Integrado por miembros de la sociedad civil, ONGs y otros actores relevantes para fiscalizar y transparentar el desarrollo del proyecto.
           </p>
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-10 h-10 rounded-full bg-[#0D7377]/10 flex items-center justify-center">
-                <svg className="w-5 h-5 text-[#0D7377]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div>
-                <p className="font-medium text-[#1B3A5C]">Reuniones de trabajo</p>
-                <p className="text-sm text-gray-500">Periodicidad mensual — Formato presencial y/o videoconferencia</p>
-              </div>
+          {comite.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {comite.map((m: any) => (
+                <div key={m.id} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-[#0D7377]/10 flex items-center justify-center shrink-0">
+                    <span className="text-[#0D7377] font-bold text-lg">{m.nombre?.charAt(0) || '?'}</span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-[#1B3A5C]">{m.nombre}</p>
+                    <p className="text-sm text-gray-500">{m.cargo} — {m.institucion}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <p className="text-sm text-gray-500 italic">
-              Los integrantes del Comité Consultivo serán definidos durante la ejecución del programa.
-            </p>
-          </div>
+          ) : (
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-[#0D7377]/10 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-[#0D7377]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-medium text-[#1B3A5C]">Reuniones de trabajo</p>
+                  <p className="text-sm text-gray-500">Periodicidad mensual — Presencial y/o videoconferencia</p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-400 mt-4 italic">
+                Los integrantes del Comité Consultivo serán definidos durante la ejecución del programa.
+              </p>
+            </div>
+          )}
         </div>
       </section>
+
+      {/* Unidad de Coordinación - si hay datos */}
+      {unidad.length > 0 && (
+        <section className="py-16 px-4">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl font-bold text-[#1B3A5C] mb-6">Unidad de Coordinación y Gestión</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {unidad.map((m: any) => (
+                <div key={m.id} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                  <p className="font-semibold text-[#1B3A5C]">{m.nombre}</p>
+                  <p className="text-sm text-[#0D7377]">{m.cargo}</p>
+                  <p className="text-sm text-gray-500">{m.institucion}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

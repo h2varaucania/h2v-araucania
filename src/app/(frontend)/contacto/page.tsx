@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import ContactForm from '@/components/forms/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Contacto',
@@ -17,57 +18,11 @@ export default function Contacto() {
 
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Formulario */}
           <div>
             <h2 className="text-xl font-semibold text-[#1B3A5C] mb-6">Envíanos un mensaje</h2>
-            <form className="space-y-5">
-              <div>
-                <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
-                <input
-                  type="text" id="nombre" name="nombre" required
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none transition-shadow"
-                  placeholder="Tu nombre"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
-                <input
-                  type="email" id="email" name="email" required
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none transition-shadow"
-                  placeholder="tu@email.com"
-                />
-              </div>
-              <div>
-                <label htmlFor="asunto" className="block text-sm font-medium text-gray-700 mb-1">Asunto</label>
-                <select
-                  id="asunto" name="asunto" required
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none transition-shadow"
-                >
-                  <option value="">Selecciona un asunto</option>
-                  <option value="consulta">Consulta general</option>
-                  <option value="colaboracion">Propuesta de colaboración</option>
-                  <option value="prensa">Prensa y comunicaciones</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="mensaje" className="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
-                <textarea
-                  id="mensaje" name="mensaje" rows={5} required
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none transition-shadow resize-none"
-                  placeholder="Escribe tu mensaje aquí..."
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full px-6 py-3 bg-[#0D7377] text-white font-semibold rounded-lg hover:bg-[#0D7377]/90 transition-colors focus:ring-2 focus:ring-[#0D7377] focus:ring-offset-2"
-              >
-                Enviar mensaje
-              </button>
-            </form>
+            <ContactForm />
           </div>
 
-          {/* Info de contacto */}
           <div>
             <h2 className="text-xl font-semibold text-[#1B3A5C] mb-6">Información de contacto</h2>
             <div className="space-y-6">
@@ -110,7 +65,6 @@ export default function Contacto() {
               </div>
             </div>
 
-            {/* Instituciones */}
             <div className="mt-10 p-6 bg-gray-50 rounded-xl">
               <p className="text-sm font-medium text-gray-500 mb-3">Ejecutado por</p>
               <div className="space-y-2 text-sm text-gray-700">

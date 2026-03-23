@@ -10,6 +10,8 @@ import { Noticias } from '@/collections/Noticias';
 import { Documentos } from '@/collections/Documentos';
 import { Proyectos } from '@/collections/Proyectos';
 import { Miembros } from '@/collections/Miembros';
+import { Downloads } from '@/collections/Downloads';
+import { Eventos } from '@/collections/Eventos';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -28,6 +30,8 @@ export default buildConfig({
     Documentos,
     Proyectos,
     Miembros,
+    Downloads,
+    Eventos,
   ],
   editor: lexicalEditor(),
   db: postgresAdapter({
