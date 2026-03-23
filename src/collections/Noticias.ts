@@ -2,49 +2,65 @@ import type { CollectionConfig } from 'payload';
 
 export const Noticias: CollectionConfig = {
   slug: 'noticias',
+  labels: { singular: 'Noticia', plural: 'Noticias' },
   admin: {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'fecha', 'categoria', 'publicado'],
+    description: 'Publica noticias sobre seminarios, talleres, reuniones de gobernanza, acuerdos y avances del programa. Las noticias aparecen en la sección "Noticias" y en la página de inicio.',
   },
   fields: [
     {
       name: 'titulo',
       type: 'text',
       required: true,
+      label: 'Título de la noticia',
+      admin: { description: 'Título principal que verán los visitantes. Sé claro y descriptivo.' },
     },
     {
       name: 'slug',
       type: 'text',
       required: true,
       unique: true,
-      admin: { position: 'sidebar' },
+      label: 'URL amigable',
+      admin: {
+        position: 'sidebar',
+        description: 'Identificador único para la URL. Usa solo letras minúsculas, números y guiones. Ej: "lanzamiento-programa-h2v"',
+      },
     },
     {
       name: 'extracto',
       type: 'textarea',
       required: true,
       maxLength: 300,
+      label: 'Resumen breve',
+      admin: { description: 'Resumen de 1-2 oraciones que aparece en el listado de noticias. Máximo 300 caracteres.' },
     },
     {
       name: 'contenido',
       type: 'richText',
       required: true,
+      label: 'Contenido completo',
+      admin: { description: 'El texto completo de la noticia. Puedes agregar párrafos, negritas, listas, enlaces e imágenes.' },
     },
     {
       name: 'imagen',
       type: 'upload',
       relationTo: 'media',
       required: true,
+      label: 'Imagen de portada',
+      admin: { description: 'Imagen principal de la noticia. Sube una imagen JPG o PNG (recomendado: 1200x630 px).' },
     },
     {
       name: 'fecha',
       type: 'date',
       required: true,
-      admin: { position: 'sidebar' },
+      label: 'Fecha de publicación',
+      admin: { position: 'sidebar', description: 'Fecha que se mostrará en la noticia.' },
     },
     {
       name: 'categoria',
       type: 'select',
+      label: 'Categoría',
       options: [
         { label: 'Seminario', value: 'seminario' },
         { label: 'Taller', value: 'taller' },
@@ -53,13 +69,14 @@ export const Noticias: CollectionConfig = {
         { label: 'Proyecto', value: 'proyecto' },
         { label: 'General', value: 'general' },
       ],
-      admin: { position: 'sidebar' },
+      admin: { position: 'sidebar', description: 'Categoría para filtrar la noticia.' },
     },
     {
       name: 'publicado',
       type: 'checkbox',
       defaultValue: false,
-      admin: { position: 'sidebar' },
+      label: 'Publicada',
+      admin: { position: 'sidebar', description: 'Marca esta casilla para que la noticia sea visible en el sitio público. Si no está marcada, solo será visible aquí en el admin.' },
     },
   ],
 };
