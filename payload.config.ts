@@ -26,6 +26,7 @@ import { PaginaCapitalHumano } from '@/globals/PaginaCapitalHumano';
 import { PaginaMarcoRegulatorio } from '@/globals/PaginaMarcoRegulatorio';
 import { ContactoGlobal } from '@/globals/Contacto';
 import { SitioGeneral } from '@/globals/SitioGeneral';
+import { GuiaAdmin } from '@/globals/GuiaAdmin';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -59,6 +60,7 @@ export default buildConfig({
     PaginaComunidad,
     PaginaCapitalHumano,
     PaginaMarcoRegulatorio,
+    GuiaAdmin,
   ],
   editor: lexicalEditor(),
   db: postgresAdapter({
