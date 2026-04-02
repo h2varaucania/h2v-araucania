@@ -4,6 +4,8 @@ import Footer from "@/components/layout/Footer";
 import { getPayload } from "@/lib/payload/getPayload";
 import "../globals.css";
 
+export const dynamic = 'force-dynamic';
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://h2varaucania.cl';
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
+import { requireFeature } from '@/lib/featureGate';
 
 export const dynamic = 'force-dynamic';
 
@@ -84,6 +85,7 @@ const defaultSectores = [
 ];
 
 export default async function Sectores() {
+  requireFeature('sectores');
   let heroTitulo = 'Sectores Productivos';
   let heroSubtitulo = 'Sectores de La Araucanía con potencial de integración del hidrógeno verde para su desarrollo sostenible.';
   let sectores = defaultSectores;

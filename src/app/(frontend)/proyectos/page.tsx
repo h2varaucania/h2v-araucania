@@ -14,23 +14,29 @@ export const metadata: Metadata = {
 };
 
 export default async function Proyectos() {
-  const payload = await getPayload();
-  const { docs } = await payload.find({
-    collection: 'proyectos',
-    limit: 100,
-  });
+  let proyectos: any[] = [];
 
-  const proyectos = docs.map((p: any) => ({
-    id: String(p.id),
-    nombre: p.nombre,
-    descripcion: p.descripcion,
-    empresa: p.empresa,
-    etapa: p.etapa,
-    region: p.region,
-    coordenadas: p.coordenadas,
-    capacidadMW: p.capacidadMW,
-    produccionTonAnio: p.produccionTonAnio,
-  }));
+  try {
+    const payload = await getPayload();
+    const { docs } = await payload.find({
+      collection: 'proyectos',
+      limit: 100,
+    });
+
+    proyectos = docs.map((p: any) => ({
+      id: String(p.id),
+      nombre: p.nombre,
+      descripcion: p.descripcion,
+      empresa: p.empresa,
+      etapa: p.etapa,
+      region: p.region,
+      coordenadas: p.coordenadas,
+      capacidadMW: p.capacidadMW,
+      produccionTonAnio: p.produccionTonAnio,
+    }));
+  } catch {
+    // DB unavailable — render empty map
+  }
 
   return (
     <div>

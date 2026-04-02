@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
+import { requireFeature } from '@/lib/featureGate';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,13 +14,21 @@ export const metadata: Metadata = {
 };
 
 export default async function Eventos() {
-  const payload = await getPayload();
-  const { docs: eventos } = await payload.find({
-    collection: 'eventos',
-    where: { publicado: { equals: true } },
-    sort: 'fecha',
-    limit: 20,
-  });
+  requireFeature('eventos');
+  let eventos: any[] = [];
+
+  try {
+    const payload = await getPayload();
+    const result = await payload.find({
+      collection: 'eventos',
+      where: { publicado: { equals: true } },
+      sort: 'fecha',
+      limit: 20,
+    });
+    eventos = result.docs;
+  } catch {
+    // DB unavailable — render empty state
+  }
 
   return (
     <div>

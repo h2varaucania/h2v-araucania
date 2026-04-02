@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
+import { requireFeature } from '@/lib/featureGate';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,6 +20,7 @@ const defaultHitos = [
 ];
 
 export default async function HojaDeRuta() {
+  requireFeature('hojaDeRuta');
   let heroTitulo = 'Hoja de Ruta';
   let heroSubtitulo = 'Estrategia regional para el desarrollo del hidrógeno verde en La Araucanía, horizonte 2024-2050.';
   let hitos = defaultHitos;

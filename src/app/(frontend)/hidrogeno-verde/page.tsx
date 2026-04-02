@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getPayload } from '@/lib/payload/getPayload';
+import { requireFeature } from '@/lib/featureGate';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,6 +42,7 @@ const defaultDerivados = [
 ];
 
 export default async function HidrogenoVerde() {
+  requireFeature('hidrogenoVerde');
   let heroTitulo = 'Hidrógeno Verde';
   let heroSubtitulo = 'El hidrógeno verde es un vector energético producido mediante electrólisis del agua utilizando energías renovables. No genera emisiones de CO2 y es clave para la descarbonización de la economía.';
   let electrolisis = defaultElectrolisis;

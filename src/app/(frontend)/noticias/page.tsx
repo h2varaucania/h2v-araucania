@@ -30,14 +30,25 @@ export default async function Noticias({ searchParams }: { searchParams: SearchP
   const params = await searchParams;
   const currentPage = Math.max(1, parseInt(params.page || '1', 10));
 
-  const payload = await getPayload();
-  const { docs: noticias, totalDocs, totalPages } = await payload.find({
-    collection: 'noticias',
-    where: { publicado: { equals: true } },
-    sort: '-fecha',
-    limit: ITEMS_PER_PAGE,
-    page: currentPage,
-  });
+  let noticias: any[] = [];
+  let totalDocs = 0;
+  let totalPages = 1;
+
+  try {
+    const payload = await getPayload();
+    const result = await payload.find({
+      collection: 'noticias',
+      where: { publicado: { equals: true } },
+      sort: '-fecha',
+      limit: ITEMS_PER_PAGE,
+      page: currentPage,
+    });
+    noticias = result.docs;
+    totalDocs = result.totalDocs;
+    totalPages = result.totalPages;
+  } catch {
+    // DB unavailable — render empty state
+  }
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
+import { requireFeature } from '@/lib/featureGate';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,6 +28,7 @@ const defaultProgramas = [
 ];
 
 export default async function CapitalHumano() {
+  requireFeature('capitalHumano');
   let heroTitulo = 'Capital Humano';
   let heroSubtitulo = 'Formación y desarrollo de competencias para la industria del hidrógeno verde en La Araucanía.';
   let perfiles = defaultPerfiles;

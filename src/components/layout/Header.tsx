@@ -1,34 +1,36 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import SearchDialog from '@/components/ui/SearchDialog';
+import { features } from '@/lib/features';
 
 type NavItem = {
   label: string;
   href: string;
+  featureFlag?: keyof typeof features;
   children?: NavItem[];
 };
 
-const navItems: NavItem[] = [
+const allNavItems: NavItem[] = [
   { label: 'Inicio', href: '/' },
   {
     label: 'Programa', href: '/programa/quienes-somos',
     children: [
       { label: 'Quienes Somos', href: '/programa/quienes-somos' },
       { label: 'Gobernanza', href: '/programa/gobernanza' },
-      { label: 'Comunidad', href: '/programa/comunidad' },
-      { label: 'Transparencia', href: '/programa/transparencia' },
+      { label: 'Comunidad', href: '/programa/comunidad', featureFlag: 'comunidad' },
+      { label: 'Transparencia', href: '/programa/transparencia', featureFlag: 'transparencia' },
     ],
   },
   {
-    label: 'Hidrogeno Verde', href: '/hidrogeno-verde',
+    label: 'Hidrogeno Verde', href: '/hidrogeno-verde', featureFlag: 'hidrogenoVerde',
     children: [
       { label: 'Que es el H2V?', href: '/hidrogeno-verde' },
-      { label: 'Sectores Productivos', href: '/hidrogeno-verde/sectores' },
-      { label: 'Capital Humano', href: '/hidrogeno-verde/capital-humano' },
-      { label: 'Hoja de Ruta', href: '/hidrogeno-verde/hoja-de-ruta' },
-      { label: 'Marco Regulatorio', href: '/hidrogeno-verde/marco-regulatorio' },
+      { label: 'Sectores Productivos', href: '/hidrogeno-verde/sectores', featureFlag: 'sectores' },
+      { label: 'Capital Humano', href: '/hidrogeno-verde/capital-humano', featureFlag: 'capitalHumano' },
+      { label: 'Hoja de Ruta', href: '/hidrogeno-verde/hoja-de-ruta', featureFlag: 'hojaDeRuta' },
+      { label: 'Marco Regulatorio', href: '/hidrogeno-verde/marco-regulatorio', featureFlag: 'marcoRegulatorio' },
     ],
   },
   { label: 'Proyectos', href: '/proyectos' },
@@ -36,13 +38,23 @@ const navItems: NavItem[] = [
     label: 'Recursos', href: '/recursos/documentos',
     children: [
       { label: 'Documentos', href: '/recursos/documentos' },
-      { label: 'Eventos', href: '/recursos/eventos' },
-      { label: 'Mediateca', href: '/recursos/mediateca' },
+      { label: 'Eventos', href: '/recursos/eventos', featureFlag: 'eventos' },
+      { label: 'Mediateca', href: '/recursos/mediateca', featureFlag: 'mediateca' },
     ],
   },
   { label: 'Noticias', href: '/noticias' },
   { label: 'Contacto', href: '/contacto' },
 ];
+
+function filterNavByFeatures(items: NavItem[]): NavItem[] {
+  return items
+    .filter((item) => !item.featureFlag || features[item.featureFlag])
+    .map((item) => ({
+      ...item,
+      children: item.children ? filterNavByFeatures(item.children) : undefined,
+    }))
+    .filter((item) => !item.children || item.children.length > 0);
+}
 
 function DropdownItem({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false);
@@ -123,6 +135,7 @@ function DropdownItem({ item }: { item: NavItem }) {
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const navItems = useMemo(() => filterNavByFeatures(allNavItems), []);
 
   // Close mobile menu on Escape
   useEffect(() => {

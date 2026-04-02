@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
+import { requireFeature } from '@/lib/featureGate';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,6 +38,7 @@ const defaultDocumentos = [
 ];
 
 export default async function MarcoRegulatorio() {
+  requireFeature('marcoRegulatorio');
   let heroTitulo = 'Marco Regulatorio';
   let heroSubtitulo = 'Normativa, políticas y lineamientos para el desarrollo del hidrógeno verde en Chile.';
   let documentos = defaultDocumentos;

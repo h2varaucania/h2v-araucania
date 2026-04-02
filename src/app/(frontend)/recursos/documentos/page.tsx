@@ -14,16 +14,25 @@ export const metadata: Metadata = {
 };
 
 export default async function Documentos() {
-  const payload = await getPayload();
-  const { docs } = await payload.find({
-    collection: 'documentos',
-    sort: '-anio',
-    limit: 50,
-  });
+  let docs: any[] = [];
+  let anios: number[] = [];
+  let tipos: string[] = [];
 
-  // Extract unique years and types for filters
-  const anios = [...new Set(docs.map((d: any) => d.anio))].sort((a: any, b: any) => b - a);
-  const tipos = [...new Set(docs.map((d: any) => d.tipo))];
+  try {
+    const payload = await getPayload();
+    const result = await payload.find({
+      collection: 'documentos',
+      sort: '-anio',
+      limit: 50,
+    });
+    docs = result.docs;
+
+    // Extract unique years and types for filters
+    anios = [...new Set(docs.map((d: any) => d.anio))].sort((a: number, b: number) => b - a);
+    tipos = [...new Set(docs.map((d: any) => d.tipo))] as string[];
+  } catch {
+    // DB unavailable — render empty state
+  }
 
   return (
     <div>

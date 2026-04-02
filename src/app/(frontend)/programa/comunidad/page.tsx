@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
+import { requireFeature } from '@/lib/featureGate';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,6 +21,7 @@ const defaultGlosario = [
 ];
 
 export default async function Comunidad() {
+  requireFeature('comunidad');
   let heroTitulo = 'Comunidad y Participación';
   let heroSubtitulo = 'El desarrollo del hidrógeno verde en La Araucanía se construye con la participación activa de las comunidades y actores territoriales.';
   let glosario = defaultGlosario;
