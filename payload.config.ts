@@ -68,6 +68,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || process.env.DATABASE_POSTGRES_URL || '',
     },
+    push: true,
   }),
   secret: (() => {
     const s = process.env.PAYLOAD_SECRET;
