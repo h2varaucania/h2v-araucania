@@ -1,19 +1,86 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getPayload } from '@/lib/payload/getPayload';
 
 export const metadata: Metadata = {
   title: 'Hidrógeno Verde',
   description: 'Todo sobre el hidrógeno verde: qué es, cómo se produce, cadena de valor, derivados y aplicaciones.',
+  openGraph: {
+    title: 'Hidrógeno Verde | H2V Araucanía',
+    description: 'Todo sobre el hidrógeno verde: qué es, cómo se produce, cadena de valor, derivados y aplicaciones.',
+  },
 };
 
-export default function HidrogenoVerde() {
+const defaultElectrolisis = [
+  { step: '1', title: 'Energía Renovable', desc: 'La electricidad proviene de fuentes limpias: eólica, solar, hidroeléctrica o geotérmica. La Araucanía cuenta con potencial eólico, de biomasa y geotérmico.' },
+  { step: '2', title: 'Electrolizador', desc: 'El agua (H₂O) se separa en hidrógeno (H₂) y oxígeno (O₂) mediante una corriente eléctrica en un dispositivo llamado electrolizador.' },
+  { step: '3', title: 'Hidrógeno Verde', desc: 'El H₂ producido se almacena, transporta y utiliza como combustible limpio o materia prima industrial. El oxígeno se libera sin impacto ambiental.' },
+];
+
+const defaultElectrolizadores = [
+  { name: 'Alcalino (AEL)', desc: 'Tecnología más madura y económica. Usa una solución alcalina (KOH) como electrolito. Ideal para producción a gran escala.', maturity: 'Alta', cost: 'Bajo' },
+  { name: 'PEM', desc: 'Membrana de intercambio protónico. Más compacto, respuesta rápida, ideal para acoplamiento con renovables variables (eólica, solar).', maturity: 'Media-Alta', cost: 'Medio' },
+  { name: 'SOEC', desc: 'Electrolizador de óxido sólido. Opera a alta temperatura (700-900°C). Mayor eficiencia pero en fase de desarrollo comercial.', maturity: 'Baja', cost: 'Alto' },
+];
+
+const defaultCadena = [
+  { icon: '⚡', title: 'Producción', desc: 'Electrólisis con energía renovable' },
+  { icon: '💧', title: 'Conversión', desc: 'Amoníaco, metanol, e-combustibles' },
+  { icon: '📦', title: 'Almacenamiento', desc: 'Tanques, cavernas salinas, hidruros' },
+  { icon: '🚛', title: 'Transporte', desc: 'Tuberías, camiones, barcos' },
+  { icon: '🏭', title: 'Uso Final', desc: 'Industria, transporte, calor, electricidad' },
+];
+
+const defaultDerivados = [
+  { name: 'Amoníaco verde (NH₃)', desc: 'Principal vector para transporte marítimo de H₂. Usado en fertilizantes, refrigeración industrial y como combustible para barcos.', use: 'Fertilizantes, transporte marítimo' },
+  { name: 'Metanol verde (CH₃OH)', desc: 'Combustible y materia prima química. Se produce combinando H₂ con CO₂ capturado. Usado en la industria química y como combustible.', use: 'Química, combustible' },
+  { name: 'E-combustibles sintéticos', desc: 'Combustibles líquidos producidos con H₂ verde y CO₂. Compatibles con motores e infraestructura existente (e-gasolina, e-diésel, SAF).', use: 'Aviación, transporte pesado' },
+  { name: 'Acero verde', desc: 'El H₂ reemplaza al carbón como agente reductor en la siderurgia, eliminando las emisiones del proceso.', use: 'Industria siderúrgica' },
+];
+
+export default async function HidrogenoVerde() {
+  let heroTitulo = 'Hidrógeno Verde';
+  let heroSubtitulo = 'El hidrógeno verde es un vector energético producido mediante electrólisis del agua utilizando energías renovables. No genera emisiones de CO2 y es clave para la descarbonización de la economía.';
+  let electrolisis = defaultElectrolisis;
+  let electrolizadores = defaultElectrolizadores;
+  let cadena = defaultCadena;
+  let derivados = defaultDerivados;
+
+  try {
+    const payload = await getPayload();
+    const data = await payload.findGlobal({ slug: 'pagina-h2v' });
+    if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
+    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
+    if (data?.electrolisis?.pasos?.length > 0) {
+      electrolisis = (data.electrolisis.pasos as any[]).map((p, i) => ({
+        step: String(i + 1), title: p.titulo, desc: p.descripcion,
+      }));
+    }
+    if (data?.electrolizadores?.length > 0) {
+      electrolizadores = (data.electrolizadores as any[]).map((e) => ({
+        name: e.nombre, desc: e.descripcion, maturity: e.madurez || '', cost: e.costo || '',
+      }));
+    }
+    if (data?.cadenaValor?.length > 0) {
+      cadena = (data.cadenaValor as any[]).map((c) => ({
+        icon: c.icono || '•', title: c.titulo, desc: c.descripcion,
+      }));
+    }
+    if (data?.derivados?.length > 0) {
+      derivados = (data.derivados as any[]).map((d) => ({
+        name: d.nombre, desc: d.descripcion, use: d.aplicacion || '',
+      }));
+    }
+  } catch {
+    // Use defaults
+  }
   return (
     <div>
-      <section className="bg-gradient-to-br from-[#0D7377] to-[#1B3A5C] text-white py-20 px-4">
+      <section className="bg-gradient-to-br from-h2v-green to-h2v-blue text-white py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Hidrógeno Verde</h1>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">{heroTitulo}</h1>
           <p className="text-lg opacity-90 max-w-2xl mx-auto">
-            El hidrógeno verde es un vector energético producido mediante electrólisis del agua utilizando energías renovables. No genera emisiones de CO2 y es clave para la descarbonización de la economía.
+            {heroSubtitulo}
           </p>
         </div>
       </section>
@@ -21,7 +88,7 @@ export default function HidrogenoVerde() {
       {/* ¿Qué es? */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-6">¿Qué es el Hidrógeno Verde?</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-6">¿Qué es el Hidrógeno Verde?</h2>
           <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
             <p>
               El hidrógeno (H₂) es el elemento más abundante del universo. Cuando se produce a partir de agua (H₂O) utilizando electricidad de fuentes renovables — como la energía eólica, solar o hidroeléctrica — se denomina <strong>hidrógeno verde</strong>, porque su proceso de producción no genera emisiones de gases de efecto invernadero.
@@ -36,16 +103,12 @@ export default function HidrogenoVerde() {
       {/* Electrólisis */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-8">Proceso de Electrólisis</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-8">Proceso de Electrólisis</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { step: '1', title: 'Energía Renovable', desc: 'La electricidad proviene de fuentes limpias: eólica, solar, hidroeléctrica o geotérmica. La Araucanía cuenta con potencial eólico, de biomasa y geotérmico.' },
-              { step: '2', title: 'Electrolizador', desc: 'El agua (H₂O) se separa en hidrógeno (H₂) y oxígeno (O₂) mediante una corriente eléctrica en un dispositivo llamado electrolizador.' },
-              { step: '3', title: 'Hidrógeno Verde', desc: 'El H₂ producido se almacena, transporta y utiliza como combustible limpio o materia prima industrial. El oxígeno se libera sin impacto ambiental.' },
-            ].map((item) => (
+            {electrolisis.map((item) => (
               <div key={item.step} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <div className="w-10 h-10 rounded-full bg-[#0D7377] flex items-center justify-center text-white font-bold mb-4">{item.step}</div>
-                <h3 className="text-lg font-semibold text-[#1B3A5C] mb-2">{item.title}</h3>
+                <div className="w-10 h-10 rounded-full bg-h2v-green flex items-center justify-center text-white font-bold mb-4">{item.step}</div>
+                <h3 className="text-lg font-semibold text-h2v-blue mb-2">{item.title}</h3>
                 <p className="text-sm text-gray-600">{item.desc}</p>
               </div>
             ))}
@@ -56,15 +119,11 @@ export default function HidrogenoVerde() {
       {/* Tipos de electrolizadores */}
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-8">Tipos de Electrolizadores</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-8">Tipos de Electrolizadores</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { name: 'Alcalino (AEL)', desc: 'Tecnología más madura y económica. Usa una solución alcalina (KOH) como electrolito. Ideal para producción a gran escala.', maturity: 'Alta', cost: 'Bajo' },
-              { name: 'PEM', desc: 'Membrana de intercambio protónico. Más compacto, respuesta rápida, ideal para acoplamiento con renovables variables (eólica, solar).', maturity: 'Media-Alta', cost: 'Medio' },
-              { name: 'SOEC', desc: 'Electrolizador de óxido sólido. Opera a alta temperatura (700-900°C). Mayor eficiencia pero en fase de desarrollo comercial.', maturity: 'Baja', cost: 'Alto' },
-            ].map((tipo) => (
+            {electrolizadores.map((tipo) => (
               <div key={tipo.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <h3 className="text-lg font-semibold text-[#0D7377] mb-2">{tipo.name}</h3>
+                <h3 className="text-lg font-semibold text-h2v-green mb-2">{tipo.name}</h3>
                 <p className="text-sm text-gray-600 mb-4">{tipo.desc}</p>
                 <div className="flex gap-4 text-xs">
                   <div>
@@ -85,18 +144,12 @@ export default function HidrogenoVerde() {
       {/* Cadena de valor */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-8">Cadena de Valor del Hidrógeno Verde</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-8">Cadena de Valor del Hidrógeno Verde</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {[
-              { icon: '⚡', title: 'Producción', desc: 'Electrólisis con energía renovable' },
-              { icon: '💧', title: 'Conversión', desc: 'Amoníaco, metanol, e-combustibles' },
-              { icon: '📦', title: 'Almacenamiento', desc: 'Tanques, cavernas salinas, hidruros' },
-              { icon: '🚛', title: 'Transporte', desc: 'Tuberías, camiones, barcos' },
-              { icon: '🏭', title: 'Uso Final', desc: 'Industria, transporte, calor, electricidad' },
-            ].map((step) => (
+            {cadena.map((step) => (
               <div key={step.title} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
                 <div className="text-3xl mb-2">{step.icon}</div>
-                <h3 className="text-sm font-semibold text-[#1B3A5C] mb-1">{step.title}</h3>
+                <h3 className="text-sm font-semibold text-h2v-blue mb-1">{step.title}</h3>
                 <p className="text-xs text-gray-500">{step.desc}</p>
               </div>
             ))}
@@ -107,16 +160,11 @@ export default function HidrogenoVerde() {
       {/* Derivados */}
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-8">Derivados del Hidrógeno Verde</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-8">Derivados del Hidrógeno Verde</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              { name: 'Amoníaco verde (NH₃)', desc: 'Principal vector para transporte marítimo de H₂. Usado en fertilizantes, refrigeración industrial y como combustible para barcos.', use: 'Fertilizantes, transporte marítimo' },
-              { name: 'Metanol verde (CH₃OH)', desc: 'Combustible y materia prima química. Se produce combinando H₂ con CO₂ capturado. Usado en la industria química y como combustible.', use: 'Química, combustible' },
-              { name: 'E-combustibles sintéticos', desc: 'Combustibles líquidos producidos con H₂ verde y CO₂. Compatibles con motores e infraestructura existente (e-gasolina, e-diésel, SAF).', use: 'Aviación, transporte pesado' },
-              { name: 'Acero verde', desc: 'El H₂ reemplaza al carbón como agente reductor en la siderurgia, eliminando las emisiones del proceso.', use: 'Industria siderúrgica' },
-            ].map((d) => (
+            {derivados.map((d) => (
               <div key={d.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <h3 className="text-lg font-semibold text-[#0D7377] mb-2">{d.name}</h3>
+                <h3 className="text-lg font-semibold text-h2v-green mb-2">{d.name}</h3>
                 <p className="text-sm text-gray-600 mb-3">{d.desc}</p>
                 <p className="text-xs text-gray-400"><strong>Aplicación:</strong> {d.use}</p>
               </div>
@@ -126,7 +174,7 @@ export default function HidrogenoVerde() {
       </section>
 
       {/* Links a subsecciones */}
-      <section className="py-16 px-4 bg-[#1B3A5C]">
+      <section className="py-16 px-4 bg-h2v-blue">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-bold text-white mb-8 text-center">Explora más</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

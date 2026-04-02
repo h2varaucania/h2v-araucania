@@ -4,6 +4,10 @@ import { getPayload } from '@/lib/payload/getPayload';
 export const metadata: Metadata = {
   title: 'Eventos',
   description: 'Calendario de eventos del programa de Hidrógeno Verde en La Araucanía.',
+  openGraph: {
+    title: 'Eventos | H2V Araucanía',
+    description: 'Calendario de eventos del programa de Hidrógeno Verde en La Araucanía.',
+  },
 };
 
 export default async function Eventos() {
@@ -17,7 +21,7 @@ export default async function Eventos() {
 
   return (
     <div>
-      <section className="bg-[#1B3A5C] text-white py-16 px-4">
+      <section className="bg-h2v-blue text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Eventos</h1>
           <p className="text-lg opacity-80">Calendario de eventos del programa y la industria del hidrógeno verde.</p>
@@ -39,7 +43,7 @@ export default async function Eventos() {
               {eventos.map((evento: any) => (
                 <div key={evento.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex gap-6">
                   <div className="shrink-0 w-16 text-center">
-                    <div className="text-2xl font-bold text-[#0D7377]">
+                    <div className="text-2xl font-bold text-h2v-green">
                       {new Date(evento.fecha).getDate()}
                     </div>
                     <div className="text-xs text-gray-400 uppercase">
@@ -47,10 +51,10 @@ export default async function Eventos() {
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#1B3A5C] mb-1">{evento.titulo}</h3>
+                    <h3 className="text-lg font-semibold text-h2v-blue mb-1">{evento.titulo}</h3>
                     <p className="text-sm text-gray-500 mb-2">{evento.lugar}</p>
                     {evento.tipo && (
-                      <span className="text-xs bg-[#0D7377]/10 text-[#0D7377] px-2 py-0.5 rounded-full">{evento.tipo}</span>
+                      <span className="text-xs bg-h2v-green/10 text-h2v-green px-2 py-0.5 rounded-full">{evento.tipo}</span>
                     )}
                   </div>
                 </div>

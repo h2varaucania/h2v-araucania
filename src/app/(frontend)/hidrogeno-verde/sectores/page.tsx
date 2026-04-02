@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
+import { getPayload } from '@/lib/payload/getPayload';
 
 export const metadata: Metadata = {
   title: 'Sectores Productivos',
   description: 'Sectores productivos de La Araucanía con potencial de integración del hidrógeno verde.',
 };
 
-const sectores = [
+const defaultSectores = [
   {
     nombre: 'Sector Forestal',
     icon: '🌲',
@@ -80,14 +81,35 @@ const sectores = [
   },
 ];
 
-export default function Sectores() {
+export default async function Sectores() {
+  let heroTitulo = 'Sectores Productivos';
+  let heroSubtitulo = 'Sectores de La Araucanía con potencial de integración del hidrógeno verde para su desarrollo sostenible.';
+  let sectores = defaultSectores;
+
+  try {
+    const payload = await getPayload();
+    const data = await payload.findGlobal({ slug: 'pagina-sectores' });
+    if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
+    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
+    if (data?.sectores?.length > 0) {
+      sectores = (data.sectores as any[]).map((s, i) => ({
+        nombre: s.nombre,
+        icon: s.icono || defaultSectores[i]?.icon || '•',
+        color: defaultSectores[i]?.color || 'bg-gray-50 border-gray-200',
+        desc: s.descripcion,
+        oportunidades: (s.oportunidades as any[])?.map((o: any) => o.texto) || [],
+      }));
+    }
+  } catch {
+    // Use defaults
+  }
   return (
     <div>
-      <section className="bg-[#1B3A5C] text-white py-16 px-4">
+      <section className="bg-h2v-blue text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Sectores Productivos</h1>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">{heroTitulo}</h1>
           <p className="text-lg opacity-80 max-w-2xl mx-auto">
-            Sectores de La Araucanía con potencial de integración del hidrógeno verde para su desarrollo sostenible.
+            {heroSubtitulo}
           </p>
         </div>
       </section>
@@ -98,14 +120,14 @@ export default function Sectores() {
             <div key={sector.nombre} className={`rounded-xl p-8 border ${sector.color}`}>
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-3xl">{sector.icon}</span>
-                <h2 className="text-2xl font-bold text-[#1B3A5C]">{sector.nombre}</h2>
+                <h2 className="text-2xl font-bold text-h2v-blue">{sector.nombre}</h2>
               </div>
               <p className="text-gray-700 mb-6">{sector.desc}</p>
-              <h3 className="text-sm font-semibold text-[#0D7377] uppercase tracking-wider mb-3">Oportunidades para la región</h3>
+              <h3 className="text-sm font-semibold text-h2v-green uppercase tracking-wider mb-3">Oportunidades para la región</h3>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {sector.oportunidades.map((op, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-[#0D7377] mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     {op}

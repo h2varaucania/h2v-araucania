@@ -69,7 +69,13 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  secret: process.env.PAYLOAD_SECRET || 'default-dev-secret-change-me',
+  secret: (() => {
+    const s = process.env.PAYLOAD_SECRET;
+    if (!s || s === 'your-secret-key-change-in-production') {
+      throw new Error('PAYLOAD_SECRET is not set or is using the default value. Generate one with: openssl rand -base64 32');
+    }
+    return s;
+  })(),
   typescript: {
     outputFile: path.resolve(dirname, 'src/payload-types.ts'),
   },

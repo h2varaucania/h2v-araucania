@@ -1,0 +1,41 @@
+# Dependencias (se instalan en el build)
+node_modules
+
+# Artefactos de build
+.next
+out
+dist
+
+# Git
+.git
+.gitignore
+
+# Docker (evitar recursion)
+docker/
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Entorno local
+.env
+.env.local
+.env.*.local
+
+# IDE y sistema
+.vscode
+.idea
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Tests
+__tests__
+*.test.*
+*.spec.*
+coverage

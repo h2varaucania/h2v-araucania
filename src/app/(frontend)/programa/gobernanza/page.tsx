@@ -4,6 +4,10 @@ import { getPayload } from '@/lib/payload/getPayload';
 export const metadata: Metadata = {
   title: 'Gobernanza',
   description: 'Modelo de gobernanza del Programa de Hidrógeno Verde en La Araucanía: niveles estratégico y operativo.',
+  openGraph: {
+    title: 'Gobernanza | H2V Araucanía',
+    description: 'Modelo de gobernanza del Programa de Hidrógeno Verde en La Araucanía: niveles estratégico y operativo.',
+  },
 };
 
 const defaultFuncionesEstrategico = [
@@ -33,6 +37,7 @@ export default async function Gobernanza() {
   let descripcion = 'El modelo de gobernanza del programa se divide en dos niveles — estratégico y operativo — para asegurar una gestión integral y sostenible del proyecto. Define quién tiene el poder y la responsabilidad, cómo se toman las decisiones, y cómo se supervisa y evalúa el desempeño.';
   let estrategico = { titulo: 'Consejo de Dirección del Hidrógeno Verde de Araucanía', descripcion: 'Instancia máxima de dirección estratégica compuesta por representantes del Gobierno Regional, Ministerios, universidades, asociaciones empresariales, comunidades indígenas y expertos independientes.', funciones: defaultFuncionesEstrategico, periodicidad: 'Trimestralmente — Presencial y/o videoconferencia' };
   let operativo = { titulo: 'Unidad de Coordinación y Gestión del Proyecto', descripcion: 'Compuesta por el Director del proyecto, equipo técnico, equipo de gestión financiera y equipo de comunicación y participación comunitaria.', funciones: defaultFuncionesOperativo, periodicidad: 'Cada 15 días — Presencial y/o videoconferencia' };
+  let unidadMiembros: any[] = [];
 
   try {
     const payload = await getPayload();
@@ -50,9 +55,10 @@ export default async function Gobernanza() {
     if (data?.nivelOperativo?.periodicidad) operativo.periodicidad = data.nivelOperativo.periodicidad;
 
     // Get miembros for the team table
-    var { docs: unidadMiembros } = await payload.find({ collection: 'miembros', where: { instancia: { equals: 'unidad' } }, sort: 'orden', limit: 50 });
+    const miembrosResult = await payload.find({ collection: 'miembros', where: { instancia: { equals: 'unidad' } }, sort: 'orden', limit: 50 });
+    unidadMiembros = miembrosResult.docs as any[];
   } catch {
-    var unidadMiembros: any[] = [];
+    // keep default empty array
   }
 
   function FuncionList({ items, color }: { items: string[]; color: string }) {
@@ -72,7 +78,7 @@ export default async function Gobernanza() {
 
   return (
     <div>
-      <section className="bg-[#1B3A5C] text-white py-16 px-4">
+      <section className="bg-h2v-blue text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{hero.titulo}</h1>
           <p className="text-lg opacity-80 max-w-2xl mx-auto">{hero.subtitulo}</p>
@@ -89,17 +95,17 @@ export default async function Gobernanza() {
       <section className="py-12 px-4 bg-gray-50">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-[#0D7377] flex items-center justify-center text-white font-bold">1</div>
-            <h2 className="text-2xl font-bold text-[#1B3A5C]">Nivel Estratégico</h2>
+            <div className="w-10 h-10 rounded-lg bg-h2v-green flex items-center justify-center text-white font-bold">1</div>
+            <h2 className="text-2xl font-bold text-h2v-blue">Nivel Estratégico</h2>
           </div>
           <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 mb-8">
-            <h3 className="text-xl font-semibold text-[#0D7377] mb-4">{estrategico.titulo}</h3>
+            <h3 className="text-xl font-semibold text-h2v-green mb-4">{estrategico.titulo}</h3>
             <p className="text-gray-600 mb-6">{estrategico.descripcion}</p>
-            <h4 className="font-semibold text-[#1B3A5C] mb-3">Funciones:</h4>
-            <FuncionList items={estrategico.funciones} color="text-[#0D7377]" />
-            <div className="flex items-center gap-4 p-4 bg-[#0D7377]/5 rounded-lg">
-              <svg className="w-5 h-5 text-[#0D7377]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-              <div><p className="font-medium text-[#1B3A5C]">Reuniones del Consejo</p><p className="text-sm text-gray-500">{estrategico.periodicidad}</p></div>
+            <h4 className="font-semibold text-h2v-blue mb-3">Funciones:</h4>
+            <FuncionList items={estrategico.funciones} color="text-h2v-green" />
+            <div className="flex items-center gap-4 p-4 bg-h2v-green/5 rounded-lg">
+              <svg className="w-5 h-5 text-h2v-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+              <div><p className="font-medium text-h2v-blue">Reuniones del Consejo</p><p className="text-sm text-gray-500">{estrategico.periodicidad}</p></div>
             </div>
           </div>
         </div>
@@ -109,27 +115,27 @@ export default async function Gobernanza() {
       <section className="py-12 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-[#1B3A5C] flex items-center justify-center text-white font-bold">2</div>
-            <h2 className="text-2xl font-bold text-[#1B3A5C]">Nivel Operativo</h2>
+            <div className="w-10 h-10 rounded-lg bg-h2v-blue flex items-center justify-center text-white font-bold">2</div>
+            <h2 className="text-2xl font-bold text-h2v-blue">Nivel Operativo</h2>
           </div>
           <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 mb-8">
-            <h3 className="text-xl font-semibold text-[#0D7377] mb-4">{operativo.titulo}</h3>
+            <h3 className="text-xl font-semibold text-h2v-green mb-4">{operativo.titulo}</h3>
             <p className="text-gray-600 mb-6">{operativo.descripcion}</p>
-            <h4 className="font-semibold text-[#1B3A5C] mb-3">Funciones:</h4>
-            <FuncionList items={operativo.funciones} color="text-[#1B3A5C]" />
-            <div className="flex items-center gap-4 p-4 bg-[#1B3A5C]/5 rounded-lg">
-              <svg className="w-5 h-5 text-[#1B3A5C]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-              <div><p className="font-medium text-[#1B3A5C]">Reuniones de coordinación</p><p className="text-sm text-gray-500">{operativo.periodicidad}</p></div>
+            <h4 className="font-semibold text-h2v-blue mb-3">Funciones:</h4>
+            <FuncionList items={operativo.funciones} color="text-h2v-blue" />
+            <div className="flex items-center gap-4 p-4 bg-h2v-blue/5 rounded-lg">
+              <svg className="w-5 h-5 text-h2v-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+              <div><p className="font-medium text-h2v-blue">Reuniones de coordinación</p><p className="text-sm text-gray-500">{operativo.periodicidad}</p></div>
             </div>
           </div>
 
           {/* Equipo */}
           {unidadMiembros.length > 0 && (
             <>
-              <h3 className="text-xl font-semibold text-[#1B3A5C] mb-4">Equipo del Proyecto</h3>
+              <h3 className="text-xl font-semibold text-h2v-blue mb-4">Equipo del Proyecto</h3>
               <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                 <table className="w-full text-left">
-                  <thead className="bg-[#1B3A5C] text-white">
+                  <thead className="bg-h2v-blue text-white">
                     <tr>
                       <th className="px-6 py-3 text-sm font-medium">Institución</th>
                       <th className="px-6 py-3 text-sm font-medium">Cargo</th>
@@ -155,28 +161,28 @@ export default async function Gobernanza() {
       {/* Diagrama */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-8">Estructura del Modelo</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-8">Estructura del Modelo</h2>
           <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100" role="img" aria-label="Diagrama: Consejo de Dirección (estratégico) conectado al Comité Consultivo, y debajo la Unidad de Coordinación (operativo) con 4 equipos">
             <svg viewBox="0 0 800 350" className="w-full max-w-2xl mx-auto" aria-hidden="true">
-              <rect x="200" y="20" width="400" height="60" rx="12" fill="#0D7377" />
+              <rect x="200" y="20" width="400" height="60" rx="12" fill="var(--h2v-green)" />
               <text x="400" y="55" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold">Consejo de Dirección H2V</text>
               <rect x="550" y="100" width="220" height="50" rx="10" fill="#4ECDC4" />
               <text x="660" y="130" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">Comité Consultivo</text>
               <line x1="500" y1="80" x2="550" y2="110" stroke="#94A3B8" strokeWidth="2" strokeDasharray="6" />
               <line x1="400" y1="80" x2="400" y2="160" stroke="#94A3B8" strokeWidth="2" />
-              <rect x="150" y="160" width="500" height="60" rx="12" fill="#1B3A5C" />
+              <rect x="150" y="160" width="500" height="60" rx="12" fill="var(--h2v-blue)" />
               <text x="400" y="195" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold">Unidad de Coordinación y Gestión</text>
               {[{ label: 'Director', x: 100 }, { label: 'Equipo Técnico', x: 280 }, { label: 'Gestión Financiera', x: 480 }, { label: 'Comunicaciones', x: 660 }].map((eq, i) => (
                 <g key={i}>
                   <line x1={eq.x + 60} y1="220" x2={eq.x + 60} y2="270" stroke="#94A3B8" strokeWidth="1.5" />
                   <rect x={eq.x} y="270" width="120" height="45" rx="8" fill="#F1F5F9" stroke="#CBD5E1" />
-                  <text x={eq.x + 60} y="297" textAnchor="middle" fill="#1B3A5C" fontSize="11" fontWeight="600">{eq.label}</text>
+                  <text x={eq.x + 60} y="297" textAnchor="middle" fill="var(--h2v-blue)" fontSize="11" fontWeight="600">{eq.label}</text>
                 </g>
               ))}
-              <text x="30" y="55" fill="#0D7377" fontSize="11" fontWeight="bold">NIVEL</text>
-              <text x="30" y="70" fill="#0D7377" fontSize="11" fontWeight="bold">ESTRATÉGICO</text>
-              <text x="30" y="195" fill="#1B3A5C" fontSize="11" fontWeight="bold">NIVEL</text>
-              <text x="30" y="210" fill="#1B3A5C" fontSize="11" fontWeight="bold">OPERATIVO</text>
+              <text x="30" y="55" fill="var(--h2v-green)" fontSize="11" fontWeight="bold">NIVEL</text>
+              <text x="30" y="70" fill="var(--h2v-green)" fontSize="11" fontWeight="bold">ESTRATÉGICO</text>
+              <text x="30" y="195" fill="var(--h2v-blue)" fontSize="11" fontWeight="bold">NIVEL</text>
+              <text x="30" y="210" fill="var(--h2v-blue)" fontSize="11" fontWeight="bold">OPERATIVO</text>
             </svg>
           </div>
         </div>
@@ -185,7 +191,7 @@ export default async function Gobernanza() {
       {/* Galería */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-8">Evidencia de Actividades</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-8">Evidencia de Actividades</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((n) => (
               <div key={n} className="aspect-[4/3] bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-sm border border-gray-200">

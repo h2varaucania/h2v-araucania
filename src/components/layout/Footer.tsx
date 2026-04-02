@@ -1,20 +1,24 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function Footer() {
+type FooterProps = {
+  texto?: string;
+  programa?: string;
+};
+
+export default function Footer({ texto, programa }: FooterProps) {
   return (
-    <footer className="bg-[#1B3A5C] text-white" role="contentinfo">
+    <footer className="bg-h2v-blue text-white" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Column 1: About */}
           <div>
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xl font-bold">H2V</span>
-              <span className="text-xl font-bold text-[#4ECDC4]">Araucanía</span>
+              <span className="text-xl font-bold text-h2v-green-light">Araucanía</span>
             </div>
             <p className="text-sm text-white/70 leading-relaxed">
-              Plataforma informativa del Bien Público 24BP-269085.
-              Programa Estratégico Regional de Hidrógeno Verde en La Araucanía.
+              {texto || 'Plataforma informativa del Bien Público 24BP-269085. Programa Estratégico Regional de Hidrógeno Verde en La Araucanía.'}
             </p>
           </div>
 
@@ -77,7 +81,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} H2V Araucanía. Todos los derechos reservados.
           </p>
           <p className="text-xs text-white/40">
-            Programa Desarrollo Productivo Sostenible — CORFO
+            {programa || 'Programa Desarrollo Productivo Sostenible — CORFO'}
           </p>
         </div>
       </div>

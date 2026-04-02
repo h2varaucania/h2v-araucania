@@ -81,23 +81,23 @@ export default function RegisterForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">Nombre completo *</label>
-        <input type="text" id="nombre" name="nombre" required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none" placeholder="Tu nombre" />
+        <input type="text" id="nombre" name="nombre" required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none" placeholder="Tu nombre" />
       </div>
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico *</label>
-        <input type="email" id="email" name="email" required autoComplete="email" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none" placeholder="tu@email.com" />
+        <input type="email" id="email" name="email" required autoComplete="email" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none" placeholder="tu@email.com" />
       </div>
       <div>
         <label htmlFor="institucion" className="block text-sm font-medium text-gray-700 mb-1">Institución (opcional)</label>
-        <input type="text" id="institucion" name="institucion" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none" placeholder="Universidad, empresa, organización..." />
+        <input type="text" id="institucion" name="institucion" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none" placeholder="Universidad, empresa, organización..." />
       </div>
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Contraseña *</label>
-        <input type="password" id="password" name="password" required minLength={6} autoComplete="new-password" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none" placeholder="Mínimo 6 caracteres" />
+        <input type="password" id="password" name="password" required minLength={6} autoComplete="new-password" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none" placeholder="Mínimo 6 caracteres" />
       </div>
       <div>
         <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">Confirmar contraseña *</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required minLength={6} autoComplete="new-password" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none" placeholder="Repite tu contraseña" />
+        <input type="password" id="confirmPassword" name="confirmPassword" required minLength={6} autoComplete="new-password" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none" placeholder="Repite tu contraseña" />
       </div>
       {status === 'error' && (
         <p className="text-red-600 text-sm" role="alert">{errorMsg}</p>
@@ -105,7 +105,7 @@ export default function RegisterForm() {
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="w-full px-6 py-3 bg-[#0D7377] text-white font-semibold rounded-lg hover:bg-[#0D7377]/90 transition-colors disabled:opacity-50"
+        className="w-full px-6 py-3 bg-h2v-green text-white font-semibold rounded-lg hover:bg-h2v-green/90 transition-colors disabled:opacity-50"
       >
         {status === 'loading' ? 'Creando cuenta...' : 'Crear cuenta'}
       </button>

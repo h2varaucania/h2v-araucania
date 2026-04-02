@@ -6,6 +6,7 @@ export const Eventos: CollectionConfig = {
   admin: {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'fecha', 'lugar', 'tipo', 'publicado'],
+    group: 'Contenido',
     description: 'Publica eventos del programa: seminarios, talleres, ferias, reuniones y capacitaciones. Aparecen en la sección "Eventos" del sitio.',
   },
   fields: [
@@ -13,6 +14,7 @@ export const Eventos: CollectionConfig = {
       name: 'titulo',
       type: 'text',
       required: true,
+      maxLength: 120,
       label: 'Nombre del evento',
       admin: { description: 'Ej: "Seminario Internacional de Hidrógeno Verde", "Taller de capacitación para sector forestal"' },
     },
@@ -40,6 +42,7 @@ export const Eventos: CollectionConfig = {
       name: 'lugar',
       type: 'text',
       required: true,
+      maxLength: 100,
       label: 'Lugar',
       admin: { description: 'Ej: "Hotel Dreams, Temuco", "Online vía Zoom", "Universidad de La Frontera, Temuco"' },
     },

@@ -1,0 +1,71 @@
+# =============================================================================
+# docker-compose.yml — H2V Araucania
+# Orquestacion base: Next.js/Payload + PostgreSQL
+# Uso: docker compose up --build
+# Produccion: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # Base de datos PostgreSQL 16
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: h2v-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-h2v_araucania}
+      POSTGRES_USER: ${POSTGRES_USER:-h2v_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definir POSTGRES_PASSWORD en .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-h2v_admin} -d ${POSTGRES_DB:-h2v_araucania}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - h2v-net
+
+  # ---------------------------------------------------------------------------
+  # Aplicacion Next.js + Payload CMS
+  # ---------------------------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: h2v-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      # Sobreescribir DATABASE_URI para apuntar al servicio postgres del compose
+      DATABASE_URI: postgresql://${POSTGRES_USER:-h2v_admin}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-h2v_araucania}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?Definir PAYLOAD_SECRET en .env}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    volumes:
+      - uploads:/app/public/uploads
+    networks:
+      - h2v-net
+
+# ---------------------------------------------------------------------------
+# Volumenes persistentes
+# ---------------------------------------------------------------------------
+volumes:
+  pgdata:
+    name: h2v-pgdata
+  uploads:
+    name: h2v-uploads
+
+# ---------------------------------------------------------------------------
+# Red interna
+# ---------------------------------------------------------------------------
+networks:
+  h2v-net:
+    driver: bridge

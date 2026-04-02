@@ -52,15 +52,15 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
         <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
-        <input type="text" id="nombre" name="nombre" required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none" placeholder="Tu nombre" />
+        <input type="text" id="nombre" name="nombre" required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none" placeholder="Tu nombre" />
       </div>
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
-        <input type="email" id="email" name="email" required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none" placeholder="tu@email.com" />
+        <input type="email" id="email" name="email" required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none" placeholder="tu@email.com" />
       </div>
       <div>
         <label htmlFor="asunto" className="block text-sm font-medium text-gray-700 mb-1">Asunto</label>
-        <select id="asunto" name="asunto" required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none">
+        <select id="asunto" name="asunto" required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none">
           <option value="">Selecciona un asunto</option>
           <option value="consulta">Consulta general</option>
           <option value="colaboracion">Propuesta de colaboración</option>
@@ -70,7 +70,7 @@ export default function ContactForm() {
       </div>
       <div>
         <label htmlFor="mensaje" className="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
-        <textarea id="mensaje" name="mensaje" rows={5} required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none resize-none" placeholder="Escribe tu mensaje aquí..." />
+        <textarea id="mensaje" name="mensaje" rows={5} required className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none resize-none" placeholder="Escribe tu mensaje aquí..." />
       </div>
       {status === 'error' && (
         <p className="text-red-600 text-sm">Error al enviar. Por favor intenta nuevamente.</p>
@@ -78,7 +78,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="w-full px-6 py-3 bg-[#0D7377] text-white font-semibold rounded-lg hover:bg-[#0D7377]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-6 py-3 bg-h2v-green text-white font-semibold rounded-lg hover:bg-h2v-green/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'sending' ? 'Enviando...' : 'Enviar mensaje'}
       </button>

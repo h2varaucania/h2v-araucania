@@ -1,0 +1,16 @@
+{
+  "name": "H2V Araucanía — Hidrógeno Verde en La Araucanía",
+  "short_name": "H2V Araucanía",
+  "description": "Plataforma informativa sobre los avances, proyectos y oportunidades del hidrógeno verde en la región de La Araucanía, Chile.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0D7377",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

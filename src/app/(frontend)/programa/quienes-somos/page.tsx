@@ -5,6 +5,10 @@ import { getPayload } from '@/lib/payload/getPayload';
 export const metadata: Metadata = {
   title: 'Quiénes Somos',
   description: 'Conozca el equipo, instituciones y actores del Programa Estratégico Regional de Hidrógeno Verde en La Araucanía.',
+  openGraph: {
+    title: 'Quiénes Somos | H2V Araucanía',
+    description: 'Conozca el equipo, instituciones y actores del Programa Estratégico Regional de Hidrógeno Verde en La Araucanía.',
+  },
 };
 
 const instituciones = [
@@ -16,6 +20,26 @@ const instituciones = [
 
 export default async function QuienesSomos() {
   const payload = await getPayload();
+
+  // CMS Global data
+  let heroTitulo = 'Quiénes Somos';
+  let heroSubtitulo = 'El Programa Estratégico Regional de Hidrógeno Verde de La Araucanía impulsa el crecimiento socioeconómico regional mediante tecnologías de hidrógeno verde.';
+  let consejoTitulo = 'Consejo de Dirección del Hidrógeno Verde de Araucanía';
+  let consejoDesc = 'Instancia estratégica encargada de definir la visión, aprobar planes de desarrollo y supervisar el progreso del proyecto.';
+  let comiteTitulo = 'Comité Consultivo Técnico Científico';
+  let comiteDesc = 'Integrado por miembros de la sociedad civil, ONGs y otros actores relevantes para fiscalizar y transparentar el desarrollo del proyecto.';
+
+  try {
+    const global = await payload.findGlobal({ slug: 'pagina-quienes-somos' });
+    if (global?.hero?.titulo) heroTitulo = global.hero.titulo as string;
+    if (global?.hero?.subtitulo) heroSubtitulo = global.hero.subtitulo as string;
+    if (global?.consejoTitulo) consejoTitulo = global.consejoTitulo as string;
+    if (global?.consejoDescripcion) consejoDesc = global.consejoDescripcion as string;
+    if (global?.comiteTitulo) comiteTitulo = global.comiteTitulo as string;
+    if (global?.comiteDescripcion) comiteDesc = global.comiteDescripcion as string;
+  } catch {
+    // Use defaults
+  }
 
   const { docs: consejo } = await payload.find({
     collection: 'miembros',
@@ -56,11 +80,11 @@ export default async function QuienesSomos() {
 
   return (
     <div>
-      <section className="bg-[#1B3A5C] text-white py-16 px-4">
+      <section className="bg-h2v-blue text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Quiénes Somos</h1>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">{heroTitulo}</h1>
           <p className="text-lg opacity-80 max-w-2xl mx-auto">
-            El Programa Estratégico Regional de Hidrógeno Verde de La Araucanía impulsa el crecimiento socioeconómico regional mediante tecnologías de hidrógeno verde.
+            {heroSubtitulo}
           </p>
         </div>
       </section>
@@ -68,7 +92,7 @@ export default async function QuienesSomos() {
       {/* Descripción del BP */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-6">El Bien Público</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-6">El Bien Público</h2>
           <div className="prose prose-lg max-w-none text-gray-700">
             <p>
               El proyecto &quot;Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde: Un camino hacia el Desarrollo Sostenible en la Región de la Araucanía&quot; (código 24BP-269085) tiene como objetivo impulsar el crecimiento socioeconómico en la Región de la Araucanía mediante el aprovechamiento de las tecnologías de hidrógeno verde, la mejora del capital humano y el desarrollo de estrategias de financiamiento para capitalizar el potencial regional y las agendas globales de sostenibilidad.
@@ -80,14 +104,14 @@ export default async function QuienesSomos() {
       {/* Instituciones */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-8 text-center">Instituciones Participantes</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-8 text-center">Instituciones Participantes</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {instituciones.map((inst) => (
               <div key={inst.nombre} className="bg-white rounded-xl p-6 shadow-sm text-center border border-gray-100">
                 <div className="h-16 flex items-center justify-center mb-4">
                   <Image src={inst.logo} alt={inst.nombre} width={120} height={60} className="h-12 w-auto object-contain" />
                 </div>
-                <h3 className="font-semibold text-[#1B3A5C] mb-1">{inst.nombre}</h3>
+                <h3 className="font-semibold text-h2v-blue mb-1">{inst.nombre}</h3>
                 <p className="text-sm text-gray-500">{inst.rol}</p>
               </div>
             ))}
@@ -98,13 +122,13 @@ export default async function QuienesSomos() {
       {/* Consejo de Dirección */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-4">Consejo de Dirección del Hidrógeno Verde de Araucanía</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-4">{consejoTitulo}</h2>
           <p className="text-gray-600 mb-8">
-            Instancia estratégica encargada de definir la visión, aprobar planes de desarrollo y supervisar el progreso del proyecto.
+            {consejoDesc}
           </p>
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <table className="w-full text-left">
-              <thead className="bg-[#1B3A5C] text-white">
+              <thead className="bg-h2v-blue text-white">
                 <tr>
                   <th className="px-6 py-3 text-sm font-medium">Institución</th>
                   <th className="px-6 py-3 text-sm font-medium">Cargo</th>
@@ -133,19 +157,19 @@ export default async function QuienesSomos() {
       {/* Comité Consultivo */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#1B3A5C] mb-4">Comité Consultivo Técnico Científico</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-4">{comiteTitulo}</h2>
           <p className="text-gray-600 mb-4">
-            Integrado por miembros de la sociedad civil, ONGs y otros actores relevantes para fiscalizar y transparentar el desarrollo del proyecto.
+            {comiteDesc}
           </p>
           {comite.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {comite.map((m: any) => (
                 <div key={m.id} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#0D7377]/10 flex items-center justify-center shrink-0">
-                    <span className="text-[#0D7377] font-bold text-lg">{m.nombre?.charAt(0) || '?'}</span>
+                  <div className="w-12 h-12 rounded-full bg-h2v-green/10 flex items-center justify-center shrink-0">
+                    <span className="text-h2v-green font-bold text-lg">{m.nombre?.charAt(0) || '?'}</span>
                   </div>
                   <div>
-                    <p className="font-medium text-[#1B3A5C]">{m.nombre}</p>
+                    <p className="font-medium text-h2v-blue">{m.nombre}</p>
                     <p className="text-sm text-gray-500">{m.cargo} — {m.institucion}</p>
                   </div>
                 </div>
@@ -154,13 +178,13 @@ export default async function QuienesSomos() {
           ) : (
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#0D7377]/10 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-[#0D7377]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <div className="w-10 h-10 rounded-full bg-h2v-green/10 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-h2v-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-[#1B3A5C]">Reuniones de trabajo</p>
+                  <p className="font-medium text-h2v-blue">Reuniones de trabajo</p>
                   <p className="text-sm text-gray-500">Periodicidad mensual — Presencial y/o videoconferencia</p>
                 </div>
               </div>
@@ -176,12 +200,12 @@ export default async function QuienesSomos() {
       {unidad.length > 0 && (
         <section className="py-16 px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-[#1B3A5C] mb-6">Unidad de Coordinación y Gestión</h2>
+            <h2 className="text-2xl font-bold text-h2v-blue mb-6">Unidad de Coordinación y Gestión</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {unidad.map((m: any) => (
                 <div key={m.id} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-                  <p className="font-semibold text-[#1B3A5C]">{m.nombre}</p>
-                  <p className="text-sm text-[#0D7377]">{m.cargo}</p>
+                  <p className="font-semibold text-h2v-blue">{m.nombre}</p>
+                  <p className="text-sm text-h2v-green">{m.cargo}</p>
                   <p className="text-sm text-gray-500">{m.institucion}</p>
                 </div>
               ))}

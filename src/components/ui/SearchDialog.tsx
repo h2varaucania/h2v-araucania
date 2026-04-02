@@ -35,7 +35,7 @@ export default function SearchDialog() {
   const [results, setResults] = useState<SearchResults | null>(null);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const debounceRef = useRef<NodeJS.Timeout>();
+  const debounceRef = useRef<NodeJS.Timeout>(undefined);
 
   // Keyboard shortcut: Cmd+K / Ctrl+K
   useEffect(() => {
@@ -145,7 +145,7 @@ export default function SearchDialog() {
                           onClick={() => setOpen(false)}
                           className="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
                         >
-                          <svg className="w-5 h-5 text-[#0D7377] mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <svg className="w-5 h-5 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={tipoIcon[tipo]} />
                           </svg>
                           <div className="min-w-0">

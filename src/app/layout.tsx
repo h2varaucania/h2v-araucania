@@ -1,13 +1,6 @@
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: {
-    default: "H2V Araucanía — Hidrógeno Verde en La Araucanía",
-    template: "%s | H2V Araucanía",
-  },
-  description:
-    "Plataforma informativa sobre los avances, proyectos y oportunidades del hidrógeno verde en la región de La Araucanía, Chile.",
-};
+// Metadata is defined in each route group's layout:
+// - (frontend)/layout.tsx — public site SEO metadata
+// - (payload)/layout.tsx — admin panel metadata
 
 export default function RootLayout({
   children,

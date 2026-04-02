@@ -5,6 +5,7 @@ export const GuiaAdmin: GlobalConfig = {
   label: '📋 Guía de uso',
   admin: {
     group: 'Ayuda',
+    description: 'Guía paso a paso para administrar el sitio H2V Araucanía: publicar noticias, subir documentos, agregar proyectos al mapa y más.',
   },
   fields: [
     {

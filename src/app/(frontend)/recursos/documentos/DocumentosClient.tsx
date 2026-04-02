@@ -69,7 +69,7 @@ export default function DocumentosClient({
           <span className="text-sm font-medium text-gray-500">Tipo:</span>
           <button
             onClick={() => setFiltroTipo('todos')}
-            className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroTipo === 'todos' ? 'bg-[#0D7377] text-white border-[#0D7377]' : 'border-gray-200 bg-white text-gray-600 hover:border-[#0D7377]'}`}
+            className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroTipo === 'todos' ? 'bg-h2v-green text-white border-h2v-green' : 'border-gray-200 bg-white text-gray-600 hover:border-h2v-green'}`}
           >
             Todos
           </button>
@@ -77,7 +77,7 @@ export default function DocumentosClient({
             <button
               key={t}
               onClick={() => setFiltroTipo(t)}
-              className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroTipo === t ? 'bg-[#0D7377] text-white border-[#0D7377]' : 'border-gray-200 bg-white text-gray-600 hover:border-[#0D7377]'}`}
+              className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroTipo === t ? 'bg-h2v-green text-white border-h2v-green' : 'border-gray-200 bg-white text-gray-600 hover:border-h2v-green'}`}
             >
               {tipoLabel[t] || t}
             </button>
@@ -87,7 +87,7 @@ export default function DocumentosClient({
               <span className="text-sm font-medium text-gray-500 ml-4">Año:</span>
               <button
                 onClick={() => setFiltroAnio('todos')}
-                className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroAnio === 'todos' ? 'bg-[#0D7377] text-white border-[#0D7377]' : 'border-gray-200 bg-white text-gray-600 hover:border-[#0D7377]'}`}
+                className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroAnio === 'todos' ? 'bg-h2v-green text-white border-h2v-green' : 'border-gray-200 bg-white text-gray-600 hover:border-h2v-green'}`}
               >
                 Todos
               </button>
@@ -95,7 +95,7 @@ export default function DocumentosClient({
                 <button
                   key={a}
                   onClick={() => setFiltroAnio(String(a))}
-                  className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroAnio === String(a) ? 'bg-[#0D7377] text-white border-[#0D7377]' : 'border-gray-200 bg-white text-gray-600 hover:border-[#0D7377]'}`}
+                  className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroAnio === String(a) ? 'bg-h2v-green text-white border-h2v-green' : 'border-gray-200 bg-white text-gray-600 hover:border-h2v-green'}`}
                 >
                   {a}
                 </button>
@@ -122,9 +122,9 @@ export default function DocumentosClient({
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((doc) => (
-                <div key={doc.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md hover:border-[#0D7377]/20 transition-all group">
-                  <div className="h-40 bg-gradient-to-br from-[#0D7377]/5 to-[#1B3A5C]/10 flex items-center justify-center">
-                    <svg className="w-12 h-12 text-[#0D7377]/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <div key={doc.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md hover:border-h2v-green/20 transition-all group">
+                  <div className="h-40 bg-gradient-to-br from-h2v-green/5 to-h2v-blue/10 flex items-center justify-center">
+                    <svg className="w-12 h-12 text-h2v-green/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                   </div>
@@ -138,13 +138,13 @@ export default function DocumentosClient({
                         <span className="text-xs text-gray-400 ml-auto">{doc.descargas} descargas</span>
                       )}
                     </div>
-                    <h3 className="font-semibold text-[#1B3A5C] group-hover:text-[#0D7377] transition-colors mb-2">
+                    <h3 className="font-semibold text-h2v-blue group-hover:text-h2v-green transition-colors mb-2">
                       {doc.titulo}
                     </h3>
                     <p className="text-sm text-gray-500 line-clamp-2">{doc.descripcion}</p>
                     <button
                       onClick={() => handleDownload(doc)}
-                      className="mt-4 flex items-center gap-2 text-sm font-medium text-[#0D7377] hover:underline"
+                      className="mt-4 flex items-center gap-2 text-sm font-medium text-h2v-green hover:underline"
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

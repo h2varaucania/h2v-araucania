@@ -13,6 +13,7 @@ export const Media: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'alt',
+    group: 'Sistema',
     description: 'Sube imágenes (JPG, PNG, WebP) y documentos (PDF, Word). Estos archivos se usan en noticias, documentos y otras secciones del sitio. NO subas archivos de texto plano (.txt) — solo imágenes y PDFs.',
   },
   upload: {

@@ -1,10 +1,14 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
-import ProyectosMap from '@/components/maps/ProyectosMap';
+import ProyectosMapLoader from '@/components/maps/ProyectosMapLoader';
 
 export const metadata: Metadata = {
   title: 'Mapa de Proyectos',
   description: 'Visualiza proyectos de hidrógeno verde en la región de La Araucanía y a nivel nacional.',
+  openGraph: {
+    title: 'Mapa de Proyectos | H2V Araucanía',
+    description: 'Visualiza proyectos de hidrógeno verde en la región de La Araucanía y a nivel nacional.',
+  },
 };
 
 export default async function Proyectos() {
@@ -28,7 +32,7 @@ export default async function Proyectos() {
 
   return (
     <div>
-      <section className="bg-[#1B3A5C] text-white py-12 px-4">
+      <section className="bg-h2v-blue text-white py-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Mapa de Proyectos</h1>
           <p className="text-lg opacity-80">
@@ -37,7 +41,7 @@ export default async function Proyectos() {
         </div>
       </section>
 
-      <ProyectosMap proyectos={proyectos} />
+      <ProyectosMapLoader proyectos={proyectos} />
     </div>
   );
 }

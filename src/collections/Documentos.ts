@@ -6,6 +6,7 @@ export const Documentos: CollectionConfig = {
   admin: {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'tipo', 'anio', 'descargas'],
+    group: 'Contenido',
     description: 'Sube documentos técnicos, de difusión, regulatorios o de capacitación. Aparecen en la sección "Recursos y Documentación" del sitio. Los visitantes registrados pueden descargarlos y cada descarga queda registrada.',
   },
   fields: [
@@ -13,6 +14,7 @@ export const Documentos: CollectionConfig = {
       name: 'titulo',
       type: 'text',
       required: true,
+      maxLength: 120,
       label: 'Título del documento',
       admin: { description: 'Nombre descriptivo del documento. Ej: "Estrategia Nacional de Hidrógeno Verde"' },
     },
@@ -20,6 +22,7 @@ export const Documentos: CollectionConfig = {
       name: 'descripcion',
       type: 'textarea',
       required: true,
+      maxLength: 400,
       label: 'Descripción',
       admin: { description: 'Breve descripción del contenido del documento (2-3 oraciones).' },
     },

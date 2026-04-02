@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function Mediateca() {
   return (
     <div>
-      <section className="bg-[#1B3A5C] text-white py-16 px-4">
+      <section className="bg-h2v-blue text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Mediateca</h1>
           <p className="text-lg opacity-80">Videos, infografías y material multimedia del programa.</p>

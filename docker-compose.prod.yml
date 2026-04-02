@@ -1,0 +1,34 @@
+# =============================================================================
+# docker-compose.prod.yml — H2V Araucania (override de produccion)
+# Uso: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # PostgreSQL: sin puertos expuestos, solo accesible internamente
+  # ---------------------------------------------------------------------------
+  postgres:
+    restart: always
+    ports: !reset []
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+  # ---------------------------------------------------------------------------
+  # Aplicacion: reinicio automatico + limites de recursos
+  # ---------------------------------------------------------------------------
+  app:
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1G
+        reservations:
+          cpus: "0.5"
+          memory: 512M

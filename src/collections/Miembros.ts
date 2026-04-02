@@ -6,6 +6,7 @@ export const Miembros: CollectionConfig = {
   admin: {
     useAsTitle: 'nombre',
     defaultColumns: ['nombre', 'cargo', 'institucion', 'instancia'],
+    group: 'Contenido',
     description: 'Gestiona los integrantes del Consejo de Dirección, Comité Consultivo y Unidad de Coordinación. Aparecen en las páginas "Quiénes Somos" y "Gobernanza".',
   },
   fields: [
@@ -13,6 +14,7 @@ export const Miembros: CollectionConfig = {
       name: 'nombre',
       type: 'text',
       required: true,
+      maxLength: 80,
       label: 'Nombre completo',
       admin: { description: 'Nombre y apellido de la persona.' },
     },
@@ -20,6 +22,7 @@ export const Miembros: CollectionConfig = {
       name: 'cargo',
       type: 'text',
       required: true,
+      maxLength: 60,
       label: 'Cargo',
       admin: { description: 'Ej: "Presidente", "Director", "Consejero", "Coordinador Programa"' },
     },
@@ -27,6 +30,7 @@ export const Miembros: CollectionConfig = {
       name: 'institucion',
       type: 'text',
       required: true,
+      maxLength: 80,
       label: 'Institución',
       admin: { description: 'Organización que representa. Ej: "Ministerio de Energía", "CODESSER", "Universidad de Talca"' },
     },

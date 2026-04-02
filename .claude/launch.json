@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "h2v-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3000
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "export PATH=/usr/local/bin:$PATH && exec node node_modules/.bin/next dev"],
+      "port": 3000,
+      "autoPort": true
     }
   ]
 }

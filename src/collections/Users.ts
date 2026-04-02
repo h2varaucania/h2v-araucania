@@ -6,6 +6,7 @@ export const Users: CollectionConfig = {
   auth: true,
   admin: {
     useAsTitle: 'email',
+    group: 'Sistema',
     description: 'Usuarios registrados en la plataforma. Los administradores y editores pueden gestionar contenido. Los usuarios registrados pueden descargar documentos.',
   },
   fields: [

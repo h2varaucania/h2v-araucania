@@ -6,6 +6,7 @@ export const Proyectos: CollectionConfig = {
   admin: {
     useAsTitle: 'nombre',
     defaultColumns: ['nombre', 'empresa', 'etapa', 'region'],
+    group: 'Contenido',
     description: 'Agrega proyectos de hidrógeno verde que aparecerán en el Mapa de Proyectos. Cada proyecto se muestra como un marcador en el mapa con su información.',
   },
   fields: [
@@ -13,6 +14,7 @@ export const Proyectos: CollectionConfig = {
       name: 'nombre',
       type: 'text',
       required: true,
+      maxLength: 100,
       label: 'Nombre del proyecto',
       admin: { description: 'Ej: "Planta piloto H2V Temuco", "Proyecto eólico Araucanía Norte"' },
     },
@@ -20,6 +22,7 @@ export const Proyectos: CollectionConfig = {
       name: 'descripcion',
       type: 'textarea',
       required: true,
+      maxLength: 400,
       label: 'Descripción',
       admin: { description: 'Descripción breve del proyecto (2-4 oraciones). Aparece en el popup del mapa.' },
     },
@@ -27,6 +30,7 @@ export const Proyectos: CollectionConfig = {
       name: 'empresa',
       type: 'text',
       required: true,
+      maxLength: 80,
       label: 'Empresa o entidad',
       admin: { description: 'Nombre de la empresa u organización responsable del proyecto.' },
     },

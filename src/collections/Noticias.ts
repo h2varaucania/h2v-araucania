@@ -6,6 +6,7 @@ export const Noticias: CollectionConfig = {
   admin: {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'fecha', 'categoria', 'publicado'],
+    group: 'Contenido',
     description: 'Publica noticias sobre seminarios, talleres, reuniones de gobernanza, acuerdos y avances del programa. Las noticias aparecen en la sección "Noticias" y en la página de inicio.',
   },
   fields: [
@@ -13,6 +14,7 @@ export const Noticias: CollectionConfig = {
       name: 'titulo',
       type: 'text',
       required: true,
+      maxLength: 120,
       label: 'Título de la noticia',
       admin: { description: 'Título principal que verán los visitantes. Sé claro y descriptivo.' },
     },

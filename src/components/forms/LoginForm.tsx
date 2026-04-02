@@ -45,7 +45,7 @@ export default function LoginForm() {
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
         <input
           type="email" id="email" name="email" required autoComplete="email"
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none"
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none"
           placeholder="tu@email.com"
         />
       </div>
@@ -53,7 +53,7 @@ export default function LoginForm() {
         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
         <input
           type="password" id="password" name="password" required autoComplete="current-password" minLength={6}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0D7377] focus:border-transparent outline-none"
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-h2v-green focus:border-transparent outline-none"
           placeholder="Tu contraseña"
         />
       </div>
@@ -63,7 +63,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="w-full px-6 py-3 bg-[#0D7377] text-white font-semibold rounded-lg hover:bg-[#0D7377]/90 transition-colors disabled:opacity-50"
+        className="w-full px-6 py-3 bg-h2v-green text-white font-semibold rounded-lg hover:bg-h2v-green/90 transition-colors disabled:opacity-50"
       >
         {status === 'loading' ? 'Ingresando...' : 'Iniciar sesión'}
       </button>
