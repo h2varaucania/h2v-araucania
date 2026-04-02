@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Hoja de Ruta',
   description: 'Hoja de Ruta del Hidrógeno Verde en La Araucanía: ejes estratégicos y horizonte 2024-2050.',

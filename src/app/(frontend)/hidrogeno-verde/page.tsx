@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getPayload } from '@/lib/payload/getPayload';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Hidrógeno Verde',
   description: 'Todo sobre el hidrógeno verde: qué es, cómo se produce, cadena de valor, derivados y aplicaciones.',

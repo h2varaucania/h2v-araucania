@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Marco Regulatorio',
   description: 'Normativa y políticas para el desarrollo del hidrógeno verde en Chile y La Araucanía.',

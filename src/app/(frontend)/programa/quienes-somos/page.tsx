@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getPayload } from '@/lib/payload/getPayload';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Quiénes Somos',
   description: 'Conozca el equipo, instituciones y actores del Programa Estratégico Regional de Hidrógeno Verde en La Araucanía.',

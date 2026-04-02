@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Sectores Productivos',
   description: 'Sectores productivos de La Araucanía con potencial de integración del hidrógeno verde.',

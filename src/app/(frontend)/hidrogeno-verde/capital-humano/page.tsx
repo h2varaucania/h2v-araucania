@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Capital Humano',
   description: 'Formación y capacitación para la industria del hidrógeno verde en La Araucanía.',

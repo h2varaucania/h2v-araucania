@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { getPayload } from "@/lib/payload/getPayload";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'H2V Araucanía — Hidrógeno Verde en La Araucanía',
   description: 'Plataforma informativa sobre los avances, proyectos y oportunidades del hidrógeno verde en la región de La Araucanía, Chile.',

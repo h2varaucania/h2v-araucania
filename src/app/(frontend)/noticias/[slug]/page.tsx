@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getPayload } from '@/lib/payload/getPayload';
+
+export const dynamic = 'force-dynamic';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 
 type Props = {

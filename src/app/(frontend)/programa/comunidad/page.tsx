@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Comunidad y Participación',
   description: 'Participación ciudadana y comunitaria en el programa de Hidrógeno Verde en La Araucanía.',

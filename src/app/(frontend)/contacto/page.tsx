@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import ContactForm from '@/components/forms/ContactForm';
 import { getPayload } from '@/lib/payload/getPayload';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Contacto',
   description: 'Escríbenos para consultas sobre el programa de Hidrógeno Verde en La Araucanía.',

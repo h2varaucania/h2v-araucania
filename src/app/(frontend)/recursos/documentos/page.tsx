@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import DocumentosClient from './DocumentosClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Documentos y Recursos',
   description: 'Documentos técnicos y de difusión del programa de Hidrógeno Verde en La Araucanía.',

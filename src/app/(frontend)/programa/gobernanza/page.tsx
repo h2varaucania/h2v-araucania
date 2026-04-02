@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Gobernanza',
   description: 'Modelo de gobernanza del Programa de Hidrógeno Verde en La Araucanía: niveles estratégico y operativo.',

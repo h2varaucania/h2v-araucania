@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import ProyectosMapLoader from '@/components/maps/ProyectosMapLoader';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Mapa de Proyectos',
   description: 'Visualiza proyectos de hidrógeno verde en la región de La Araucanía y a nivel nacional.',
