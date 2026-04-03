@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Analytics from "@/components/Analytics";
 import { getPayload } from "@/lib/payload/getPayload";
 import "../globals.css";
 
@@ -58,6 +59,7 @@ export default async function FrontendLayout({
   return (
     <html lang="es" className="h-full scroll-smooth">
       <body className="min-h-full flex flex-col antialiased">
+        <Analytics />
         <a href="#main-content" className="skip-link">
           Saltar al contenido principal
         </a>
