@@ -7,6 +7,20 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     -- Generated: 2026-04-02
     -- ============================================================
 
+    -- ============ PAYLOAD INTERNAL: MIGRATIONS TABLE ============
+    -- Required FIRST: migrate() records each migration in this table
+    -- within the same transaction. Without it, the INSERT fails and
+    -- the entire transaction (all 45 tables) rolls back.
+    CREATE TABLE IF NOT EXISTS payload_migrations (
+        id serial PRIMARY KEY,
+        name varchar,
+        batch numeric,
+        updated_at timestamp(3) with time zone DEFAULT now() NOT NULL,
+        created_at timestamp(3) with time zone DEFAULT now() NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS payload_migrations_created_at_idx ON payload_migrations USING btree (created_at);
+    CREATE INDEX IF NOT EXISTS payload_migrations_updated_at_idx ON payload_migrations USING btree (updated_at);
+
     -- ======================== ENUMS =============================
     CREATE TYPE enum_documentos_tipo AS ENUM (
         'tecnico',
@@ -1045,5 +1059,8 @@ export async function down({ db }: MigrateDownArgs): Promise<void> {
     DROP TYPE IF EXISTS enum_proyectos_etapa;
     DROP TYPE IF EXISTS enum_proyectos_region;
     DROP TYPE IF EXISTS enum_users_role;
+
+    -- ==================== DROP PAYLOAD INTERNAL ==================
+    DROP TABLE IF EXISTS payload_migrations CASCADE;
   `)
 }
