@@ -5,6 +5,8 @@ import sharp from 'sharp';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { migrations } from './src/migrations';
+
 // Collections
 import { Users } from '@/collections/Users';
 import { Media } from '@/collections/Media';
@@ -68,7 +70,8 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || process.env.DATABASE_POSTGRES_URL || '',
     },
-    push: true,
+    push: process.env.NODE_ENV !== 'production',
+    prodMigrations: migrations,
   }),
   secret: (() => {
     const s = process.env.PAYLOAD_SECRET;
