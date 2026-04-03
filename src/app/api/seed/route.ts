@@ -6,15 +6,20 @@ import fs from 'fs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
-  // Only allow in development
-  if (process.env.NODE_ENV === 'production') {
-    return NextResponse.json({ error: 'Not allowed in production' }, { status: 403 });
-  }
-
-  // Simple secret check
+  // In production, require SEED_SECRET env var (one-time setup, remove after seeding)
+  // In development, accept the hardcoded key
   const { searchParams } = new URL(req.url);
-  if (searchParams.get('key') !== 'seed-h2v-2026') {
-    return NextResponse.json({ error: 'Invalid key' }, { status: 401 });
+  const providedKey = searchParams.get('key');
+
+  if (process.env.NODE_ENV === 'production') {
+    const seedSecret = process.env.SEED_SECRET;
+    if (!seedSecret || providedKey !== seedSecret) {
+      return NextResponse.json({ error: 'Not allowed' }, { status: 403 });
+    }
+  } else {
+    if (providedKey !== 'seed-h2v-2026') {
+      return NextResponse.json({ error: 'Invalid key' }, { status: 401 });
+    }
   }
 
   const payload = await getPayload();
