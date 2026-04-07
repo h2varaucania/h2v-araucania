@@ -10,19 +10,26 @@ async function seed() {
   // ════════════════════════════════════════
   // 1. USUARIO ADMIN
   // ════════════════════════════════════════
-  console.log('👤 Creando usuario admin...');
+  console.log('👤 Verificando usuario admin...');
   const existingUsers = await payload.find({ collection: 'users', limit: 1 });
   if (existingUsers.totalDocs === 0) {
-    await payload.create({
-      collection: 'users',
-      data: {
-        email: 'admin@h2varaucania.cl',
-        password: 'H2vAdmin2026!',
-        nombre: 'Administrador H2V',
-        role: 'admin',
-      },
-    });
-    console.log('  ✓ admin@h2varaucania.cl / H2vAdmin2026!');
+    const email = process.env.ADMIN_EMAIL || 'admin@h2varaucania.cl';
+    const password = process.env.ADMIN_PASSWORD;
+    if (!password) {
+      console.log('  ⚠ ADMIN_PASSWORD no definido — omitiendo creación de admin.');
+      console.log('    Crea el admin desde /admin (formulario "Create first user")');
+    } else {
+      await payload.create({
+        collection: 'users',
+        data: {
+          email,
+          password,
+          nombre: 'Administrador H2V',
+          role: 'admin',
+        },
+      });
+      console.log(`  ✓ Admin creado: ${email}`);
+    }
   } else {
     console.log('  ⏭ Ya existe al menos un usuario, saltando...');
   }

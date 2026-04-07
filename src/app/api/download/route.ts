@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Download tracking error:', error);
+    if (process.env.NODE_ENV !== 'production') console.error('Download tracking error:', error);
     return NextResponse.json({ error: 'Internal error' }, { status: 500 });
   }
 }

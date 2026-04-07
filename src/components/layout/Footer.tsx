@@ -80,9 +80,17 @@ export default function Footer({ texto, programa }: FooterProps) {
           <p className="text-xs text-white/40">
             &copy; {new Date().getFullYear()} H2V Araucanía. Todos los derechos reservados.
           </p>
-          <p className="text-xs text-white/40">
-            {programa || 'Programa Desarrollo Productivo Sostenible — CORFO'}
-          </p>
+          <div className="flex items-center gap-4">
+            <Link href="/politica-privacidad" className="text-xs text-white/40 hover:text-white/70 transition-colors">
+              Privacidad
+            </Link>
+            <Link href="/accesibilidad" className="text-xs text-white/40 hover:text-white/70 transition-colors">
+              Accesibilidad
+            </Link>
+            <span className="text-xs text-white/40">
+              {programa || 'Programa Desarrollo Productivo Sostenible — CORFO'}
+            </span>
+          </div>
         </div>
       </div>
     </footer>

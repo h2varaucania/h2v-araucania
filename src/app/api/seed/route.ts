@@ -11,15 +11,9 @@ export async function POST(req: Request) {
   const { searchParams } = new URL(req.url);
   const providedKey = searchParams.get('key');
 
-  if (process.env.NODE_ENV === 'production') {
-    const seedSecret = process.env.SEED_SECRET;
-    if (!seedSecret || providedKey !== seedSecret) {
-      return NextResponse.json({ error: 'Not allowed' }, { status: 403 });
-    }
-  } else {
-    if (providedKey !== 'seed-h2v-2026') {
-      return NextResponse.json({ error: 'Invalid key' }, { status: 401 });
-    }
+  const seedSecret = process.env.SEED_SECRET;
+  if (!seedSecret || providedKey !== seedSecret) {
+    return NextResponse.json({ error: 'Not allowed' }, { status: 403 });
   }
 
   const payload = await getPayload();
@@ -27,21 +21,10 @@ export async function POST(req: Request) {
 
   try {
     // ═══════ 1. ADMIN USER ═══════
+    // Admin user is created via the /admin "Create first user" form.
+    // The seed endpoint no longer creates admin credentials.
     const existingUsers = await payload.find({ collection: 'users', limit: 1 });
-    if (existingUsers.totalDocs === 0) {
-      await payload.create({
-        collection: 'users',
-        data: {
-          email: 'admin@h2varaucania.cl',
-          password: 'H2vAdmin2026!',
-          nombre: 'Administrador H2V',
-          role: 'admin',
-        },
-      });
-      log.push('✓ Usuario admin creado');
-    } else {
-      log.push('⏭ Ya existe usuario');
-    }
+    log.push(existingUsers.totalDocs > 0 ? '⏭ Usuario admin existente' : '⚠ Sin admin — crear desde /admin');
 
     // ═══════ 2. SITIO GENERAL ═══════
     await payload.updateGlobal({

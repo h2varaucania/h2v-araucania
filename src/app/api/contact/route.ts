@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: 'Datos invalidos', details: error.issues }, { status: 400 });
     }
-    console.error('Contact form error:', error);
+    if (process.env.NODE_ENV !== 'production') console.error('Contact form error:', error);
     return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
   }
 }

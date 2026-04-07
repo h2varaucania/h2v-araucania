@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
       total: noticias.totalDocs + documentos.totalDocs + proyectos.totalDocs,
     });
   } catch (error) {
-    console.error('Search error:', error);
+    if (process.env.NODE_ENV !== 'production') console.error('Search error:', error);
     return NextResponse.json({ error: 'Error de busqueda' }, { status: 500 });
   }
 }

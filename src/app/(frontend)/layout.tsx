@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Analytics from "@/components/Analytics";
+import CookieBanner from "@/components/CookieBanner";
 import { getPayload } from "@/lib/payload/getPayload";
 import "../globals.css";
 
@@ -68,6 +69,7 @@ export default async function FrontendLayout({
           {children}
         </main>
         <Footer texto={footerTexto} programa={footerPrograma} />
+        <CookieBanner />
       </body>
     </html>
   );
