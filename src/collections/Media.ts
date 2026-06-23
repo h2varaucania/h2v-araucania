@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { anyone, isAdminOrEditor } from '@/lib/access';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -10,6 +11,12 @@ export const Media: CollectionConfig = {
   labels: {
     singular: 'Archivo multimedia',
     plural: 'Archivos multimedia',
+  },
+  access: {
+    read: anyone,
+    create: isAdminOrEditor,
+    update: isAdminOrEditor,
+    delete: isAdminOrEditor,
   },
   admin: {
     useAsTitle: 'alt',

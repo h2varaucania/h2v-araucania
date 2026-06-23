@@ -1,8 +1,15 @@
 import type { CollectionConfig } from 'payload';
+import { anyone, isAdminOrEditor } from '@/lib/access';
 
 export const Miembros: CollectionConfig = {
   slug: 'miembros',
   labels: { singular: 'Miembro', plural: 'Miembros de Gobernanza' },
+  access: {
+    read: anyone,
+    create: isAdminOrEditor,
+    update: isAdminOrEditor,
+    delete: isAdminOrEditor,
+  },
   admin: {
     useAsTitle: 'nombre',
     defaultColumns: ['nombre', 'cargo', 'institucion', 'instancia'],

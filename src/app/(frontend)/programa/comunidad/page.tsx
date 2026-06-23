@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import { requireFeature } from '@/lib/featureGate';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,17 +21,45 @@ const defaultGlosario = [
   { mapudungun: 'Wenu mapu', espanol: 'Cielo, espacio superior' },
 ];
 
+const defaultParticipacion = [
+  'Comunidades indígenas (representantes mapuche)',
+  'Sociedad civil a través del Comité Consultivo',
+  'Asociaciones empresariales locales',
+  'Universidades regionales',
+];
+
+const defaultCompromisos = [
+  'Informar de manera transparente sobre avances y decisiones',
+  'Incorporar las preocupaciones ambientales y culturales',
+  'Promover beneficios locales del desarrollo energético',
+  'Respetar la cosmovisión y derechos de los pueblos originarios',
+];
+
 export default async function Comunidad() {
   requireFeature('comunidad');
   let heroTitulo = 'Comunidad y Participación';
   let heroSubtitulo = 'El desarrollo del hidrógeno verde en La Araucanía se construye con la participación activa de las comunidades y actores territoriales.';
   let glosario = defaultGlosario;
+  let introduccion: any = null;
+  let participacionTitulo = 'Participación en gobernanza';
+  let participacionItems = defaultParticipacion;
+  let compromisosTitulo = 'Compromiso con el territorio';
+  let compromisosItems = defaultCompromisos;
 
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-comunidad' });
     if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
     if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
+    if (data?.introduccion) introduccion = data.introduccion;
+    if (data?.participacion?.titulo) participacionTitulo = data.participacion.titulo as string;
+    if ((data?.participacion as any)?.items?.length > 0) {
+      participacionItems = ((data.participacion as any).items as any[]).map((i: any) => i.texto);
+    }
+    if (data?.compromisos?.titulo) compromisosTitulo = data.compromisos.titulo as string;
+    if ((data?.compromisos as any)?.items?.length > 0) {
+      compromisosItems = ((data.compromisos as any).items as any[]).map((i: any) => i.texto);
+    }
     if (data?.glosario?.length > 0) {
       glosario = (data.glosario as any[]).map((g) => ({
         mapudungun: g.mapudungun,
@@ -54,53 +83,39 @@ export default async function Comunidad() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-h2v-blue mb-6">Participación territorial</h2>
-          <p className="text-gray-700 text-lg mb-8">
-            El Plan de Acción de Hidrógeno Verde 2023-2030 del Ministerio de Energía, en su Acción 27, promueve la participación temprana de los territorios. Este programa se compromete a integrar las voces de todos los actores de La Araucanía en el diseño y desarrollo de la industria del hidrógeno verde.
-          </p>
+          {introduccion ? (
+            <div className="prose prose-lg max-w-none text-gray-700 mb-8">
+              <RichText data={introduccion} />
+            </div>
+          ) : (
+            <p className="text-gray-700 text-lg mb-8">
+              El Plan de Acción de Hidrógeno Verde 2023-2030 del Ministerio de Energía, en su Acción 27, promueve la participación temprana de los territorios. Este programa se compromete a integrar las voces de todos los actores de La Araucanía en el diseño y desarrollo de la industria del hidrógeno verde.
+            </p>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-              <h3 className="font-semibold text-h2v-green mb-3">Participación en gobernanza</h3>
+              <h3 className="font-semibold text-h2v-green mb-3">{participacionTitulo}</h3>
               <p className="text-sm text-gray-600 mb-3">El Consejo de Dirección del H2V de Araucanía incluye representación directa de:</p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex items-start gap-2">
-                  <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  Comunidades indígenas (representantes mapuche)
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  Sociedad civil a través del Comité Consultivo
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  Asociaciones empresariales locales
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  Universidades regionales
-                </li>
+                {participacionItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-              <h3 className="font-semibold text-h2v-green mb-3">Compromiso con el territorio</h3>
+              <h3 className="font-semibold text-h2v-green mb-3">{compromisosTitulo}</h3>
               <p className="text-sm text-gray-600 mb-3">El programa se compromete a:</p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex items-start gap-2">
-                  <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  Informar de manera transparente sobre avances y decisiones
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  Incorporar las preocupaciones ambientales y culturales
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  Promover beneficios locales del desarrollo energético
-                </li>
-                <li className="flex items-start gap-2">
-                  <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  Respetar la cosmovisión y derechos de los pueblos originarios
-                </li>
+                {compromisosItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <svg className="w-4 h-4 text-h2v-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

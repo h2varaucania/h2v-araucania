@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import { requireFeature } from '@/lib/featureGate';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,12 +34,16 @@ export default async function CapitalHumano() {
   let heroSubtitulo = 'Formación y desarrollo de competencias para la industria del hidrógeno verde en La Araucanía.';
   let perfiles = defaultPerfiles;
   let programas = defaultProgramas;
+  let introduccion: any = null;
+  let notaOportunidad: any = null;
 
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-capital-humano' });
     if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
     if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
+    if (data?.introduccion) introduccion = data.introduccion;
+    if (data?.notaOportunidad) notaOportunidad = data.notaOportunidad;
     if (data?.perfiles?.length > 0) perfiles = (data.perfiles as any[]).map((p) => p.texto);
     if (data?.programas?.length > 0) programas = (data.programas as any[]).map((p) => p.texto);
   } catch {
@@ -58,9 +63,15 @@ export default async function CapitalHumano() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-h2v-blue mb-6">El desafío de la formación</h2>
-          <p className="text-gray-700 text-lg mb-8">
-            La industria del hidrógeno verde requiere perfiles profesionales especializados que actualmente no existen en la formación tradicional. El programa busca anticiparse a esta demanda desarrollando capacidades en la región.
-          </p>
+          {introduccion ? (
+            <div className="prose prose-lg max-w-none text-gray-700 mb-8">
+              <RichText data={introduccion} />
+            </div>
+          ) : (
+            <p className="text-gray-700 text-lg mb-8">
+              La industria del hidrógeno verde requiere perfiles profesionales especializados que actualmente no existen en la formación tradicional. El programa busca anticiparse a esta demanda desarrollando capacidades en la región.
+            </p>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             <div className="bg-h2v-green/5 rounded-xl p-6 border border-h2v-green/20">
@@ -90,9 +101,15 @@ export default async function CapitalHumano() {
 
           <div className="bg-amber-50 rounded-xl p-6 border border-amber-200">
             <h3 className="font-semibold text-amber-800 mb-2">Oportunidad regional</h3>
-            <p className="text-sm text-amber-700">
-              La Araucanía puede posicionarse como polo de formación en hidrógeno verde del sur de Chile, aprovechando su infraestructura universitaria (Universidad de La Frontera, Universidad Católica de Temuco) y los programas de capacitación del Bien Público. Los programas específicos se irán publicando a medida que se desarrollen durante la ejecución del proyecto.
-            </p>
+            {notaOportunidad ? (
+              <div className="prose prose-sm max-w-none text-amber-700">
+                <RichText data={notaOportunidad} />
+              </div>
+            ) : (
+              <p className="text-sm text-amber-700">
+                La Araucanía puede posicionarse como polo de formación en hidrógeno verde del sur de Chile, aprovechando su infraestructura universitaria (Universidad de La Frontera, Universidad Católica de Temuco) y los programas de capacitación del Bien Público. Los programas específicos se irán publicando a medida que se desarrollen durante la ejecución del proyecto.
+              </p>
+            )}
           </div>
         </div>
       </section>

@@ -1,6 +1,9 @@
 import type { MetadataRoute } from 'next'
 import { getPayload } from '@/lib/payload/getPayload'
 
+// Se genera en request time: evita prerenderizar (y conectar a la BD) durante `next build`.
+export const dynamic = 'force-dynamic'
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://h2varaucania.cl'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

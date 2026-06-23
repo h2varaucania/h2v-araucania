@@ -24,12 +24,14 @@ export default async function HojaDeRuta() {
   let heroTitulo = 'Hoja de Ruta';
   let heroSubtitulo = 'Estrategia regional para el desarrollo del hidrógeno verde en La Araucanía, horizonte 2024-2050.';
   let hitos = defaultHitos;
+  let notaFinal = 'La Hoja de Ruta detallada se publicará como documento descargable una vez completado el proceso de diagnóstico regional.';
 
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-hoja-ruta' });
     if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
     if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
+    if (data?.notaFinal) notaFinal = data.notaFinal as string;
     if (data?.hitos?.length > 0) {
       hitos = (data.hitos as any[]).map((h, i) => ({
         year: h.periodo,
@@ -82,7 +84,7 @@ export default async function HojaDeRuta() {
       <section className="py-12 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-sm text-gray-400 italic">
-            La Hoja de Ruta detallada se publicará como documento descargable una vez completado el proceso de diagnóstico regional.
+            {notaFinal}
           </p>
         </div>
       </section>

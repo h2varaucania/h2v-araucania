@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getPayload } from '@/lib/payload/getPayload';
 import { requireFeature } from '@/lib/featureGate';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 
 export const dynamic = 'force-dynamic';
 
@@ -45,6 +46,9 @@ export default async function HidrogenoVerde() {
   requireFeature('hidrogenoVerde');
   let heroTitulo = 'Hidrógeno Verde';
   let heroSubtitulo = 'El hidrógeno verde es un vector energético producido mediante electrólisis del agua utilizando energías renovables. No genera emisiones de CO2 y es clave para la descarbonización de la economía.';
+  let queEsTitulo = '¿Qué es el Hidrógeno Verde?';
+  let queEsContenido: any = null;
+  let electrolisisTitulo = 'Proceso de Electrólisis';
   let electrolisis = defaultElectrolisis;
   let electrolizadores = defaultElectrolizadores;
   let cadena = defaultCadena;
@@ -55,6 +59,9 @@ export default async function HidrogenoVerde() {
     const data = await payload.findGlobal({ slug: 'pagina-h2v' });
     if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
     if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
+    if ((data?.queEs as any)?.titulo) queEsTitulo = (data.queEs as any).titulo as string;
+    if ((data?.queEs as any)?.contenido) queEsContenido = (data.queEs as any).contenido;
+    if ((data?.electrolisis as any)?.titulo) electrolisisTitulo = (data.electrolisis as any).titulo as string;
     if (data?.electrolisis?.pasos?.length > 0) {
       electrolisis = (data.electrolisis.pasos as any[]).map((p, i) => ({
         step: String(i + 1), title: p.titulo, desc: p.descripcion,
@@ -92,14 +99,20 @@ export default async function HidrogenoVerde() {
       {/* ¿Qué es? */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-h2v-blue mb-6">¿Qué es el Hidrógeno Verde?</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-6">{queEsTitulo}</h2>
           <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
-            <p>
-              El hidrógeno (H₂) es el elemento más abundante del universo. Cuando se produce a partir de agua (H₂O) utilizando electricidad de fuentes renovables — como la energía eólica, solar o hidroeléctrica — se denomina <strong>hidrógeno verde</strong>, porque su proceso de producción no genera emisiones de gases de efecto invernadero.
-            </p>
-            <p>
-              A diferencia del hidrógeno gris (producido a partir de gas natural) o el hidrógeno azul (con captura de carbono), el hidrógeno verde es completamente limpio en toda su cadena de producción.
-            </p>
+            {queEsContenido ? (
+              <RichText data={queEsContenido} />
+            ) : (
+              <>
+                <p>
+                  El hidrógeno (H₂) es el elemento más abundante del universo. Cuando se produce a partir de agua (H₂O) utilizando electricidad de fuentes renovables — como la energía eólica, solar o hidroeléctrica — se denomina <strong>hidrógeno verde</strong>, porque su proceso de producción no genera emisiones de gases de efecto invernadero.
+                </p>
+                <p>
+                  A diferencia del hidrógeno gris (producido a partir de gas natural) o el hidrógeno azul (con captura de carbono), el hidrógeno verde es completamente limpio en toda su cadena de producción.
+                </p>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -107,7 +120,7 @@ export default async function HidrogenoVerde() {
       {/* Electrólisis */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-h2v-blue mb-8">Proceso de Electrólisis</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-8">{electrolisisTitulo}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {electrolisis.map((item) => (
               <div key={item.step} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">

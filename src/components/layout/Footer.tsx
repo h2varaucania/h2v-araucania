@@ -1,12 +1,26 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+type FooterInstitucion = {
+  nombre: string;
+  logo: string;
+};
+
 type FooterProps = {
   texto?: string;
   programa?: string;
+  instituciones?: FooterInstitucion[];
+  email?: string;
+  ubicacion?: string;
 };
 
-export default function Footer({ texto, programa }: FooterProps) {
+const defaultInstituciones: FooterInstitucion[] = [
+  { nombre: 'CORFO', logo: '/logos/BP H2V Araucanía - Logo Corfo Azul.png' },
+  { nombre: 'Desarrollo Productivo Sostenible', logo: '/logos/BP H2V Araucanía - DPS Corfo Blanco.png' },
+];
+
+export default function Footer({ texto, programa, instituciones, email, ubicacion }: FooterProps) {
+  const logos = instituciones && instituciones.length > 0 ? instituciones : defaultInstituciones;
   return (
     <footer className="bg-h2v-blue text-white" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -50,27 +64,23 @@ export default function Footer({ texto, programa }: FooterProps) {
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 text-white/90">
               Contacto
             </h3>
-            <p className="text-sm text-white/60 mb-1">h2varaucania@gmail.com</p>
-            <p className="text-sm text-white/60 mb-6">Temuco, La Araucanía, Chile</p>
+            <p className="text-sm text-white/60 mb-1">{email || 'h2varaucania@gmail.com'}</p>
+            <p className="text-sm text-white/60 mb-6">{ubicacion || 'Temuco, La Araucanía, Chile'}</p>
 
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-3 text-white/90">
               Proyecto apoyado por
             </h3>
             <div className="flex items-center gap-4 flex-wrap">
-              <Image
-                src="/logos/BP H2V Araucanía - Logo Corfo Azul.png"
-                alt="CORFO"
-                width={80}
-                height={40}
-                className="h-8 w-auto brightness-0 invert opacity-70"
-              />
-              <Image
-                src="/logos/BP H2V Araucanía - DPS Corfo Blanco.png"
-                alt="Desarrollo Productivo Sostenible"
-                width={80}
-                height={40}
-                className="h-8 w-auto opacity-70"
-              />
+              {logos.map((inst) => (
+                <Image
+                  key={inst.nombre}
+                  src={inst.logo}
+                  alt={inst.nombre}
+                  width={80}
+                  height={40}
+                  className="h-8 w-auto opacity-70"
+                />
+              ))}
             </div>
           </div>
         </div>

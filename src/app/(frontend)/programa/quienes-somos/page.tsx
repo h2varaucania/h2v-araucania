@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getPayload } from '@/lib/payload/getPayload';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   },
 };
 
-const instituciones = [
+const defaultInstituciones = [
   { nombre: 'CORFO', rol: 'Financiamiento del Bien Público', logo: '/logos/BP H2V Araucanía - Logo Corfo Azul.png' },
   { nombre: 'CODESSER', rol: 'Ejecutor del proyecto', logo: '/logos/BP H2V Araucanía - Logo CES4.0.png' },
   { nombre: 'Universidad de Talca', rol: 'Co-ejecutor técnico', logo: '/logos/BP H2V Araucanía - Logo Utalca.png' },
@@ -26,6 +27,9 @@ export default async function QuienesSomos() {
   // CMS Global data
   let heroTitulo = 'Quiénes Somos';
   let heroSubtitulo = 'El Programa Estratégico Regional de Hidrógeno Verde de La Araucanía impulsa el crecimiento socioeconómico regional mediante tecnologías de hidrógeno verde.';
+  let bienPublicoTitulo = 'El Bien Público';
+  let bienPublicoContenido: any = null;
+  let instituciones = defaultInstituciones;
   let consejoTitulo = 'Consejo de Dirección del Hidrógeno Verde de Araucanía';
   let consejoDesc = 'Instancia estratégica encargada de definir la visión, aprobar planes de desarrollo y supervisar el progreso del proyecto.';
   let comiteTitulo = 'Comité Consultivo Técnico Científico';
@@ -35,6 +39,15 @@ export default async function QuienesSomos() {
     const global = await payload.findGlobal({ slug: 'pagina-quienes-somos' });
     if (global?.hero?.titulo) heroTitulo = global.hero.titulo as string;
     if (global?.hero?.subtitulo) heroSubtitulo = global.hero.subtitulo as string;
+    if ((global?.bienPublico as any)?.titulo) bienPublicoTitulo = (global.bienPublico as any).titulo as string;
+    if ((global?.bienPublico as any)?.contenido) bienPublicoContenido = (global.bienPublico as any).contenido;
+    if ((global?.instituciones as any[])?.length > 0) {
+      instituciones = (global.instituciones as any[]).map((inst: any) => ({
+        nombre: inst.nombre,
+        rol: inst.rol,
+        logo: inst.logo?.url || inst.logo || '',
+      }));
+    }
     if (global?.consejoTitulo) consejoTitulo = global.consejoTitulo as string;
     if (global?.consejoDescripcion) consejoDesc = global.consejoDescripcion as string;
     if (global?.comiteTitulo) comiteTitulo = global.comiteTitulo as string;
@@ -94,11 +107,15 @@ export default async function QuienesSomos() {
       {/* Descripción del BP */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-h2v-blue mb-6">El Bien Público</h2>
+          <h2 className="text-2xl font-bold text-h2v-blue mb-6">{bienPublicoTitulo}</h2>
           <div className="prose prose-lg max-w-none text-gray-700">
-            <p>
-              El proyecto &quot;Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde: Un camino hacia el Desarrollo Sostenible en la Región de la Araucanía&quot; (código 24BP-269085) tiene como objetivo impulsar el crecimiento socioeconómico en la Región de la Araucanía mediante el aprovechamiento de las tecnologías de hidrógeno verde, la mejora del capital humano y el desarrollo de estrategias de financiamiento para capitalizar el potencial regional y las agendas globales de sostenibilidad.
-            </p>
+            {bienPublicoContenido ? (
+              <RichText data={bienPublicoContenido} />
+            ) : (
+              <p>
+                El proyecto &quot;Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde: Un camino hacia el Desarrollo Sostenible en la Región de la Araucanía&quot; (código 24BP-269085) tiene como objetivo impulsar el crecimiento socioeconómico en la Región de la Araucanía mediante el aprovechamiento de las tecnologías de hidrógeno verde, la mejora del capital humano y el desarrollo de estrategias de financiamiento para capitalizar el potencial regional y las agendas globales de sostenibilidad.
+              </p>
+            )}
           </div>
         </div>
       </section>
@@ -110,9 +127,11 @@ export default async function QuienesSomos() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {instituciones.map((inst) => (
               <div key={inst.nombre} className="bg-white rounded-xl p-6 shadow-sm text-center border border-gray-100">
-                <div className="h-16 flex items-center justify-center mb-4">
-                  <Image src={inst.logo} alt={inst.nombre} width={120} height={60} className="h-12 w-auto object-contain" />
-                </div>
+                {inst.logo && (
+                  <div className="h-16 flex items-center justify-center mb-4">
+                    <Image src={inst.logo} alt={inst.nombre} width={120} height={60} className="h-12 w-auto object-contain" />
+                  </div>
+                )}
                 <h3 className="font-semibold text-h2v-blue mb-1">{inst.nombre}</h3>
                 <p className="text-sm text-gray-500">{inst.rol}</p>
               </div>

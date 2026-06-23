@@ -1,6 +1,7 @@
 import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { es } from '@payloadcms/translations/languages/es';
 import sharp from 'sharp';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -27,6 +28,8 @@ import { PaginaHojaRuta } from '@/globals/PaginaHojaRuta';
 import { PaginaComunidad } from '@/globals/PaginaComunidad';
 import { PaginaCapitalHumano } from '@/globals/PaginaCapitalHumano';
 import { PaginaMarcoRegulatorio } from '@/globals/PaginaMarcoRegulatorio';
+import { PaginaTransparencia } from '@/globals/PaginaTransparencia';
+import { PaginaMediateca } from '@/globals/PaginaMediateca';
 import { ContactoGlobal } from '@/globals/Contacto';
 import { SitioGeneral } from '@/globals/SitioGeneral';
 import { GuiaAdmin } from '@/globals/GuiaAdmin';
@@ -40,6 +43,11 @@ export default buildConfig({
     meta: {
       titleSuffix: ' — H2V Araucanía Admin',
     },
+  },
+  // Panel de administración en español.
+  i18n: {
+    supportedLanguages: { es },
+    fallbackLanguage: 'es',
   },
   collections: [
     Users,
@@ -63,6 +71,8 @@ export default buildConfig({
     PaginaComunidad,
     PaginaCapitalHumano,
     PaginaMarcoRegulatorio,
+    PaginaTransparencia,
+    PaginaMediateca,
     GuiaAdmin,
   ],
   editor: lexicalEditor(),
