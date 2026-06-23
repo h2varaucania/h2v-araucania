@@ -78,9 +78,19 @@ export default buildConfig({
   editor: lexicalEditor(),
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || process.env.DATABASE_POSTGRES_URL || '',
+      // Acepta la cadena de conexión local (DATABASE_URI) o la que inyecta Vercel/Neon
+      // al crear la base de datos (POSTGRES_URL / DATABASE_URL).
+      connectionString:
+        process.env.DATABASE_URI ||
+        process.env.POSTGRES_URL ||
+        process.env.DATABASE_POSTGRES_URL ||
+        process.env.DATABASE_URL ||
+        '',
     },
-    push: process.env.NODE_ENV !== 'production',
+    // En dev usa push (drizzle) para sincronizar el esquema. En producción (Vercel) el push
+    // está apagado, salvo que se active PAYLOAD_DB_PUSH=true para el primer deploy contra una
+    // base de datos nueva (crea las tablas). Quitar esa variable una vez creado el esquema.
+    push: process.env.PAYLOAD_DB_PUSH === 'true' || process.env.NODE_ENV !== 'production',
     prodMigrations: migrations,
   }),
   secret: (() => {
