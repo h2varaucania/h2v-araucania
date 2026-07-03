@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import { anyone, isAdminOrEditor } from '@/lib/access';
+import { anyone, isAdmin, isAdminOrEditor } from '@/lib/access';
 
 export const Eventos: CollectionConfig = {
   slug: 'eventos',
@@ -8,13 +8,19 @@ export const Eventos: CollectionConfig = {
     read: anyone,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
-    delete: isAdminOrEditor,
+    // Borrar es permanente (no hay papelera): reservado a administradores (F9).
+    delete: isAdmin,
+  },
+  // Borradores y versiones (F4): botones "Guardar borrador" / "Publicar" + historial restaurable.
+  versions: {
+    drafts: { autosave: true },
+    maxPerDoc: 20,
   },
   admin: {
     useAsTitle: 'titulo',
-    defaultColumns: ['titulo', 'fecha', 'lugar', 'tipo', 'publicado'],
+    defaultColumns: ['titulo', 'fecha', 'lugar', 'tipo', '_status'],
     group: 'Contenido',
-    description: 'Publica eventos del programa: seminarios, talleres, ferias, reuniones y capacitaciones. Aparecen en la sección "Eventos" del sitio.',
+    description: 'Publica eventos del programa: seminarios, talleres, ferias, reuniones y capacitaciones. Aparecen en la sección "Eventos" del sitio. Usa "Publicar" para que el evento sea visible.',
   },
   fields: [
     {
@@ -79,13 +85,6 @@ export const Eventos: CollectionConfig = {
       type: 'text',
       label: 'Enlace de inscripción (opcional)',
       admin: { description: 'URL al formulario de inscripción. Ej: enlace a Google Forms o Eventbrite.' },
-    },
-    {
-      name: 'publicado',
-      type: 'checkbox',
-      defaultValue: false,
-      label: 'Publicado',
-      admin: { position: 'sidebar', description: 'Marca para que el evento sea visible en el sitio público.' },
     },
   ],
 };

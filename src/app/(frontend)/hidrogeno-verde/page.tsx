@@ -42,6 +42,13 @@ const defaultDerivados = [
   { name: 'Acero verde', desc: 'El H₂ reemplaza al carbón como agente reductor en la siderurgia, eliminando las emisiones del proceso.', use: 'Industria siderúrgica' },
 ];
 
+const defaultExploraMas = [
+  { title: 'Sectores Productivos', href: '/hidrogeno-verde/sectores', desc: 'Potencial H2V en La Araucanía' },
+  { title: 'Capital Humano', href: '/hidrogeno-verde/capital-humano', desc: 'Formación y capacitación' },
+  { title: 'Hoja de Ruta', href: '/hidrogeno-verde/hoja-de-ruta', desc: 'Estrategia regional 2024-2050' },
+  { title: 'Marco Regulatorio', href: '/hidrogeno-verde/marco-regulatorio', desc: 'Normativa y políticas' },
+];
+
 export default async function HidrogenoVerde() {
   requireFeature('hidrogenoVerde');
   let heroTitulo = 'Hidrógeno Verde';
@@ -53,6 +60,7 @@ export default async function HidrogenoVerde() {
   let electrolizadores = defaultElectrolizadores;
   let cadena = defaultCadena;
   let derivados = defaultDerivados;
+  let exploraMas = defaultExploraMas;
 
   try {
     const payload = await getPayload();
@@ -80,6 +88,11 @@ export default async function HidrogenoVerde() {
     if (data?.derivados?.length > 0) {
       derivados = (data.derivados as any[]).map((d) => ({
         name: d.nombre, desc: d.descripcion, use: d.aplicacion || '',
+      }));
+    }
+    if ((data?.exploraMas as any[])?.length > 0) {
+      exploraMas = (data.exploraMas as any[]).map((l: any) => ({
+        title: l.titulo, href: l.enlace, desc: l.descripcion,
       }));
     }
   } catch {
@@ -190,17 +203,12 @@ export default async function HidrogenoVerde() {
         </div>
       </section>
 
-      {/* Links a subsecciones */}
+      {/* Links a subsecciones — editables en /admin → Páginas → Hidrógeno Verde → "Explora más" */}
       <section className="py-16 px-4 bg-h2v-blue">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-bold text-white mb-8 text-center">Explora más</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { title: 'Sectores Productivos', href: '/hidrogeno-verde/sectores', desc: 'Potencial H2V en La Araucanía' },
-              { title: 'Capital Humano', href: '/hidrogeno-verde/capital-humano', desc: 'Formación y capacitación' },
-              { title: 'Hoja de Ruta', href: '/hidrogeno-verde/hoja-de-ruta', desc: 'Estrategia regional 2024-2050' },
-              { title: 'Marco Regulatorio', href: '/hidrogeno-verde/marco-regulatorio', desc: 'Normativa y políticas' },
-            ].map((link) => (
+            {exploraMas.map((link) => (
               <Link key={link.href} href={link.href} className="bg-white/10 rounded-xl p-5 hover:bg-white/20 transition-colors">
                 <h3 className="font-semibold text-white mb-1">{link.title}</h3>
                 <p className="text-sm text-white/60">{link.desc}</p>

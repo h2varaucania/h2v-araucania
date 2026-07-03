@@ -77,5 +77,33 @@ export const PaginaH2V: GlobalConfig = {
         { name: 'aplicacion', type: 'text', maxLength: 80, label: 'Aplicación principal', admin: { description: 'Ej: "Fertilizantes verdes", "Transporte marítimo"' } },
       ],
     },
+    {
+      name: 'exploraMas',
+      type: 'array',
+      label: 'Sección "Explora más" (tarjetas al final)',
+      maxRows: 4,
+      admin: { description: 'Tarjetas de enlace al final de la página. Si no agregas ninguna, se muestran las 4 estándar (Sectores, Capital Humano, Hoja de Ruta, Marco Regulatorio).' },
+      fields: [
+        { name: 'titulo', type: 'text', required: true, maxLength: 40 },
+        { name: 'descripcion', type: 'text', required: true, maxLength: 80 },
+        {
+          name: 'enlace',
+          type: 'select',
+          required: true,
+          label: 'Página de destino',
+          admin: { description: 'Se elige de la lista para evitar enlaces rotos.' },
+          options: [
+            { label: 'Sectores Productivos', value: '/hidrogeno-verde/sectores' },
+            { label: 'Capital Humano', value: '/hidrogeno-verde/capital-humano' },
+            { label: 'Hoja de Ruta', value: '/hidrogeno-verde/hoja-de-ruta' },
+            { label: 'Marco Regulatorio', value: '/hidrogeno-verde/marco-regulatorio' },
+            { label: 'Mapa de Proyectos', value: '/proyectos' },
+            { label: 'Documentos', value: '/recursos/documentos' },
+            { label: 'Noticias', value: '/noticias' },
+            { label: 'Contacto', value: '/contacto' },
+          ],
+        },
+      ],
+    },
   ],
 };

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import { requireFeature } from '@/lib/featureGate';
+import { publicados } from '@/lib/published';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,7 +22,7 @@ export default async function Eventos() {
     const payload = await getPayload();
     const result = await payload.find({
       collection: 'eventos',
-      where: { publicado: { equals: true } },
+      where: publicados,
       sort: 'fecha',
       limit: 20,
     });

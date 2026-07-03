@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getPayload } from '@/lib/payload/getPayload'
+import { publicados } from '@/lib/published'
 
 // Se genera en request time: evita prerenderizar (y conectar a la BD) durante `next build`.
 export const dynamic = 'force-dynamic'
@@ -82,7 +83,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const payload = await getPayload()
     const { docs } = await payload.find({
       collection: 'noticias',
-      where: { publicado: { equals: true } },
+      where: publicados,
       sort: '-fecha',
       limit: 1000,
     })

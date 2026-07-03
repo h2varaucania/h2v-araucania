@@ -4,7 +4,12 @@ import { isAdmin } from '@/lib/access';
 export const Users: CollectionConfig = {
   slug: 'users',
   labels: { singular: 'Usuario', plural: 'Usuarios' },
-  auth: true,
+  // Límites de login explícitos (F13, Auditoria_traspaso.md): 5 intentos fallidos bloquean la
+  // cuenta por 10 minutos. Documentado en la Guía de uso ("si te bloqueas, espera 10 minutos").
+  auth: {
+    maxLoginAttempts: 5,
+    lockTime: 10 * 60 * 1000, // 10 minutos
+  },
   access: {
     // Acceso al panel /admin: solo administradores y editores.
     // Los usuarios "registrado" usan el sitio público, no el panel.

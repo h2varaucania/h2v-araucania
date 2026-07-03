@@ -122,3 +122,24 @@ sitio (secciones nuevas), no operarlo.
 - Auditoría ejecutada con dos barridos paralelos de código + verificación de producción, sobre commit a2b563d.
 - Este archivo es insumo directo de las Fases 1–5 del `Estado_publicacion.md`; los fixes de código pueden
   ejecutarse de inmediato sobre este repo.
+
+### Estado de ejecución (2026-07-03, mismo día)
+
+| Hallazgo | Estado |
+|---|---|
+| F1 uploads efímeros | ✅ código listo (Blob adapter condicional) — ⚠️ falta crear el Blob store en Vercel para activarlo |
+| F2 PAYLOAD_DB_PUSH | ⬜ pendiente (coordinar: verificar `payload_migrations` en Neon antes de quitar) |
+| F3 cuentas/claves/2FA | ⬜ pendiente (sesión con el dueño) |
+| F4 borradores/publicar | ✅ hecho (drafts+versions, + fix: borrador ya no es visible por URL directa) |
+| F5 legales en CMS | ✅ hecho (email desde Contacto, texto reemplazable por richText) |
+| F6 zonas sin CMS | ✅ hecho (pagina-proyectos, diagrama+galería gobernanza, explora-más H2V) |
+| F7 guía completa | ✅ hecho (reescrita: todo el inventario + problemas comunes) |
+| F8 access globals | ✅ hecho (Configuración/Contacto/Guía solo admin) |
+| F9 delete solo admin | ✅ hecho (todas las colecciones) |
+| F10 feature flags a CMS | ⬜ descartado por ahora (P2; flags todos en true) |
+| F11 categoriasColor | ✅ hecho (src/lib/categorias.ts) |
+| F12 importMap.ts placeholder | ✅ borrado — deuda restante: CLI generate:types/importmap no resuelve el import de migraciones (workaround documentado en payload.config.ts) |
+| F13 login limits | ✅ hecho (5 intentos / 10 min, documentado en la Guía) |
+
+**Post-deploy:** re-guardar ("Publicar") las noticias/eventos existentes en producción para versionarlos;
+crear el Blob store en Vercel (Storage → Create → Blob → conectar al proyecto) para activar F1.

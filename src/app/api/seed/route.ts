@@ -470,7 +470,6 @@ export async function POST(req: Request) {
           fecha: '2025-03-15',
           imagen: placeholderMediaId,
           categoria: 'general',
-          publicado: true,
         },
         {
           titulo: 'Primer Seminario Internacional de Hidrógeno Verde en Temuco',
@@ -480,7 +479,6 @@ export async function POST(req: Request) {
           fecha: '2025-06-20',
           imagen: placeholderMediaId,
           categoria: 'seminario',
-          publicado: true,
         },
         {
           titulo: 'Se constituye el Consejo de Dirección del Hidrógeno Verde de Araucanía',
@@ -490,7 +488,6 @@ export async function POST(req: Request) {
           fecha: '2025-04-10',
           imagen: placeholderMediaId,
           categoria: 'gobernanza',
-          publicado: true,
         },
         {
           titulo: 'Taller de Capacitación: Introducción a las Tecnologías del Hidrógeno Verde',
@@ -500,7 +497,6 @@ export async function POST(req: Request) {
           fecha: '2025-05-15',
           imagen: placeholderMediaId,
           categoria: 'taller',
-          publicado: true,
         },
       ];
       for (const n of noticias) {
@@ -522,7 +518,6 @@ export async function POST(req: Request) {
           lugar: 'Hotel Dreams, Temuco',
           tipo: 'seminario',
           descripcion: { root: { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', text: 'Seminario con expertos de Chile, Alemania y Australia sobre tecnologías, modelos de negocio y oportunidades regionales del hidrógeno verde.', version: 1 }], version: 1 }], direction: 'ltr', format: '', indent: 0, version: 1 } },
-          publicado: true,
         },
         {
           titulo: 'Taller: Introducción a Tecnologías del H₂V',
@@ -530,7 +525,6 @@ export async function POST(req: Request) {
           lugar: 'Universidad de La Frontera, Temuco',
           tipo: 'taller',
           descripcion: { root: { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', text: 'Jornada de formación técnica introductoria sobre electrólisis, electrolizadores, cadena de valor y perfiles laborales del hidrógeno verde.', version: 1 }], version: 1 }], direction: 'ltr', format: '', indent: 0, version: 1 } },
-          publicado: true,
         },
         {
           titulo: 'Reunión Consejo de Dirección — Q3 2025',
@@ -538,7 +532,6 @@ export async function POST(req: Request) {
           lugar: 'Gobierno Regional de La Araucanía, Temuco',
           tipo: 'reunion',
           descripcion: { root: { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', text: 'Tercera sesión ordinaria del Consejo de Dirección. Revisión de avances, plan de trabajo segundo semestre y resultados del diagnóstico regional.', version: 1 }], version: 1 }], direction: 'ltr', format: '', indent: 0, version: 1 } },
-          publicado: true,
         },
       ];
       for (const e of eventos) {

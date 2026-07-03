@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import { anyone, isAdminOrEditor } from '@/lib/access';
+import { anyone, isAdmin, isAdminOrEditor } from '@/lib/access';
 
 export const Noticias: CollectionConfig = {
   slug: 'noticias',
@@ -8,13 +8,21 @@ export const Noticias: CollectionConfig = {
     read: anyone,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
-    delete: isAdminOrEditor,
+    // Borrar es permanente (no hay papelera): reservado a administradores (F9).
+    delete: isAdmin,
+  },
+  // Borradores y versiones (F4, Auditoria_traspaso.md): el editor ve botones explícitos
+  // "Guardar borrador" / "Publicar" (mucho más claros que una casilla), y cada guardado
+  // deja una versión restaurable desde la pestaña "Versiones".
+  versions: {
+    drafts: { autosave: true },
+    maxPerDoc: 20,
   },
   admin: {
     useAsTitle: 'titulo',
-    defaultColumns: ['titulo', 'fecha', 'categoria', 'publicado'],
+    defaultColumns: ['titulo', 'fecha', 'categoria', '_status'],
     group: 'Contenido',
-    description: 'Publica noticias sobre seminarios, talleres, reuniones de gobernanza, acuerdos y avances del programa. Las noticias aparecen en la sección "Noticias" y en la página de inicio.',
+    description: 'Publica noticias sobre seminarios, talleres, reuniones de gobernanza, acuerdos y avances del programa. Las noticias aparecen en la sección "Noticias" y en la página de inicio. Usa "Publicar" para que la noticia sea visible; "Guardar borrador" la deja solo aquí en el admin.',
   },
   fields: [
     {
@@ -79,13 +87,6 @@ export const Noticias: CollectionConfig = {
         { label: 'General', value: 'general' },
       ],
       admin: { position: 'sidebar', description: 'Categoría para filtrar la noticia.' },
-    },
-    {
-      name: 'publicado',
-      type: 'checkbox',
-      defaultValue: false,
-      label: 'Publicada',
-      admin: { position: 'sidebar', description: 'Marca esta casilla para que la noticia sea visible en el sitio público. Si no está marcada, solo será visible aquí en el admin.' },
     },
   ],
 };

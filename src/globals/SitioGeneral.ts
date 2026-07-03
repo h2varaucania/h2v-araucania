@@ -1,8 +1,12 @@
 import type { GlobalConfig } from 'payload';
+import { isAdmin } from '@/lib/access';
 
 export const SitioGeneral: GlobalConfig = {
   slug: 'sitio-general',
   label: 'Configuración General',
+  // Configuración institucional: solo administradores pueden modificarla (F8).
+  // Los editores publican contenido, pero no tocan la identidad del sitio.
+  access: { update: isAdmin },
   admin: {
     group: 'Configuración',
     description: 'Nombre del sitio, texto SEO, texto del footer y logos institucionales. Estos valores se usan en toda la plataforma.',

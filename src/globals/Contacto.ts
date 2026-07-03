@@ -1,8 +1,11 @@
 import type { GlobalConfig } from 'payload';
+import { isAdmin } from '@/lib/access';
 
 export const ContactoGlobal: GlobalConfig = {
   slug: 'contacto',
   label: 'Contacto',
+  // Datos institucionales (email público, mandante, código BP): solo administradores (F8).
+  access: { update: isAdmin },
   admin: {
     group: 'Configuración',
     description: 'Datos de contacto que aparecen en la página de Contacto y en el footer del sitio.',

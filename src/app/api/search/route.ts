@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPayload } from '@/lib/payload/getPayload';
 import { rateLimit, getClientIp } from '@/lib/rateLimit';
+import { publicados } from '@/lib/published';
 
 // 30 searches per minute per IP
 const checkLimit = rateLimit('search', 60 * 1000, 30);
@@ -29,7 +30,7 @@ export async function GET(request: NextRequest) {
         collection: 'noticias',
         where: {
           and: [
-            { publicado: { equals: true } },
+            publicados,
             {
               or: [
                 { titulo: { contains: q } },

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getPayload } from '@/lib/payload/getPayload';
+import { publicados } from '@/lib/published';
+import { categoriasColor } from '@/lib/categorias';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,15 +13,6 @@ export const metadata: Metadata = {
     title: 'Noticias | H2V Araucanía',
     description: 'Últimas noticias, eventos y actividades del programa de Hidrógeno Verde en La Araucanía.',
   },
-};
-
-const categoriasColor: Record<string, string> = {
-  general: 'bg-blue-100 text-blue-700',
-  gobernanza: 'bg-purple-100 text-purple-700',
-  proyecto: 'bg-green-100 text-green-700',
-  seminario: 'bg-amber-100 text-amber-700',
-  taller: 'bg-cyan-100 text-cyan-700',
-  acuerdo: 'bg-rose-100 text-rose-700',
 };
 
 const ITEMS_PER_PAGE = 10;
@@ -38,7 +31,7 @@ export default async function Noticias({ searchParams }: { searchParams: SearchP
     const payload = await getPayload();
     const result = await payload.find({
       collection: 'noticias',
-      where: { publicado: { equals: true } },
+      where: publicados,
       sort: '-fecha',
       limit: ITEMS_PER_PAGE,
       page: currentPage,

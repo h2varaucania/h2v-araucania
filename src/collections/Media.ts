@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import { anyone, isAdminOrEditor } from '@/lib/access';
+import { anyone, isAdmin, isAdminOrEditor } from '@/lib/access';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -16,7 +16,8 @@ export const Media: CollectionConfig = {
     read: anyone,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
-    delete: isAdminOrEditor,
+    // Borrar es permanente y puede romper noticias/documentos que usan el archivo (F9).
+    delete: isAdmin,
   },
   admin: {
     useAsTitle: 'alt',

@@ -1,11 +1,17 @@
 import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
 import { es } from '@payloadcms/translations/languages/es';
 import sharp from 'sharp';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// NOTA (deuda conocida): este directory import resuelve bien en Next (dev y build de
+// producción), pero el loader tsx de la CLI de Payload no lo resuelve, así que
+// `payload generate:types` / `generate:importmap` fallan con ERR_MODULE_NOT_FOUND.
+// Workaround si necesitas regenerar: comenta temporalmente este import y `prodMigrations`,
+// corre el comando, y descomenta. (Probado: ./index y ./index.js tampoco resuelven en esa CLI.)
 import { migrations } from './src/migrations';
 
 // Collections
@@ -30,6 +36,9 @@ import { PaginaCapitalHumano } from '@/globals/PaginaCapitalHumano';
 import { PaginaMarcoRegulatorio } from '@/globals/PaginaMarcoRegulatorio';
 import { PaginaTransparencia } from '@/globals/PaginaTransparencia';
 import { PaginaMediateca } from '@/globals/PaginaMediateca';
+import { PaginaProyectos } from '@/globals/PaginaProyectos';
+import { PaginaPrivacidad } from '@/globals/PaginaPrivacidad';
+import { PaginaAccesibilidad } from '@/globals/PaginaAccesibilidad';
 import { ContactoGlobal } from '@/globals/Contacto';
 import { SitioGeneral } from '@/globals/SitioGeneral';
 import { GuiaAdmin } from '@/globals/GuiaAdmin';
@@ -73,9 +82,25 @@ export default buildConfig({
     PaginaMarcoRegulatorio,
     PaginaTransparencia,
     PaginaMediateca,
+    PaginaProyectos,
+    PaginaPrivacidad,
+    PaginaAccesibilidad,
     GuiaAdmin,
   ],
   editor: lexicalEditor(),
+  // Persistencia de uploads (F1, Auditoria_traspaso.md): el disco de Vercel es efímero, así que
+  // en producción los archivos de Media van a Vercel Blob. Se activa solo si existe el token
+  // (lo inyecta Vercel al conectar un Blob store al proyecto); en dev local se sigue usando disco.
+  plugins: [
+    ...(process.env.BLOB_READ_WRITE_TOKEN
+      ? [
+          vercelBlobStorage({
+            collections: { media: true },
+            token: process.env.BLOB_READ_WRITE_TOKEN,
+          }),
+        ]
+      : []),
+  ],
   db: postgresAdapter({
     pool: {
       // Acepta la cadena de conexión local (DATABASE_URI) o la que inyecta Vercel/Neon

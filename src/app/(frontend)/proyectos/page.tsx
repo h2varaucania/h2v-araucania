@@ -15,9 +15,17 @@ export const metadata: Metadata = {
 
 export default async function Proyectos() {
   let proyectos: any[] = [];
+  // Defaults de respaldo; el CMS (global "Mapa de Proyectos") los sobreescribe.
+  const hero = {
+    titulo: 'Mapa de Proyectos',
+    subtitulo: 'Proyectos de hidrógeno verde en desarrollo y ejecución a nivel regional y nacional.',
+  };
 
   try {
     const payload = await getPayload();
+    const data = await payload.findGlobal({ slug: 'pagina-proyectos' });
+    if (data?.hero?.titulo) hero.titulo = data.hero.titulo;
+    if (data?.hero?.subtitulo) hero.subtitulo = data.hero.subtitulo;
     const { docs } = await payload.find({
       collection: 'proyectos',
       limit: 100,
@@ -42,10 +50,8 @@ export default async function Proyectos() {
     <div>
       <section className="bg-h2v-blue text-white py-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Mapa de Proyectos</h1>
-          <p className="text-lg opacity-80">
-            Proyectos de hidrógeno verde en desarrollo y ejecución a nivel regional y nacional.
-          </p>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">{hero.titulo}</h1>
+          <p className="text-lg opacity-80">{hero.subtitulo}</p>
         </div>
       </section>
 

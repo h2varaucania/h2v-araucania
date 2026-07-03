@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getPayload } from "@/lib/payload/getPayload";
+import { publicados } from "@/lib/published";
+import { categoriasColor } from "@/lib/categorias";
 
 export const dynamic = 'force-dynamic';
 
@@ -42,7 +44,7 @@ const defaultParticipantes = [
 ];
 
 export default async function Home() {
-  let hero = { titulo: 'Hidrogeno Verde en La Araucania', subtitulo: 'Plataforma informativa sobre los avances, proyectos y oportunidades del hidrogeno verde en la region de La Araucania, Chile.', ctaPrimario: 'Conozca el Programa', ctaSecundario: 'Ver Proyectos en el Mapa' };
+  const hero = { titulo: 'Hidrogeno Verde en La Araucania', subtitulo: 'Plataforma informativa sobre los avances, proyectos y oportunidades del hidrogeno verde en la region de La Araucania, Chile.', ctaPrimario: 'Conozca el Programa', ctaSecundario: 'Ver Proyectos en el Mapa' };
   let cards = defaultCards;
   let seccionTitulo = 'Explora el Programa';
   let instituciones = defaultParticipantes;
@@ -74,7 +76,7 @@ export default async function Home() {
     // Fetch latest 3 published noticias
     const { docs } = await payload.find({
       collection: 'noticias',
-      where: { publicado: { equals: true } },
+      where: publicados,
       sort: '-fecha',
       limit: 3,
     });
@@ -89,15 +91,6 @@ export default async function Home() {
   } catch {
     // Use defaults
   }
-
-  const categoriasColor: Record<string, string> = {
-    general: 'bg-blue-100 text-blue-700',
-    gobernanza: 'bg-purple-100 text-purple-700',
-    proyecto: 'bg-green-100 text-green-700',
-    seminario: 'bg-amber-100 text-amber-700',
-    taller: 'bg-cyan-100 text-cyan-700',
-    acuerdo: 'bg-rose-100 text-rose-700',
-  };
 
   return (
     <>

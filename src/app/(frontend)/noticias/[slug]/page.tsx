@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getPayload } from '@/lib/payload/getPayload';
+import { publicados } from '@/lib/published';
+import { categoriasColor } from '@/lib/categorias';
 
 export const dynamic = 'force-dynamic';
 import { RichText } from '@payloadcms/richtext-lexical/react';
@@ -16,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const payload = await getPayload();
   const { docs } = await payload.find({
     collection: 'noticias',
-    where: { slug: { equals: slug } },
+    where: { and: [{ slug: { equals: slug } }, publicados] },
     limit: 1,
   });
   const noticia = docs[0];
@@ -42,21 +44,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const categoriasColor: Record<string, string> = {
-  general: 'bg-blue-100 text-blue-700',
-  gobernanza: 'bg-purple-100 text-purple-700',
-  proyecto: 'bg-green-100 text-green-700',
-  seminario: 'bg-amber-100 text-amber-700',
-  taller: 'bg-cyan-100 text-cyan-700',
-  acuerdo: 'bg-rose-100 text-rose-700',
-};
-
 export default async function NoticiaDetalle({ params }: Props) {
   const { slug } = await params;
   const payload = await getPayload();
+  // Solo noticias publicadas: un borrador no debe ser visible ni por URL directa.
   const { docs } = await payload.find({
     collection: 'noticias',
-    where: { slug: { equals: slug } },
+    where: { and: [{ slug: { equals: slug } }, publicados] },
     limit: 1,
   });
 

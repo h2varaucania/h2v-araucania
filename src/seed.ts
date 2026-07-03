@@ -506,7 +506,6 @@ async function seed() {
         },
         fecha: '2025-03-15',
         categoria: 'general',
-        publicado: true,
       },
       {
         titulo: 'Primer Seminario Internacional de Hidrógeno Verde en Temuco',
@@ -527,7 +526,6 @@ async function seed() {
         },
         fecha: '2025-06-20',
         categoria: 'seminario',
-        publicado: true,
       },
       {
         titulo: 'Se constituye el Consejo de Dirección del Hidrógeno Verde de Araucanía',
@@ -548,7 +546,6 @@ async function seed() {
         },
         fecha: '2025-04-10',
         categoria: 'gobernanza',
-        publicado: true,
       },
       {
         titulo: 'Taller de Capacitación: Introducción a las Tecnologías del Hidrógeno Verde',
@@ -569,7 +566,6 @@ async function seed() {
         },
         fecha: '2025-05-15',
         categoria: 'taller',
-        publicado: true,
       },
     ];
     for (const n of noticias) {
@@ -596,7 +592,6 @@ async function seed() {
         descripcion: {
           root: { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', text: 'Seminario con expertos de Chile, Alemania y Australia sobre tecnologías, modelos de negocio y oportunidades regionales del hidrógeno verde. Incluye paneles de discusión, presentaciones técnicas y visitas a terreno.', version: 1 }], version: 1 }], direction: 'ltr', format: '', indent: 0, version: 1 },
         },
-        publicado: true,
       },
       {
         titulo: 'Taller: Introducción a Tecnologías del H₂V',
@@ -606,7 +601,6 @@ async function seed() {
         descripcion: {
           root: { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', text: 'Jornada de formación técnica introductoria sobre electrólisis, electrolizadores, cadena de valor y perfiles laborales del hidrógeno verde. Dirigido a profesionales y técnicos de la región.', version: 1 }], version: 1 }], direction: 'ltr', format: '', indent: 0, version: 1 },
         },
-        publicado: true,
       },
       {
         titulo: 'Reunión Consejo de Dirección — Q3 2025',
@@ -616,7 +610,6 @@ async function seed() {
         descripcion: {
           root: { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', text: 'Tercera sesión ordinaria del Consejo de Dirección del programa. Revisión de avances, aprobación de plan de trabajo segundo semestre y presentación de resultados del diagnóstico regional.', version: 1 }], version: 1 }], direction: 'ltr', format: '', indent: 0, version: 1 },
         },
-        publicado: true,
       },
     ];
     for (const e of eventos) {

@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import { anyone, isAdminOrEditor } from '@/lib/access';
+import { anyone, isAdmin, isAdminOrEditor } from '@/lib/access';
 
 export const Proyectos: CollectionConfig = {
   slug: 'proyectos',
@@ -8,7 +8,8 @@ export const Proyectos: CollectionConfig = {
     read: anyone,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
-    delete: isAdminOrEditor,
+    // Borrar es permanente (no hay papelera): reservado a administradores (F9).
+    delete: isAdmin,
   },
   admin: {
     useAsTitle: 'nombre',
