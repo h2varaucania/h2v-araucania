@@ -15,7 +15,9 @@
 - ✅ **Sanitización del registro público** — el rol del registro público se fuerza a `registrado`.
 
 ## Protección del panel
-- ⚠️ **Rate-limit de login** — `auth: true` usa los defaults de Payload (maxLoginAttempts 5 / lockTime). Conviene declararlo explícito en `Users.ts`. Probar: 6 logins fallidos deben bloquear.
+- ✅ **Rate-limit de login** — declarado explícito en `Users.ts` (2026-07-03): `maxLoginAttempts: 5`, `lockTime: 10 min`. Documentado en la Guía de uso ("si te bloqueas, espera 10 minutos").
+- ✅ **Globals de configuración solo admin** (2026-07-03) — `sitio-general`, `contacto`, `guia-admin` con `update: isAdmin`; un editor ya no puede cambiar el email institucional.
+- ✅ **Borrado solo admin** (2026-07-03) — `delete: isAdmin` en todas las colecciones (el borrado es permanente, sin papelera).
 - ➖ **Password Protection de plataforma** — no aplica (sitio público de difusión; solo tendría sentido para staging).
 - ➖ **IP allowlist** — no aplica (datos públicos; rompería el acceso legítimo).
 
