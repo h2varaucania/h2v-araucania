@@ -9,18 +9,19 @@ type FooterInstitucion = {
 type FooterProps = {
   texto?: string;
   programa?: string;
-  instituciones?: FooterInstitucion[];
   email?: string;
   ubicacion?: string;
 };
 
+// Crédito obligatorio a Corfo ("Proyecto apoyado por") — Manual de Comunicaciones Corfo Araucanía 2025 §1.2.
+// Fijo en código a propósito: no debe poder editarse ni eliminarse desde el CMS.
 const defaultInstituciones: FooterInstitucion[] = [
   { nombre: 'CORFO', logo: '/logos/BP H2V Araucanía - Logo Corfo Azul.png' },
-  { nombre: 'Desarrollo Productivo Sostenible', logo: '/logos/BP H2V Araucanía - DPS Corfo Blanco.png' },
+  { nombre: 'Desarrollo Productivo Sostenible — CORFO', logo: '/logos/BP H2V Araucanía - DPS Corfo color azul.png' },
 ];
 
-export default function Footer({ texto, programa, instituciones, email, ubicacion }: FooterProps) {
-  const logos = instituciones && instituciones.length > 0 ? instituciones : defaultInstituciones;
+export default function Footer({ texto, programa, email, ubicacion }: FooterProps) {
+  const logos = defaultInstituciones;
   return (
     <footer className="bg-h2v-blue text-white" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -70,15 +71,15 @@ export default function Footer({ texto, programa, instituciones, email, ubicacio
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-3 text-white/90">
               Proyecto apoyado por
             </h3>
-            <div className="flex items-center gap-4 flex-wrap">
+            <div className="inline-flex items-center gap-4 flex-wrap rounded-lg bg-white px-4 py-3">
               {logos.map((inst) => (
                 <Image
                   key={inst.nombre}
                   src={inst.logo}
                   alt={inst.nombre}
-                  width={80}
-                  height={40}
-                  className="h-8 w-auto opacity-70"
+                  width={110}
+                  height={48}
+                  className="h-9 w-auto"
                 />
               ))}
             </div>

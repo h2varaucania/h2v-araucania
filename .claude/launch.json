@@ -7,6 +7,12 @@
       "runtimeArgs": ["node_modules/.bin/next", "dev"],
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "name": "h2v-design",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4321", "--directory", "/Users/cvillal/Library/CloudStorage/OneDrive-Personal/Work/Mi unidad/Investigacion/H2V/Demo/H2V Araucanía Design System"],
+      "port": 4321
     }
   ]
 }

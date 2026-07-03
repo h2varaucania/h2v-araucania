@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import SearchDialog from '@/components/ui/SearchDialog';
 import { features } from '@/lib/features';
@@ -176,9 +177,17 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Navegacion principal">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="H2V Araucania - Inicio">
-            <span className="text-xl font-bold text-white">H2V</span>
-            <span className="text-xl font-bold text-h2v-green-light">Araucania</span>
+          <Link href="/" className="flex items-center shrink-0" aria-label="H2V Araucania - Inicio">
+            <span className="inline-flex items-center rounded-md bg-white px-2 py-1 shadow-sm">
+              <Image
+                src="/logos/BP H2V Araucanía - Logo Bien Público.png"
+                alt="H2V Araucania - Bien Publico Agro Productivo Araucania"
+                width={710}
+                height={555}
+                priority
+                className="h-10 w-auto md:h-11"
+              />
+            </span>
           </Link>
 
           {/* Desktop nav */}

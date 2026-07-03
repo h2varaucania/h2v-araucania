@@ -49,7 +49,6 @@ export default async function FrontendLayout({
 }>) {
   let footerTexto = 'Plataforma informativa del Bien Público 24BP-269085. Programa Estratégico Regional de Hidrógeno Verde en La Araucanía.';
   let footerPrograma = 'Programa Desarrollo Productivo Sostenible — CORFO';
-  let footerInstituciones: { nombre: string; logo: string }[] = [];
   let footerEmail = 'h2varaucania@gmail.com';
   let footerUbicacion = 'Temuco, La Araucanía, Chile';
 
@@ -58,14 +57,6 @@ export default async function FrontendLayout({
     const sitio = await payload.findGlobal({ slug: 'sitio-general' });
     if (sitio?.footerTexto) footerTexto = sitio.footerTexto as string;
     if (sitio?.footerPrograma) footerPrograma = sitio.footerPrograma as string;
-    if ((sitio?.instituciones as any[])?.length > 0) {
-      footerInstituciones = (sitio.instituciones as any[])
-        .map((inst: any) => ({
-          nombre: inst.nombre,
-          logo: inst.logo?.url || '',
-        }))
-        .filter((i) => i.logo);
-    }
     const contacto = await payload.findGlobal({ slug: 'contacto' });
     if (contacto?.email) footerEmail = contacto.email as string;
     if (contacto?.ubicacion) footerUbicacion = contacto.ubicacion as string;
@@ -84,7 +75,7 @@ export default async function FrontendLayout({
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <Footer texto={footerTexto} programa={footerPrograma} instituciones={footerInstituciones} email={footerEmail} ubicacion={footerUbicacion} />
+        <Footer texto={footerTexto} programa={footerPrograma} email={footerEmail} ubicacion={footerUbicacion} />
         <CookieBanner />
       </body>
     </html>

@@ -23,21 +23,29 @@ const defaultCards = [
   { titulo: "Contacto", descripcion: "Escribenos para consultas, colaboraciones o mas informacion sobre el programa.", enlace: "/contacto", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
 ];
 
-const defaultLogos = [
+// Financiador Corfo — destacado, con leyenda "Proyecto apoyado por".
+// Obligatorio por el Manual de Comunicaciones Corfo Araucanía 2025 §1.2 (proyectos con financiamiento Corfo).
+const apoyoCorfo = [
   { src: "/logos/BP H2V Araucanía - Logo Corfo Azul.png", alt: "CORFO" },
+  { src: "/logos/BP H2V Araucanía - DPS Corfo color azul.png", alt: "Desarrollo Productivo Sostenible — CORFO" },
+];
+
+// Instituciones participantes (ejecutor + colaboradores). Secundarias y NUNCA mayores que Corfo (§1.2).
+const defaultParticipantes = [
   { src: "/logos/BP H2V Araucanía - Logo Utalca.png", alt: "Universidad de Talca" },
   { src: "/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png", alt: "Seremi de Energia Araucania" },
   { src: "/logos/BP H2V Araucanía - Logo CES4.0.png", alt: "CES 4.0" },
   { src: "/logos/BP H2V Araucanía - Corma_logo_color.png", alt: "CORMA" },
   { src: "/logos/BP H2V Araucanía - Logo Asoc Biomasa-Photoroom.png", alt: "Asociacion de Biomasa" },
   { src: "/logos/BP H2V Araucanía - Logo FIA-Photoroom.png", alt: "FIA" },
+  { src: "/logos/BP H2V Araucanía - Logo Comasa-Photoroom.png", alt: "Comasa" },
 ];
 
 export default async function Home() {
   let hero = { titulo: 'Hidrogeno Verde en La Araucania', subtitulo: 'Plataforma informativa sobre los avances, proyectos y oportunidades del hidrogeno verde en la region de La Araucania, Chile.', ctaPrimario: 'Conozca el Programa', ctaSecundario: 'Ver Proyectos en el Mapa' };
   let cards = defaultCards;
   let seccionTitulo = 'Explora el Programa';
-  let instituciones = defaultLogos;
+  let instituciones = defaultParticipantes;
   let latestNoticias: Array<{ id: string; titulo: string; slug: string; fecha: string; extracto: string; categoria?: string }> = [];
 
   try {
@@ -161,10 +169,18 @@ export default async function Home() {
 
       <section className="py-12 px-4 bg-white border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
+          {/* Financiador destacado — Manual de Comunicaciones Corfo Araucanía 2025 §1.2 */}
+          <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-6">Proyecto apoyado por</p>
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-12">
+            {apoyoCorfo.map((logo) => (
+              <Image key={logo.alt} src={logo.src} alt={logo.alt} width={200} height={90} className="h-14 md:h-20 w-auto" />
+            ))}
+          </div>
+          {/* Instituciones participantes — secundarias, menores que Corfo (§1.2) */}
           <p className="text-center text-sm text-gray-400 uppercase tracking-wider mb-8">Instituciones participantes</p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-10">
             {instituciones.map((logo) => (
-              <Image key={logo.alt} src={logo.src} alt={logo.alt} width={100} height={50} className="h-10 md:h-12 w-auto grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+              <Image key={logo.alt} src={logo.src} alt={logo.alt} width={100} height={50} className="h-9 md:h-10 w-auto grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
             ))}
           </div>
         </div>
