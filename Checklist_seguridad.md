@@ -6,7 +6,7 @@
 ## Acceso y claves
 - ⬜ **Clave del admin fuerte** — actualmente DÉBIL (`h2varaucania`, = nombre del sitio). Generar con `openssl rand -base64 24` y cambiar en /admin → perfil. **Crítico: `/admin` está público.**
 - ✅ **Secretos fuera de git** — `.env`, `.env.local`, `.env.production` ignorados; solo `.env.example` (plantilla sin secretos) rastreado. Secretos viven en las Environment Variables de Vercel.
-- ⬜ **`PAYLOAD_DB_PUSH` quitado de Vercel** — se usó `true` para crear el esquema; debe quitarse (cada deploy podría alterar el esquema de producción).
+- ✅ **`PAYLOAD_DB_PUSH` quitado de Vercel** (2026-07-03) — eliminado del proyecto (Production y Preview). Nota: se comprobó que el push nunca aplicó diffs en runtime serverless; los cambios de esquema van por SQL en Neon (ver `docs/fix_esquema_prod_20260703.sql`).
 
 ## Roles y permisos (control de acceso REAL)
 - ✅ **`access` por colección** — read público, create/update/delete admin/editor. Verificado: `POST /api/noticias` sin sesión → **403 "No tienes permiso"**.

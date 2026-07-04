@@ -46,8 +46,8 @@
 | # | Fase | Estado | Decisiones tomadas | Fecha |
 |---|---|---|---|---|
 | 0 | Diagnóstico y plan | **hecho** | Nivel mínimo/institucional; plan de 6 fases | 2026-06-23 |
-| 1 | Seguridad / hardening | **en curso** | Headers ✅, access/roles ✅, secretos ✅; PENDIENTE clave fuerte, quitar PAYLOAD_DB_PUSH, 2FA, rate-limit explícito | 2026-06-23 |
-| 2 | Respaldo de datos | pendiente | — | — |
+| 1 | Seguridad / hardening | **en curso** | Headers ✅, access/roles ✅, secretos ✅, rate-limit explícito ✅, PAYLOAD_DB_PUSH quitado ✅, delete/config solo admin ✅; PENDIENTE (de Carlos): clave admin fuerte + 2FA en cuentas | 2026-07-03 |
+| 2 | Respaldo de datos | **en curso** | Uploads persistentes ✅ (Vercel Blob); PENDIENTE respaldo automatizado DB + restauración probada | 2026-07-03 |
 | 3 | Dominio + DNS + hosting | pendiente | Tentativo: h2varaucania.cl en NIC Chile, hosting sigue en Vercel (NO cPanel) | — |
 | 4 | Manual del /admin | pendiente | — | — |
 | 5 | Entrega / traspaso | pendiente | Tentativo: traspasar todo a la cuenta central h2varaucania | — |
@@ -68,7 +68,7 @@
 
 ### Base de datos y archivos
 - **Proveedor de DB:** Neon Postgres, Free (point-in-time restore + branching)
-- **Persistencia de uploads:** PENDIENTE — mover a Vercel Blob (sin esto los PDFs/imágenes se pierden)
+- **Persistencia de uploads:** ✅ **Vercel Blob activo** (2026-07-03): store `h2v-araucania-blob` (Public, iad1) conectado a Production+Preview; el adapter condicional de `payload.config.ts` se activa con el `BLOB_READ_WRITE_TOKEN` inyectado. Los archivos subidos por /admin ya NO se pierden entre deploys. (Los archivos de abril se perdieron antes de esto; re-subir desde /admin.)
 
 ### Plan de respaldo
 - **Qué se respalda y cómo:** PENDIENTE (DB vía scripts/respaldo.sh + point-in-time de Neon; uploads en Blob)

@@ -127,9 +127,9 @@ sitio (secciones nuevas), no operarlo.
 
 | Hallazgo | Estado |
 |---|---|
-| F1 uploads efímeros | ✅ código listo (Blob adapter condicional) — ⚠️ falta crear el Blob store en Vercel para activarlo |
-| F2 PAYLOAD_DB_PUSH | ⬜ pendiente (coordinar: verificar `payload_migrations` en Neon antes de quitar) |
-| F3 cuentas/claves/2FA | ⬜ pendiente (sesión con el dueño) |
+| F1 uploads efímeros | ✅ **ACTIVO** (store `h2v-araucania-blob` creado y conectado 2026-07-03; probar subiendo un archivo en /admin) |
+| F2 PAYLOAD_DB_PUSH | ✅ **QUITADO** de Vercel (2026-07-03); regla nueva: esquema por SQL en Neon, nunca push runtime |
+| F3 cuentas/claves/2FA | ⬜ pendiente (sesión del dueño: clave admin fuerte + 2FA en Vercel/GitHub/Gmail/Neon) |
 | F4 borradores/publicar | ✅ hecho (drafts+versions, + fix: borrador ya no es visible por URL directa) |
 | F5 legales en CMS | ✅ hecho (email desde Contacto, texto reemplazable por richText) |
 | F6 zonas sin CMS | ✅ hecho (pagina-proyectos, diagrama+galería gobernanza, explora-más H2V) |
