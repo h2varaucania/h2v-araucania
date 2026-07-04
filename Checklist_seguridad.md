@@ -4,7 +4,8 @@
 > Cada ítem se verifica contra la fuente viva (comando o panel), no se asume.
 
 ## Acceso y claves
-- ⬜ **Clave del admin fuerte** — actualmente DÉBIL (`h2varaucania`, = nombre del sitio). Generar con `openssl rand -base64 24` y cambiar en /admin → perfil. **Crítico: `/admin` está público.**
+- [~] **Clave del admin** — se MANTIENE SIMPLE a propósito durante el poblado de contenido (decisión 2026-07-04, ver `Plan_de_traspaso.md`). Riesgo acotado: la clave del `/admin` ≠ la del correo/infra (un acceso indebido solo llega al panel de contenido); hay rate-limit 5/10min; contenido versionado y respaldado. **Se cambia en la entrega, con protocolo de clave compartida.** Mitigación real = 2FA en la capa de infraestructura (abajo).
+- ⬜ **2FA en la infraestructura** — prioridad sobre la clave del /admin: es la capa irrecuperable (correo maestro, Vercel, Neon, GitHub). Lo activa Carlos con su teléfono mientras sea custodio.
 - ✅ **Secretos fuera de git** — `.env`, `.env.local`, `.env.production` ignorados; solo `.env.example` (plantilla sin secretos) rastreado. Secretos viven en las Environment Variables de Vercel.
 - ✅ **`PAYLOAD_DB_PUSH` quitado de Vercel** (2026-07-03) — eliminado del proyecto (Production y Preview). Nota: se comprobó que el push nunca aplicó diffs en runtime serverless; los cambios de esquema van por SQL en Neon (ver `docs/fix_esquema_prod_20260703.sql`).
 

@@ -41,11 +41,18 @@ A un administrador no técnico se le entrega **solo la capa de contenido**. La d
   4. GitHub (`h2varaucania`)
 
 ### Estado de la Fase 1
-- [ ] Clave fuerte en la cuenta `admin` de Carlos (reemplazar la débil actual)
-- [ ] 2FA en las 4 cuentas de infraestructura + códigos de respaldo al gestor del programa
-- [ ] Crear el usuario `editor` del destinatario (pendiente: nombre + correo del destinatario)
-- [ ] Entregar la credencial del `editor` por canal seguro (gestor de contraseñas, no chat/mail plano;
-      idealmente que el destinatario fije su propia clave en el primer ingreso)
+- [~] **Clave del `/admin`: se mantiene simple A PROPÓSITO** durante el poblado de contenido (Carlos la
+      comparte con un ayudante para cargar noticias/documentos). Decisión de riesgo aceptada (2026-07-04):
+      la clave del `/admin` es distinta de la del correo/infra (un acceso indebido solo alcanza el panel de
+      contenido, no las llaves maestras), hay bloqueo por 5 intentos/10 min, y el contenido es versionado y
+      respaldado. **Se cambia en la entrega, con protocolo de clave compartida** (ver Fase 2).
+- [ ] **2FA en las 4 cuentas de infraestructura** (Google, Vercel, GitHub; Neon vía SSO de Google) +
+      códigos de respaldo al gestor del programa. Lo ejecuta Carlos (requiere su teléfono). **Prioridad:**
+      es la capa irrecuperable; blindarla es lo que hace aceptable dejar la clave del `/admin` simple.
+- [ ] Usuario `editor` del destinatario: **EN ESPERA** — aún no hay persona designada en la Seremi.
+- [ ] (Opcional) Usuario `editor` para el **ayudante** que puebla la página, en vez de compartir la clave
+      de admin: le da acceso de carga sin exponer la cuenta admin, y se revoca al terminar.
+- [ ] Entregar credenciales por canal seguro (gestor de contraseñas, nunca chat/mail plano).
 
 ---
 
