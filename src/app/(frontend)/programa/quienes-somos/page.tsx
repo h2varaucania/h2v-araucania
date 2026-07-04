@@ -24,6 +24,17 @@ const defaultInstituciones = [
 
 type Institucion = { nombre: string; rol: string; logo: string };
 
+// Logos oficiales por institución: si el CMS no trae logo subido, se usa el
+// logo oficial del repo (no puede quedar el ejecutor sin su logo — Manual §1.2).
+function logoOficial(nombre: string): string {
+  const n = nombre.toLowerCase();
+  if (n.includes('corfo')) return '/logos/BP H2V Araucanía - Logo Corfo Azul.png';
+  if (n.includes('codesser')) return '/logos/BP H2V Araucanía - Logo Codesser.png';
+  if (n.includes('talca')) return '/logos/BP H2V Araucanía - Logo Utalca.png';
+  if (n.includes('energía') || n.includes('energia')) return '/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png';
+  return '';
+}
+
 export default async function QuienesSomos() {
   const payload = await getPayload();
 
@@ -48,7 +59,7 @@ export default async function QuienesSomos() {
       instituciones = global.instituciones.map((inst) => ({
         nombre: inst.nombre,
         rol: inst.rol,
-        logo: (typeof inst.logo === 'object' ? inst.logo?.url : null) || '',
+        logo: (typeof inst.logo === 'object' ? inst.logo?.url : null) || logoOficial(inst.nombre),
       }));
     }
     if (global?.consejoTitulo) consejoTitulo = global.consejoTitulo;
