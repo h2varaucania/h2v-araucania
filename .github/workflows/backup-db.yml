@@ -1,0 +1,53 @@
+name: Respaldo diario de la base de datos (Neon)
+
+# Respaldo automatizado y DURABLE (fuera de Neon) de la base de datos de producción.
+# - Corre todos los días y también se puede lanzar a mano (workflow_dispatch).
+# - Usa pg_dump 17 (misma versión que el servidor Neon) vía Docker.
+# - Guarda el dump comprimido como ARTEFACTO del run (retención 90 días).
+# Requiere el secret de repositorio DATABASE_URI_UNPOOLED = cadena de conexión DIRECTA
+# (sin pooler) de Neon. El pooler (pgbouncer, transaction mode) rompe pg_dump, por eso
+# se usa la conexión directa.
+# Restaurar: ver scripts/restore-db.md.
+
+on:
+  schedule:
+    - cron: '17 8 * * *' # 08:17 UTC a diario (~04:17-05:17 AM en Chile según horario de verano)
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pg_dump (Postgres 17) + gzip
+        env:
+          DATABASE_URI: ${{ secrets.DATABASE_URI_UNPOOLED }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DATABASE_URI:-}" ]; then
+            echo "::error::Falta el secret DATABASE_URI_UNPOOLED (cadena directa de Neon, sin pooler)."
+            exit 1
+          fi
+          STAMP="$(date -u +%Y%m%d-%H%M%S)"
+          FILE="h2v-backup-${STAMP}.sql.gz"
+          # La cadena se pasa como env al contenedor (no en argv) y GitHub la enmascara en logs.
+          docker run --rm -e DATABASE_URI postgres:17-alpine \
+            sh -c 'pg_dump --no-owner --no-privileges "$DATABASE_URI"' | gzip > "$FILE"
+          BYTES="$(gzip -dc "$FILE" | wc -c)"
+          LINES="$(gzip -dc "$FILE" | wc -l)"
+          echo "Dump generado: $FILE  (${BYTES} bytes sin comprimir, ${LINES} líneas)"
+          # Sanity check: el dump debe tener contenido real, no solo cabeceras.
+          if [ "$LINES" -lt 100 ] || ! gzip -dc "$FILE" | grep -q "CREATE TABLE"; then
+            echo "::error::El dump parece vacío o inválido; no se sube."
+            exit 1
+          fi
+          echo "FILE=$FILE" >> "$GITHUB_ENV"
+      - name: Subir respaldo como artefacto (retención 90 días)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.FILE }}
+          path: ${{ env.FILE }}
+          retention-days: 90
+          if-no-files-found: error
