@@ -79,6 +79,12 @@ Tras la capacitación, se transfiere la capa de infraestructura y Carlos cesa su
 
 ---
 
+## Acción de LANZAMIENTO (cuando el contenido esté listo y se quiera hacer público en buscadores)
+- El sitio está en **NOINDEX** mientras se puebla (para que Google no lo muestre a medio construir).
+- Para lanzarlo: setear la env var **`SITE_INDEXABLE=true`** en Vercel (Production) y redeployar.
+  Esto NO cambia el contenido; solo permite que Google lo indexe. Idealmente coordinar con el
+  dominio propio (Fase 3) para lanzar con la URL definitiva.
+
 ## Reglas de credenciales (ambas fases)
 - Nunca se comparten claves por chat ni correo en texto plano.
 - Canal: gestor de contraseñas compartido, o entrega en persona.
