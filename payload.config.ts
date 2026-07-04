@@ -2,6 +2,7 @@ import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
+import { resendAdapter } from '@payloadcms/email-resend';
 import { es } from '@payloadcms/translations/languages/es';
 import sharp from 'sharp';
 import path from 'path';
@@ -98,6 +99,18 @@ export default buildConfig({
   // plugin ACTIVO (`npm run payload:importmap`, que fija un token dummy con formato válido).
   // Si se genera sin token, falta VercelBlobClientUploadHandler en el mapa y el admin de
   // producción queda EN NEGRO (error solo visible en los logs de runtime de Vercel).
+  // Email transaccional (EDITABILIDAD_TOTAL §5.5): sin esto, "olvidé mi clave"
+  // no envía correo. Se activa solo si existe RESEND_API_KEY (Vercel/local).
+  // Remitente onboarding@resend.dev hasta verificar dominio propio en Resend.
+  ...(process.env.RESEND_API_KEY
+    ? {
+        email: resendAdapter({
+          apiKey: process.env.RESEND_API_KEY,
+          defaultFromAddress: 'onboarding@resend.dev',
+          defaultFromName: 'H2V Araucanía',
+        }),
+      }
+    : {}),
   plugins: [
     ...(process.env.BLOB_READ_WRITE_TOKEN
       ? [
