@@ -33,7 +33,7 @@ export const PaginaGobernanza: GlobalConfig = {
       label: 'Nivel Estratégico',
       admin: { description: 'Consejo de Dirección — instancia máxima de decisión.' },
       fields: [
-        { name: 'titulo', type: 'text', maxLength: 80, defaultValue: 'Consejo de Dirección del Hidrógeno Verde de Araucanía' },
+        { name: 'titulo', type: 'text', maxLength: 80, defaultValue: 'Comité Estratégico del Bien Público' },
         { name: 'descripcion', type: 'textarea', maxLength: 400, defaultValue: 'Instancia máxima de dirección estratégica compuesta por representantes del Gobierno Regional, Ministerios, universidades, asociaciones empresariales, comunidades indígenas y expertos independientes.' },
         { name: 'funciones', type: 'array', label: 'Funciones', maxRows: 8, fields: [
           { name: 'texto', type: 'text', required: true, maxLength: 200 },

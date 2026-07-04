@@ -382,3 +382,26 @@ El sistema registra automaticamente cada descarga de documento. Esto es util par
 | Crear un usuario | Sistema > Usuarios > Crear nuevo |
 | Ver cuantas descargas tiene un documento | Sistema > Registro de Descargas |
 | Ver la guia de ayuda | Ayuda > Guia de uso |
+
+---
+
+## Anexo (2026-07-04): qué se edita dónde — estándar "editabilidad total"
+
+**Regla de oro: si ves un texto en la web, se cambia en el panel** (`/admin`).
+Guarda y recarga la página pública: el cambio se ve al instante.
+
+| Quiero cambiar… | Voy a… |
+|---|---|
+| Textos de la página de Contacto (títulos, formulario, asuntos) | Globals → **Contacto** (pestañas Página / Formulario / Datos institucionales) |
+| Portada: título, eyebrow, cifras (KPIs), títulos de secciones | Globals → **Página de Inicio** |
+| Pie de página (títulos de columnas, derechos) y textos del error 404 | Globals → **Configuración General** |
+| Integrantes del Comité Estratégico / Unidad | Contenido → **Miembros de Gobernanza** |
+| Noticias, Documentos, Eventos, Proyectos | Contenido → su colección |
+
+**Perímetro honesto (lo que NO se edita desde el panel, a propósito):**
+- El diseño: colores, tipografías, disposición y animaciones.
+- El crédito obligatorio a Corfo del pie de página (Manual de Comunicaciones §1.2) — fijo en código para que no pueda borrarse por error.
+- Símbolos de interfaz (flechas, iconos) y textos legales de fallback mientras se completa su migración al panel.
+
+Si un texto visible NO aparece en esta tabla, es un pendiente del inventario
+(`docs/INVENTARIO_LITERALES.md`) — repórtalo como defecto, no como "así es".

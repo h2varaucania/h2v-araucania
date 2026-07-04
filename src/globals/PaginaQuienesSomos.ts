@@ -46,7 +46,7 @@ export const PaginaQuienesSomos: GlobalConfig = {
       type: 'text',
       maxLength: 80,
       label: 'Título sección Consejo',
-      defaultValue: 'Consejo de Dirección del Hidrógeno Verde de Araucanía',
+      defaultValue: 'Comité Estratégico del Bien Público',
       admin: { description: 'Título que aparece sobre la lista de miembros del Consejo.' },
     },
     {
@@ -54,7 +54,7 @@ export const PaginaQuienesSomos: GlobalConfig = {
       type: 'textarea',
       maxLength: 300,
       label: 'Descripción del Consejo',
-      defaultValue: 'Instancia estratégica encargada de definir la visión, aprobar planes de desarrollo y supervisar el progreso del proyecto.',
+      defaultValue: 'Instancia estratégica del proyecto, presidida por la entidad mandante (Seremi de Energía de La Araucanía) con vicepresidencia de CORFO. Sesiona periódicamente desde junio de 2025.',
     },
     {
       name: 'comiteTitulo',
