@@ -35,11 +35,13 @@ jobs:
           # La cadena se pasa como env al contenedor (no en argv) y GitHub la enmascara en logs.
           docker run --rm -e DATABASE_URI postgres:17-alpine \
             sh -c 'pg_dump --no-owner --no-privileges "$DATABASE_URI"' | gzip > "$FILE"
-          BYTES="$(gzip -dc "$FILE" | wc -c)"
-          LINES="$(gzip -dc "$FILE" | wc -l)"
-          echo "Dump generado: $FILE  (${BYTES} bytes sin comprimir, ${LINES} líneas)"
+          # Verificación (lee el stream completo; nada de grep -q que corta el pipe y,
+          # con pipefail, marca un falso "dump inválido" por Broken pipe en gzip).
+          BYTES="$(gzip -dc "$FILE" | wc -c | tr -d ' ')"
+          TABLES="$(gzip -dc "$FILE" | grep -c 'CREATE TABLE' || true)"
+          echo "Dump generado: $FILE  (${BYTES} bytes sin comprimir, ${TABLES} tablas)"
           # Sanity check: el dump debe tener contenido real, no solo cabeceras.
-          if [ "$LINES" -lt 100 ] || ! gzip -dc "$FILE" | grep -q "CREATE TABLE"; then
+          if [ "${BYTES:-0}" -lt 1000 ] || [ "${TABLES:-0}" -lt 1 ]; then
             echo "::error::El dump parece vacío o inválido; no se sube."
             exit 1
           fi
