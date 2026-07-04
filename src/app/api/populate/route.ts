@@ -201,7 +201,7 @@ const EVENTOS_RETIRAR = [
 const PROYECTOS_RETIRAR = ['Planta Piloto H₂V Temuco', 'Bus H₂ Temuco', 'H₂V Forestal Victoria'];
 
 export async function GET() {
-  return NextResponse.json({ ok: true, version: 'populate-oficial-v1' });
+  return NextResponse.json({ ok: true, version: 'populate-oficial-v2', blob: Boolean(process.env.BLOB_READ_WRITE_TOKEN) });
 }
 
 export async function POST(req: Request) {
@@ -230,37 +230,51 @@ export async function POST(req: Request) {
   }
 
   let partial = false;
+  let mediaBloqueada = false;
 
   try {
-    // ═══ 1. DOCUMENTOS: 8 productos finales ═══
-    for (const d of DOCS) {
-      if (Date.now() > deadline) { partial = true; break; }
-      const exists = await payload.find({ collection: 'documentos', where: { titulo: { equals: d.titulo } }, limit: 1 });
-      if (exists.totalDocs > 0) { log.push(`⏭ Documento existente: ${d.titulo}`); continue; }
-      const mediaId = await ensureMedia(`BP H2V — ${d.titulo} (PDF)`, `/docs/${d.file}`, d.file, 'application/pdf');
-      await payload.create({
-        collection: 'documentos',
-        data: { titulo: d.titulo, descripcion: d.descripcion, archivo: mediaId, tipo: d.tipo, anio: d.anio },
+    // ═══ 1. MIEMBROS: retirar placeholders del seed y cargar el Modelo ═══
+    // (no depende de archivos — entra aunque falte el Blob store)
+    const stale = await payload.delete({ collection: 'miembros', where: { nombre: { like: 'Por designar' } } });
+    if (stale.docs.length > 0) log.push(`✓ Retirados ${stale.docs.length} miembros "Por designar" (seed)`);
+    for (const m of MIEMBROS) {
+      const exists = await payload.find({
+        collection: 'miembros',
+        where: { and: [{ institucion: { equals: m.institucion } }, { instancia: { equals: m.instancia } }] },
+        limit: 1,
       });
-      log.push(`✓ Documento: ${d.titulo}`);
+      if (exists.totalDocs > 0) { log.push(`⏭ Miembro existente: ${m.institucion} (${m.instancia})`); continue; }
+      await payload.create({ collection: 'miembros', data: m });
+      log.push(`✓ Miembro: ${m.nombre} — ${m.institucion} [${m.instancia}]`);
     }
 
-    if (!partial) {
-      // ═══ 2. MIEMBROS: retirar placeholders del seed y cargar el Modelo ═══
-      const stale = await payload.delete({ collection: 'miembros', where: { nombre: { like: 'Por designar' } } });
-      if (stale.docs.length > 0) log.push(`✓ Retirados ${stale.docs.length} miembros "Por designar" (seed)`);
-      for (const m of MIEMBROS) {
-        const exists = await payload.find({
-          collection: 'miembros',
-          where: { and: [{ institucion: { equals: m.institucion } }, { instancia: { equals: m.instancia } }] },
-          limit: 1,
-        });
-        if (exists.totalDocs > 0) { log.push(`⏭ Miembro existente: ${m.institucion} (${m.instancia})`); continue; }
-        await payload.create({ collection: 'miembros', data: m });
-        log.push(`✓ Miembro: ${m.nombre} — ${m.institucion} [${m.instancia}]`);
-      }
+    // ═══ 2. Retirar contenido de ejemplo no verificable ═══
+    const ev = await payload.delete({ collection: 'eventos', where: { titulo: { in: EVENTOS_RETIRAR } } });
+    if (ev.docs.length > 0) log.push(`✓ Retirados ${ev.docs.length} eventos de ejemplo`);
+    const pr = await payload.delete({ collection: 'proyectos', where: { nombre: { in: PROYECTOS_RETIRAR } } });
+    if (pr.docs.length > 0) log.push(`✓ Retirados ${pr.docs.length} proyectos de ejemplo`);
 
-      // ═══ 3. NOTICIAS: reales y publicadas ═══
+    // ═══ 3. DOCUMENTOS: 8 productos finales (requiere Blob en Vercel) ═══
+    for (const d of DOCS) {
+      if (Date.now() > deadline) { partial = true; break; }
+      try {
+        const exists = await payload.find({ collection: 'documentos', where: { titulo: { equals: d.titulo } }, limit: 1 });
+        if (exists.totalDocs > 0) { log.push(`⏭ Documento existente: ${d.titulo}`); continue; }
+        const mediaId = await ensureMedia(`BP H2V — ${d.titulo} (PDF)`, `/docs/${d.file}`, d.file, 'application/pdf');
+        await payload.create({
+          collection: 'documentos',
+          data: { titulo: d.titulo, descripcion: d.descripcion, archivo: mediaId, tipo: d.tipo, anio: d.anio },
+        });
+        log.push(`✓ Documento: ${d.titulo}`);
+      } catch (e) {
+        mediaBloqueada = true;
+        log.push(`✗ Documento pendiente (media): ${d.titulo} — ${e instanceof Error ? e.message : String(e)}`);
+        break; // sin storage de archivos no tiene sentido insistir con los demás
+      }
+    }
+
+    // ═══ 4. NOTICIAS: reales y publicadas (imagen requiere Blob) ═══
+    try {
       const imagenId = await ensureMedia('Imagen H2V Araucanía — portada de noticias', '/images/noticia-h2v.png', 'noticia-h2v.png', 'image/png');
       for (const n of NOTICIAS) {
         const exists = await payload.find({ collection: 'noticias', where: { slug: { equals: n.slug } }, limit: 1, draft: true });
@@ -280,19 +294,19 @@ export async function POST(req: Request) {
         });
         log.push(`✓ Noticia publicada: ${n.titulo}`);
       }
-
-      // ═══ 4. Retirar contenido de ejemplo no verificable ═══
-      const ev = await payload.delete({ collection: 'eventos', where: { titulo: { in: EVENTOS_RETIRAR } } });
-      if (ev.docs.length > 0) log.push(`✓ Retirados ${ev.docs.length} eventos de ejemplo`);
-      const pr = await payload.delete({ collection: 'proyectos', where: { nombre: { in: PROYECTOS_RETIRAR } } });
-      if (pr.docs.length > 0) log.push(`✓ Retirados ${pr.docs.length} proyectos de ejemplo`);
+    } catch (e) {
+      mediaBloqueada = true;
+      log.push(`✗ Noticias pendientes (media): ${e instanceof Error ? e.message : String(e)}`);
     }
 
-    log.push(partial ? '⏳ PARCIAL — volver a llamar para continuar' : '═══ POBLADO OFICIAL COMPLETADO ═══');
-    return NextResponse.json({ success: true, partial, log });
+    if (mediaBloqueada) {
+      log.push('⚠ FALTA STORAGE DE ARCHIVOS: conectar un Blob store al proyecto en Vercel y volver a llamar.');
+    }
+    log.push(partial ? '⏳ PARCIAL — volver a llamar para continuar' : mediaBloqueada ? '═══ POBLADO SIN ARCHIVOS (falta Blob) ═══' : '═══ POBLADO OFICIAL COMPLETADO ═══');
+    return NextResponse.json({ success: true, partial, mediaBloqueada, log });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     log.push(`❌ Error: ${message}`);
-    return NextResponse.json({ success: false, partial, log, error: message }, { status: 500 });
+    return NextResponse.json({ success: false, partial, mediaBloqueada, log, error: message }, { status: 500 });
   }
 }
