@@ -50,7 +50,7 @@
 | 2 | Respaldo de datos | **en curso** | Uploads persistentes ✅ (Vercel Blob); PENDIENTE respaldo automatizado DB + restauración probada | 2026-07-03 |
 | 3 | Dominio + DNS + hosting | pendiente | Tentativo: h2varaucania.cl en NIC Chile, hosting sigue en Vercel (NO cPanel) | — |
 | 4 | Manual del /admin | pendiente | — | — |
-| 5 | Entrega / traspaso | pendiente | Tentativo: traspasar todo a la cuenta central h2varaucania | — |
+| 5 | Entrega / traspaso | **en curso (Fase 1)** | **Traspaso POR FASES** (ver `Plan_de_traspaso.md`): ahora solo contenido (destinatario = usuario `editor`); infraestructura recién en ~6 meses (meta 2027-01-04) tras capacitación, con acta y cese de responsabilidad. Carlos = custodio técnico entretanto. | 2026-07-04 |
 | 6 | Operación continua | pendiente | — | — |
 
 ## 5. Decisiones clave
