@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 const defaultInstituciones = [
   { nombre: 'CORFO', rol: 'Financiamiento del Bien Público', logo: '/logos/BP H2V Araucanía - Logo Corfo Azul.png' },
-  { nombre: 'CODESSER', rol: 'Ejecutor del proyecto', logo: '/logos/BP H2V Araucanía - Logo CES4.0.png' },
+  { nombre: 'CODESSER', rol: 'Ejecutor principal — Corporación de Desarrollo Social del Sector Rural', logo: '/logos/BP H2V Araucanía - Logo Codesser.png' },
   { nombre: 'Universidad de Talca', rol: 'Co-ejecutor técnico', logo: '/logos/BP H2V Araucanía - Logo Utalca.png' },
   { nombre: 'Seremi de Energía Araucanía', rol: 'Mandante — Subsecretaría de Energía', logo: '/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png' },
 ];

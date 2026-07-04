@@ -33,7 +33,9 @@ const apoyoCorfo = [
 ];
 
 // Instituciones participantes (ejecutor + colaboradores). Secundarias y NUNCA mayores que Corfo (§1.2).
+// CODESSER va primero: es la entidad ejecutora del Bien Público (seed.ts / Modelo de Sustentabilidad).
 const defaultParticipantes = [
+  { src: "/logos/BP H2V Araucanía - Logo Codesser.png", alt: "CODESSER — entidad ejecutora" },
   { src: "/logos/BP H2V Araucanía - Logo Utalca.png", alt: "Universidad de Talca" },
   { src: "/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png", alt: "Seremi de Energia Araucania" },
   { src: "/logos/BP H2V Araucanía - Logo CES4.0.png", alt: "CES 4.0" },
@@ -198,11 +200,13 @@ export default async function Home() {
               <Image key={logo.alt} src={logo.src} alt={logo.alt} width={200} height={90} className="h-14 md:h-20 w-auto" />
             ))}
           </div>
-          {/* Instituciones participantes — secundarias, menores que Corfo (§1.2) */}
+          {/* Instituciones participantes — a todo color, en tarjetas uniformes. Secundarias y menores que Corfo (§1.2). */}
           <p className="eyebrow text-center text-gray-400 mb-8">Instituciones participantes</p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-10">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto">
             {instituciones.map((logo) => (
-              <Image key={logo.alt} src={logo.src} alt={logo.alt} width={100} height={50} className="h-9 md:h-10 w-auto grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+              <div key={logo.alt} className="flex items-center justify-center bg-white rounded-lg border border-gray-200 shadow-sm px-4 py-5 h-24 transition-shadow hover:shadow-md">
+                <Image src={logo.src} alt={logo.alt} width={150} height={70} className="max-h-14 w-auto object-contain" />
+              </div>
             ))}
           </div>
         </div>
