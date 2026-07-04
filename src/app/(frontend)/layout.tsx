@@ -63,12 +63,20 @@ export default async function FrontendLayout({
   let footerPrograma = 'Programa Desarrollo Productivo Sostenible — CORFO';
   let footerEmail = 'h2varaucania@gmail.com';
   let footerUbicacion = 'Temuco, La Araucanía, Chile';
+  let tituloNavegacion = 'Navegación';
+  let tituloContacto = 'Contacto';
+  let tituloApoyo = 'Proyecto apoyado por';
+  let derechos = 'Todos los derechos reservados.';
 
   try {
     const payload = await getPayload();
     const sitio = await payload.findGlobal({ slug: 'sitio-general' });
     if (sitio?.footerTexto) footerTexto = sitio.footerTexto as string;
     if (sitio?.footerPrograma) footerPrograma = sitio.footerPrograma as string;
+    if (sitio?.tituloNavegacion) tituloNavegacion = sitio.tituloNavegacion as string;
+    if (sitio?.tituloContactoFooter) tituloContacto = sitio.tituloContactoFooter as string;
+    if (sitio?.tituloApoyoFooter) tituloApoyo = sitio.tituloApoyoFooter as string;
+    if (sitio?.derechos) derechos = sitio.derechos as string;
     const contacto = await payload.findGlobal({ slug: 'contacto' });
     if (contacto?.email) footerEmail = contacto.email as string;
     if (contacto?.ubicacion) footerUbicacion = contacto.ubicacion as string;
@@ -87,7 +95,7 @@ export default async function FrontendLayout({
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <Footer texto={footerTexto} programa={footerPrograma} email={footerEmail} ubicacion={footerUbicacion} />
+        <Footer texto={footerTexto} programa={footerPrograma} email={footerEmail} ubicacion={footerUbicacion} tituloNavegacion={tituloNavegacion} tituloContacto={tituloContacto} tituloApoyo={tituloApoyo} derechos={derechos} />
         <CookieBanner />
       </body>
     </html>

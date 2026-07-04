@@ -11,6 +11,10 @@ type FooterProps = {
   programa?: string;
   email?: string;
   ubicacion?: string;
+  tituloNavegacion?: string;
+  tituloContacto?: string;
+  tituloApoyo?: string;
+  derechos?: string;
 };
 
 // Crédito obligatorio a Corfo ("Proyecto apoyado por") — Manual de Comunicaciones Corfo Araucanía 2025 §1.2.
@@ -20,7 +24,7 @@ const defaultInstituciones: FooterInstitucion[] = [
   { nombre: 'Desarrollo Productivo Sostenible — CORFO', logo: '/logos/BP H2V Araucanía - DPS Corfo color azul.png' },
 ];
 
-export default function Footer({ texto, programa, email, ubicacion }: FooterProps) {
+export default function Footer({ texto, programa, email, ubicacion, tituloNavegacion, tituloContacto, tituloApoyo, derechos }: FooterProps) {
   const logos = defaultInstituciones;
   return (
     <footer className="bg-h2v-blue text-white" role="contentinfo">
@@ -40,7 +44,7 @@ export default function Footer({ texto, programa, email, ubicacion }: FooterProp
           {/* Column 2: Quick links */}
           <div>
             <h3 className="eyebrow text-white/80 mb-4">
-              Navegación
+              {tituloNavegacion || 'Navegación'}
             </h3>
             <ul className="space-y-2">
               {[
@@ -63,13 +67,13 @@ export default function Footer({ texto, programa, email, ubicacion }: FooterProp
           {/* Column 3: Contact + Logos */}
           <div>
             <h3 className="eyebrow text-white/80 mb-4">
-              Contacto
+              {tituloContacto || 'Contacto'}
             </h3>
             <p className="text-sm text-white/60 mb-1">{email || 'h2varaucania@gmail.com'}</p>
             <p className="text-sm text-white/60 mb-6">{ubicacion || 'Temuco, La Araucanía, Chile'}</p>
 
             <h3 className="eyebrow text-white/80 mb-3">
-              Proyecto apoyado por
+              {tituloApoyo || 'Proyecto apoyado por'}
             </h3>
             <div className="inline-flex items-center gap-5 flex-wrap rounded-lg bg-white px-5 py-4">
               {logos.map((inst) => (
@@ -89,7 +93,7 @@ export default function Footer({ texto, programa, email, ubicacion }: FooterProp
         {/* Bottom bar */}
         <div className="border-t border-white/10 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-white/40">
-            &copy; {new Date().getFullYear()} H2V Araucanía. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} H2V Araucanía. {derechos || 'Todos los derechos reservados.'}
           </p>
           <div className="flex items-center gap-4">
             <Link href="/politica-privacidad" className="text-xs text-white/40 hover:text-white/70 transition-colors">

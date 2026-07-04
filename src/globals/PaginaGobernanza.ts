@@ -1,7 +1,9 @@
 import type { GlobalConfig } from 'payload';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaGobernanza: GlobalConfig = {
   slug: 'pagina-gobernanza',
+  hooks: { afterChange: [revalidaGlobal('/programa/gobernanza')] },
   label: 'Gobernanza',
   admin: {
     group: 'Páginas',

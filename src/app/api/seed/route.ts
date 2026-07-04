@@ -97,8 +97,8 @@ export async function POST(req: Request) {
           { nombre: 'CORFO', rol: 'Financiamiento — Programa Bien Público' },
           { nombre: 'Gobierno Regional de La Araucanía', rol: 'Apoyo institucional regional' },
         ],
-        consejoTitulo: 'Consejo de Dirección del Hidrógeno Verde de Araucanía',
-        consejoDescripcion: 'Instancia estratégica encargada de definir la visión, aprobar planes de desarrollo y supervisar el progreso del proyecto.',
+        consejoTitulo: 'Comité Estratégico del Bien Público',
+        consejoDescripcion: 'Instancia estratégica del proyecto, presidida por la entidad mandante (Seremi de Energía de La Araucanía) con vicepresidencia de CORFO. Sesiona periódicamente desde junio de 2025.',
         comiteTitulo: 'Comité Consultivo Técnico Científico',
         comiteDescripcion: 'Integrado por académicos, investigadores y expertos técnicos que asesoran en materia tecnológica, ambiental y de innovación.',
       },
@@ -215,7 +215,7 @@ export async function POST(req: Request) {
         },
         descripcion: 'El modelo de gobernanza del programa se divide en dos niveles — estratégico y operativo — para asegurar una gestión integral y sostenible del proyecto.',
         nivelEstrategico: {
-          titulo: 'Consejo de Dirección del Hidrógeno Verde de Araucanía',
+          titulo: 'Comité Estratégico del Bien Público',
           descripcion: 'Instancia máxima de dirección estratégica compuesta por representantes del Gobierno Regional, Ministerios, universidades, asociaciones empresariales, comunidades indígenas y expertos independientes.',
           funciones: [
             { texto: 'Definir la visión y estrategia de largo plazo del programa' },

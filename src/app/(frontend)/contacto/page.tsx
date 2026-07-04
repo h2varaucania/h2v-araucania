@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
-import ContactForm from '@/components/forms/ContactForm';
+import ContactForm, { type ContactFormTextos } from '@/components/forms/ContactForm';
 import { getPayload } from '@/lib/payload/getPayload';
+import { t, list } from '@/lib/contenido';
+import { contactoDefaults as d } from '@/content/defaults/contacto';
+import type { Contacto as ContactoGlobalType } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,45 +17,55 @@ export const metadata: Metadata = {
 };
 
 export default async function Contacto() {
-  let email = 'h2varaucania@gmail.com';
-  let ubicacion = 'Temuco, Región de La Araucanía, Chile';
-  let telefono = '';
-  let codigoBP = 'Bien Público 24BP-269085';
-  let ejecutor1 = 'CODESSER — Corporación de Desarrollo Social del Sector Rural';
-  let ejecutor2 = 'Universidad de Talca — Co-ejecutor técnico';
-  let mandante = 'Subsecretaría de Energía — Ministerio de Energía';
-
+  let g: ContactoGlobalType | null = null;
   try {
     const payload = await getPayload();
-    const data = await payload.findGlobal({ slug: 'contacto' });
-    if (data?.email) email = data.email as string;
-    if (data?.ubicacion) ubicacion = data.ubicacion as string;
-    if (data?.telefono) telefono = data.telefono as string;
-    if (data?.codigoBP) codigoBP = data.codigoBP as string;
-    if (data?.ejecutor1) ejecutor1 = data.ejecutor1 as string;
-    if (data?.ejecutor2) ejecutor2 = data.ejecutor2 as string;
-    if (data?.mandante) mandante = data.mandante as string;
+    g = (await payload.findGlobal({ slug: 'contacto' })) as ContactoGlobalType;
   } catch {
-    // Use defaults
+    // Sin CMS disponible: la página completa rinde con los defaults.
   }
+
+  const email = t(g?.email, d.email);
+  const telefono = g?.telefono || '';
+  const textosForm: ContactFormTextos = {
+    etiquetaNombre: t(g?.formEtiquetaNombre, d.formEtiquetaNombre),
+    placeholderNombre: t(g?.formPlaceholderNombre, d.formPlaceholderNombre),
+    etiquetaEmail: t(g?.formEtiquetaEmail, d.formEtiquetaEmail),
+    placeholderEmail: t(g?.formPlaceholderEmail, d.formPlaceholderEmail),
+    etiquetaAsunto: t(g?.formEtiquetaAsunto, d.formEtiquetaAsunto),
+    opcionPorDefecto: t(g?.formOpcionPorDefecto, d.formOpcionPorDefecto),
+    opcionesAsunto: list(
+      g?.formOpcionesAsunto?.map((o) => ({ etiqueta: o.etiqueta, valor: o.valor })),
+      d.formOpcionesAsunto.map((o) => ({ ...o })),
+    ),
+    etiquetaMensaje: t(g?.formEtiquetaMensaje, d.formEtiquetaMensaje),
+    placeholderMensaje: t(g?.formPlaceholderMensaje, d.formPlaceholderMensaje),
+    textoBoton: t(g?.formTextoBoton, d.formTextoBoton),
+    textoEnviando: t(g?.formTextoEnviando, d.formTextoEnviando),
+    tituloExito: t(g?.formTituloExito, d.formTituloExito),
+    textoExito: t(g?.formTextoExito, d.formTextoExito),
+    textoOtroMensaje: t(g?.formTextoOtroMensaje, d.formTextoOtroMensaje),
+    textoError: t(g?.formTextoError, d.formTextoError),
+  };
+
   return (
     <div>
       <section className="bg-h2v-blue text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-semibold mb-4">Contacto</h1>
-          <p className="text-lg opacity-80">Escríbenos para consultas, colaboraciones o más información.</p>
+          <h1 className="text-4xl md:text-6xl font-semibold mb-4">{t(g?.tituloPagina, d.tituloPagina)}</h1>
+          <p className="text-lg opacity-80">{t(g?.bajadaPagina, d.bajadaPagina)}</p>
         </div>
       </section>
 
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-xl font-semibold text-h2v-blue mb-6">Envíanos un mensaje</h2>
-            <ContactForm />
+            <h2 className="text-xl font-semibold text-h2v-blue mb-6">{t(g?.tituloFormulario, d.tituloFormulario)}</h2>
+            <ContactForm textos={textosForm} />
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold text-h2v-blue mb-6">Información de contacto</h2>
+            <h2 className="text-xl font-semibold text-h2v-blue mb-6">{t(g?.tituloInfo, d.tituloInfo)}</h2>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-lg bg-h2v-green/10 flex items-center justify-center shrink-0">
@@ -61,7 +74,7 @@ export default async function Contacto() {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-h2v-blue">Correo electrónico</p>
+                  <p className="font-medium text-h2v-blue">{t(g?.etiquetaEmail, d.etiquetaEmail)}</p>
                   <a href={`mailto:${email}`} className="text-h2v-green hover:underline">{email}</a>
                 </div>
               </div>
@@ -74,8 +87,8 @@ export default async function Contacto() {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-h2v-blue">Ubicación</p>
-                  <p className="text-gray-600">{ubicacion}</p>
+                  <p className="font-medium text-h2v-blue">{t(g?.etiquetaUbicacion, d.etiquetaUbicacion)}</p>
+                  <p className="text-gray-600">{t(g?.ubicacion, d.ubicacion)}</p>
                 </div>
               </div>
 
@@ -87,7 +100,7 @@ export default async function Contacto() {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-medium text-h2v-blue">Teléfono</p>
+                    <p className="font-medium text-h2v-blue">{t(g?.etiquetaTelefono, d.etiquetaTelefono)}</p>
                     <a href={`tel:${telefono}`} className="text-h2v-green hover:underline">{telefono}</a>
                   </div>
                 </div>
@@ -100,21 +113,21 @@ export default async function Contacto() {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-h2v-blue">Programa</p>
-                  <p className="text-gray-600">{codigoBP}</p>
-                  <p className="text-sm text-gray-400">Programa Desarrollo Productivo Sostenible — CORFO</p>
+                  <p className="font-medium text-h2v-blue">{t(g?.etiquetaPrograma, d.etiquetaPrograma)}</p>
+                  <p className="text-gray-600">{t(g?.codigoBP, d.codigoBP)}</p>
+                  <p className="text-sm text-gray-400">{t(g?.programaLinea2, d.programaLinea2)}</p>
                 </div>
               </div>
             </div>
 
             <div className="mt-10 p-6 bg-gray-50 rounded-xl">
-              <p className="text-sm font-medium text-gray-500 mb-3">Ejecutado por</p>
+              <p className="text-sm font-medium text-gray-500 mb-3">{t(g?.tituloEjecutores, d.tituloEjecutores)}</p>
               <div className="space-y-2 text-sm text-gray-700">
-                <p>{ejecutor1}</p>
-                <p>{ejecutor2}</p>
+                <p>{t(g?.ejecutor1, d.ejecutor1)}</p>
+                <p>{t(g?.ejecutor2, d.ejecutor2)}</p>
               </div>
-              <p className="text-sm font-medium text-gray-500 mt-4 mb-2">Mandante</p>
-              <p className="text-sm text-gray-700">{mandante}</p>
+              <p className="text-sm font-medium text-gray-500 mt-4 mb-2">{t(g?.tituloMandante, d.tituloMandante)}</p>
+              <p className="text-sm text-gray-700">{t(g?.mandante, d.mandante)}</p>
             </div>
           </div>
         </div>

@@ -4,6 +4,9 @@ import Link from "next/link";
 import { getPayload } from "@/lib/payload/getPayload";
 import { publicados } from "@/lib/published";
 import { categoriasColor } from "@/lib/categorias";
+import { t, list } from "@/lib/contenido";
+import { inicioDefaults as di } from "@/content/defaults/inicio";
+import type { PaginaInicio } from "@/payload-types";
 
 export const dynamic = 'force-dynamic';
 
@@ -48,13 +51,14 @@ const defaultParticipantes = [
 export default async function Home() {
   const hero = { titulo: 'Hidrogeno Verde en La Araucania', subtitulo: 'Plataforma informativa sobre los avances, proyectos y oportunidades del hidrogeno verde en la region de La Araucania, Chile.', ctaPrimario: 'Conozca el Programa', ctaSecundario: 'Ver Proyectos en el Mapa' };
   let cards = defaultCards;
-  let seccionTitulo = 'Explora el Programa';
+  let g: PaginaInicio | null = null;
   let instituciones = defaultParticipantes;
   let latestNoticias: Array<{ id: number; titulo: string; slug: string; fecha: string; extracto: string; categoria?: string }> = [];
 
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-inicio' });
+    g = data;
     const sitio = await payload.findGlobal({ slug: 'sitio-general' });
     if (sitio?.instituciones && sitio.instituciones.length > 0) {
       instituciones = sitio.instituciones
@@ -68,7 +72,6 @@ export default async function Home() {
     if (data?.hero?.subtitulo) hero.subtitulo = data.hero.subtitulo;
     if (data?.hero?.ctaPrimario) hero.ctaPrimario = data.hero.ctaPrimario;
     if (data?.hero?.ctaSecundario) hero.ctaSecundario = data.hero.ctaSecundario;
-    if (data?.seccionExplora?.titulo) seccionTitulo = data.seccionExplora.titulo;
     if (data?.seccionExplora?.cards && data.seccionExplora.cards.length > 0) {
       cards = data.seccionExplora.cards.map((c, i) => ({
         titulo: c.titulo,
@@ -101,7 +104,7 @@ export default async function Home() {
     <>
       <section className="relative py-24 md:py-36 px-4 bg-gradient-to-br from-h2v-green to-h2v-blue">
         <div className="max-w-4xl mx-auto text-center text-white">
-          <p className="eyebrow text-h2v-green-light mb-5">Bien Público 24BP-269085 · Programa Estratégico Regional</p>
+          <p className="eyebrow text-h2v-green-light mb-5">{t(g?.hero?.eyebrow, di.eyebrow)}</p>
           <h1 className="text-5xl md:text-7xl font-semibold mb-6 leading-[1.05]">{hero.titulo}</h1>
           <p className="text-lg md:text-xl text-white/90 mb-9 max-w-2xl mx-auto leading-relaxed">{hero.subtitulo}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -114,12 +117,7 @@ export default async function Home() {
       {/* Banda de indicadores */}
       <section className="bg-h2v-blue border-t border-white/10 py-10 px-4">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-          {[
-            { n: '9', u: '', l: 'Instituciones' },
-            { n: '88.745', u: 't/año', l: 'Demanda H₂V al 2045' },
-            { n: '32', u: '', l: 'Comunas' },
-            { n: '2024–2050', u: '', l: 'Hoja de ruta' },
-          ].map((k) => (
+          {list(g?.kpis?.map((k) => ({ n: k.cifra, u: k.unidad || '', l: k.etiqueta })), di.kpis.map((k) => ({ n: k.cifra, u: k.unidad, l: k.etiqueta }))).map((k) => (
             <div key={k.l} className="pl-4 border-l-[3px] border-h2v-gold">
               <div className="font-serif font-semibold text-3xl md:text-[2.5rem] leading-none text-white tracking-tight">
                 {k.n}{k.u && <span className="text-h2v-green-light text-xl md:text-2xl ml-1">{k.u}</span>}
@@ -133,8 +131,8 @@ export default async function Home() {
       <section className="py-20 px-4 bg-gray-50 border-y border-gray-200">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <p className="eyebrow text-h2v-green mb-3">Explora</p>
-            <h2 className="text-3xl md:text-4xl font-semibold text-h2v-blue">{seccionTitulo}</h2>
+            <p className="eyebrow text-h2v-green mb-3">{t(g?.seccionExplora?.kicker, di.kickerExplora)}</p>
+            <h2 className="text-3xl md:text-4xl font-semibold text-h2v-blue">{t(g?.seccionExplora?.titulo, di.tituloExplora)}</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {cards.map((card) => (
@@ -158,11 +156,11 @@ export default async function Home() {
           <div className="max-w-4xl mx-auto">
             <div className="flex items-end justify-between mb-8">
               <div>
-                <p className="eyebrow text-h2v-green mb-2">Actualidad</p>
-                <h2 className="text-3xl md:text-4xl font-semibold text-h2v-blue">Ultimas Noticias</h2>
+                <p className="eyebrow text-h2v-green mb-2">{t(g?.seccionNoticias?.kicker, di.kickerNoticias)}</p>
+                <h2 className="text-3xl md:text-4xl font-semibold text-h2v-blue">{t(g?.seccionNoticias?.titulo, di.tituloNoticias)}</h2>
               </div>
               <Link href="/noticias" className="text-sm font-medium text-h2v-green hover:underline whitespace-nowrap">
-                Ver todas →
+                {t(g?.seccionNoticias?.verTodas, di.textoVerTodas)}
               </Link>
             </div>
             <div className="space-y-4">
@@ -194,14 +192,14 @@ export default async function Home() {
       <section className="py-12 px-4 bg-white border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
           {/* Financiador destacado — Manual de Comunicaciones Corfo Araucanía 2025 §1.2 */}
-          <p className="eyebrow text-center text-gray-500 mb-6">Proyecto apoyado por</p>
+          <p className="eyebrow text-center text-gray-500 mb-6">{t(g?.seccionInstituciones?.tituloApoyo, di.tituloApoyo)}</p>
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14 mb-12">
             {apoyoCorfo.map((logo) => (
               <Image key={logo.alt} src={logo.src} alt={logo.alt} width={260} height={120} className="h-20 md:h-28 w-auto" />
             ))}
           </div>
           {/* Instituciones participantes — a todo color, en tarjetas uniformes. Secundarias y menores que Corfo (§1.2). */}
-          <p className="eyebrow text-center text-gray-400 mb-8">Instituciones participantes</p>
+          <p className="eyebrow text-center text-gray-400 mb-8">{t(g?.seccionInstituciones?.tituloParticipantes, di.tituloParticipantes)}</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-5 max-w-5xl mx-auto">
             {instituciones.map((logo) => (
               <div key={logo.alt} className="flex items-center justify-center bg-white rounded-lg border border-gray-200 shadow-sm px-5 py-6 h-32 md:h-36 transition-shadow hover:shadow-md">

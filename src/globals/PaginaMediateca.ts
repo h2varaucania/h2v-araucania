@@ -1,7 +1,9 @@
 import type { GlobalConfig } from 'payload';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaMediateca: GlobalConfig = {
   slug: 'pagina-mediateca',
+  hooks: { afterChange: [revalidaGlobal('/recursos/mediateca')] },
   label: 'Mediateca',
   admin: {
     group: 'Páginas',

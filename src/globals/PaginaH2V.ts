@@ -1,7 +1,9 @@
 import type { GlobalConfig } from 'payload';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaH2V: GlobalConfig = {
   slug: 'pagina-h2v',
+  hooks: { afterChange: [revalidaGlobal('/hidrogeno-verde')] },
   label: 'Hidrógeno Verde',
   admin: {
     group: 'Páginas',

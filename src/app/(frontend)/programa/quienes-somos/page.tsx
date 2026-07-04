@@ -44,8 +44,8 @@ export default async function QuienesSomos() {
   let bienPublicoTitulo = 'El Bien Público';
   let bienPublicoContenido: NonNullable<PaginaQuienesSomo['bienPublico']>['contenido'] | null = null;
   let instituciones: Institucion[] = defaultInstituciones;
-  let consejoTitulo = 'Consejo de Dirección del Hidrógeno Verde de Araucanía';
-  let consejoDesc = 'Instancia estratégica encargada de definir la visión, aprobar planes de desarrollo y supervisar el progreso del proyecto.';
+  let consejoTitulo = 'Comité Estratégico del Bien Público';
+  let consejoDesc = 'Instancia estratégica del proyecto, presidida por la entidad mandante (Seremi de Energía de La Araucanía) con vicepresidencia de CORFO. Sesiona periódicamente desde junio de 2025.';
   let comiteTitulo = 'Comité Consultivo Técnico Científico';
   let comiteDesc = 'Integrado por miembros de la sociedad civil, ONGs y otros actores relevantes para fiscalizar y transparentar el desarrollo del proyecto.';
 

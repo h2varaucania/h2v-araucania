@@ -1,7 +1,9 @@
 import type { GlobalConfig } from 'payload';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaMarcoRegulatorio: GlobalConfig = {
   slug: 'pagina-marco-regulatorio',
+  hooks: { afterChange: [revalidaGlobal('/hidrogeno-verde/marco-regulatorio')] },
   label: 'Marco Regulatorio',
   admin: {
     group: 'Páginas',

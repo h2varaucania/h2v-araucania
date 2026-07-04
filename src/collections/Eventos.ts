@@ -1,8 +1,10 @@
 import type { CollectionConfig } from 'payload';
 import { anyone, isAdmin, isAdminOrEditor } from '@/lib/access';
+import { revalidaColeccion, revalidaColeccionAlBorrar } from '@/hooks/revalidate';
 
 export const Eventos: CollectionConfig = {
   slug: 'eventos',
+  hooks: { afterChange: [revalidaColeccion(['/recursos/eventos'])], afterDelete: [revalidaColeccionAlBorrar(['/recursos/eventos'])] },
   labels: { singular: 'Evento', plural: 'Eventos' },
   access: {
     read: anyone,

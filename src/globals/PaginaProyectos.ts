@@ -1,7 +1,9 @@
 import type { GlobalConfig } from 'payload';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaProyectos: GlobalConfig = {
   slug: 'pagina-proyectos',
+  hooks: { afterChange: [revalidaGlobal('/proyectos')] },
   label: 'Mapa de Proyectos',
   admin: {
     group: 'Páginas',

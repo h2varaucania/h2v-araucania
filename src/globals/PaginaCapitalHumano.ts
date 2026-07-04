@@ -1,7 +1,9 @@
 import type { GlobalConfig } from 'payload';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaCapitalHumano: GlobalConfig = {
   slug: 'pagina-capital-humano',
+  hooks: { afterChange: [revalidaGlobal('/hidrogeno-verde/capital-humano')] },
   label: 'Capital Humano',
   admin: {
     group: 'Páginas',

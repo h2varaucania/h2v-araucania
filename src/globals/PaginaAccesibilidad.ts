@@ -1,7 +1,9 @@
 import type { GlobalConfig } from 'payload';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaAccesibilidad: GlobalConfig = {
   slug: 'pagina-accesibilidad',
+  hooks: { afterChange: [revalidaGlobal('/accesibilidad')] },
   label: 'Accesibilidad',
   admin: {
     group: 'Páginas',

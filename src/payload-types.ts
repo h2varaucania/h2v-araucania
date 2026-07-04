@@ -919,6 +919,38 @@ export interface SitioGeneral {
    */
   footerPrograma?: string | null;
   /**
+   * Encabezado de la lista de enlaces del pie de página. Ej: "Navegación"
+   */
+  tituloNavegacion?: string | null;
+  /**
+   * Encabezado de la columna de contacto del pie de página. Ej: "Contacto"
+   */
+  tituloContactoFooter?: string | null;
+  /**
+   * Leyenda sobre los logos de Corfo en el pie de página (exigida por el Manual de Comunicaciones).
+   */
+  tituloApoyoFooter?: string | null;
+  /**
+   * Aparece junto al año en el pie de página. Ej: "Todos los derechos reservados."
+   */
+  derechos?: string | null;
+  /**
+   * Se muestra cuando alguien entra a una dirección que no existe.
+   */
+  titulo404?: string | null;
+  /**
+   * Explicación breve bajo el título del error 404.
+   */
+  texto404?: string | null;
+  /**
+   * Ej: "Volver al inicio"
+   */
+  boton404?: string | null;
+  /**
+   * Ej: "Ver proyectos"
+   */
+  boton404Secundario?: string | null;
+  /**
    * Logos que aparecen en el footer y la página de inicio. Sube los logos de CORFO, CODESSER, UTalca, etc.
    */
   instituciones?:
@@ -932,13 +964,129 @@ export interface SitioGeneral {
   createdAt?: string | null;
 }
 /**
- * Datos de contacto que aparecen en la página de Contacto y en el footer del sitio.
+ * TODO lo que se ve en la página de Contacto: textos de la página, formulario y datos institucionales (también usados en el footer).
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contacto".
  */
 export interface Contacto {
   id: number;
+  /**
+   * El título grande del encabezado azul. Ej: "Contacto"
+   */
+  tituloPagina?: string | null;
+  /**
+   * Frase bajo el título. Ej: "Escríbenos para consultas..."
+   */
+  bajadaPagina?: string | null;
+  /**
+   * Ej: "Envíanos un mensaje"
+   */
+  tituloFormulario?: string | null;
+  /**
+   * Ej: "Información de contacto"
+   */
+  tituloInfo?: string | null;
+  /**
+   * Ej: "Correo electrónico"
+   */
+  etiquetaEmail?: string | null;
+  /**
+   * Ej: "Ubicación"
+   */
+  etiquetaUbicacion?: string | null;
+  /**
+   * Ej: "Teléfono"
+   */
+  etiquetaTelefono?: string | null;
+  /**
+   * Ej: "Programa"
+   */
+  etiquetaPrograma?: string | null;
+  /**
+   * Texto pequeño bajo el código del Bien Público.
+   */
+  programaLinea2?: string | null;
+  /**
+   * Ej: "Ejecutado por"
+   */
+  tituloEjecutores?: string | null;
+  /**
+   * Ej: "Mandante"
+   */
+  tituloMandante?: string | null;
+  /**
+   * Ej: "Nombre completo"
+   */
+  formEtiquetaNombre?: string | null;
+  /**
+   * Texto gris dentro del campo. Ej: "Tu nombre"
+   */
+  formPlaceholderNombre?: string | null;
+  /**
+   * Ej: "Correo electrónico"
+   */
+  formEtiquetaEmail?: string | null;
+  /**
+   * Ej: "tu@email.com"
+   */
+  formPlaceholderEmail?: string | null;
+  /**
+   * Ej: "Asunto"
+   */
+  formEtiquetaAsunto?: string | null;
+  /**
+   * Primera opción del selector. Ej: "Selecciona un asunto"
+   */
+  formOpcionPorDefecto?: string | null;
+  /**
+   * Los asuntos que puede elegir quien escribe. Agrega, quita o reordena arrastrando.
+   */
+  formOpcionesAsunto?:
+    | {
+        /**
+         * Ej: "Consulta general"
+         */
+        etiqueta: string;
+        /**
+         * Identificador sin espacios. Ej: "consulta"
+         */
+        valor: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Ej: "Mensaje"
+   */
+  formEtiquetaMensaje?: string | null;
+  /**
+   * Ej: "Escribe tu mensaje aquí..."
+   */
+  formPlaceholderMensaje?: string | null;
+  /**
+   * Ej: "Enviar mensaje"
+   */
+  formTextoBoton?: string | null;
+  /**
+   * Ej: "Enviando..."
+   */
+  formTextoEnviando?: string | null;
+  /**
+   * Ej: "Mensaje enviado"
+   */
+  formTituloExito?: string | null;
+  /**
+   * Ej: "Gracias por contactarnos. Responderemos a la brevedad."
+   */
+  formTextoExito?: string | null;
+  /**
+   * Ej: "Enviar otro mensaje"
+   */
+  formTextoOtroMensaje?: string | null;
+  /**
+   * Ej: "Error al enviar. Por favor intenta nuevamente."
+   */
+  formTextoError?: string | null;
   /**
    * Email público al que llegarán los mensajes del formulario de contacto.
    */
@@ -980,6 +1128,10 @@ export interface PaginaInicio {
   id: number;
   hero: {
     /**
+     * Texto pequeño en mayúsculas sobre el título. Ej: "Bien Público 24BP-269085 · Programa Estratégico Regional"
+     */
+    eyebrow?: string | null;
+    /**
      * Título grande que aparece sobre el banner principal.
      */
     titulo: string;
@@ -996,7 +1148,31 @@ export interface PaginaInicio {
      */
     ctaSecundario?: string | null;
   };
+  /**
+   * Las cifras destacadas bajo el banner (barra azul). Agrega, quita o reordena arrastrando.
+   */
+  kpis?:
+    | {
+        /**
+         * El número grande. Ej: "88.745" o "2024–2050"
+         */
+        cifra: string;
+        /**
+         * Se muestra junto a la cifra en verde. Ej: "t/año"
+         */
+        unidad?: string | null;
+        /**
+         * Texto pequeño bajo la cifra. Ej: "Comunas"
+         */
+        etiqueta: string;
+        id?: string | null;
+      }[]
+    | null;
   seccionExplora?: {
+    /**
+     * Palabra pequeña en verde sobre el título de la sección. Ej: "Explora"
+     */
+    kicker?: string | null;
     /**
      * Título de la sección de tarjetas de acceso rápido.
      */
@@ -1021,6 +1197,30 @@ export interface PaginaInicio {
           id?: string | null;
         }[]
       | null;
+  };
+  seccionNoticias?: {
+    /**
+     * Palabra pequeña en verde sobre el título. Ej: "Actualidad"
+     */
+    kicker?: string | null;
+    /**
+     * Título de la sección de noticias en la portada.
+     */
+    titulo?: string | null;
+    /**
+     * Enlace a la página de noticias. Ej: "Ver todas →"
+     */
+    verTodas?: string | null;
+  };
+  seccionInstituciones?: {
+    /**
+     * Leyenda sobre los logos de Corfo (exigida por el Manual de Comunicaciones). Ej: "Proyecto apoyado por"
+     */
+    tituloApoyo?: string | null;
+    /**
+     * Leyenda sobre los logos de las instituciones. Ej: "Instituciones participantes"
+     */
+    tituloParticipantes?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1990,6 +2190,14 @@ export interface SitioGeneralSelect<T extends boolean = true> {
   descripcionSEO?: T;
   footerTexto?: T;
   footerPrograma?: T;
+  tituloNavegacion?: T;
+  tituloContactoFooter?: T;
+  tituloApoyoFooter?: T;
+  derechos?: T;
+  titulo404?: T;
+  texto404?: T;
+  boton404?: T;
+  boton404Secundario?: T;
   instituciones?:
     | T
     | {
@@ -2006,6 +2214,38 @@ export interface SitioGeneralSelect<T extends boolean = true> {
  * via the `definition` "contacto_select".
  */
 export interface ContactoSelect<T extends boolean = true> {
+  tituloPagina?: T;
+  bajadaPagina?: T;
+  tituloFormulario?: T;
+  tituloInfo?: T;
+  etiquetaEmail?: T;
+  etiquetaUbicacion?: T;
+  etiquetaTelefono?: T;
+  etiquetaPrograma?: T;
+  programaLinea2?: T;
+  tituloEjecutores?: T;
+  tituloMandante?: T;
+  formEtiquetaNombre?: T;
+  formPlaceholderNombre?: T;
+  formEtiquetaEmail?: T;
+  formPlaceholderEmail?: T;
+  formEtiquetaAsunto?: T;
+  formOpcionPorDefecto?: T;
+  formOpcionesAsunto?:
+    | T
+    | {
+        etiqueta?: T;
+        valor?: T;
+        id?: T;
+      };
+  formEtiquetaMensaje?: T;
+  formPlaceholderMensaje?: T;
+  formTextoBoton?: T;
+  formTextoEnviando?: T;
+  formTituloExito?: T;
+  formTextoExito?: T;
+  formTextoOtroMensaje?: T;
+  formTextoError?: T;
   email?: T;
   ubicacion?: T;
   telefono?: T;
@@ -2025,14 +2265,24 @@ export interface PaginaInicioSelect<T extends boolean = true> {
   hero?:
     | T
     | {
+        eyebrow?: T;
         titulo?: T;
         subtitulo?: T;
         ctaPrimario?: T;
         ctaSecundario?: T;
       };
+  kpis?:
+    | T
+    | {
+        cifra?: T;
+        unidad?: T;
+        etiqueta?: T;
+        id?: T;
+      };
   seccionExplora?:
     | T
     | {
+        kicker?: T;
         titulo?: T;
         cards?:
           | T
@@ -2042,6 +2292,19 @@ export interface PaginaInicioSelect<T extends boolean = true> {
               enlace?: T;
               id?: T;
             };
+      };
+  seccionNoticias?:
+    | T
+    | {
+        kicker?: T;
+        titulo?: T;
+        verTodas?: T;
+      };
+  seccionInstituciones?:
+    | T
+    | {
+        tituloApoyo?: T;
+        tituloParticipantes?: T;
       };
   updatedAt?: T;
   createdAt?: T;

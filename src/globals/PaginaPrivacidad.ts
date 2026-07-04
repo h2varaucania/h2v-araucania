@@ -1,7 +1,9 @@
 import type { GlobalConfig } from 'payload';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaPrivacidad: GlobalConfig = {
   slug: 'pagina-privacidad',
+  hooks: { afterChange: [revalidaGlobal('/politica-privacidad')] },
   label: 'Política de Privacidad',
   admin: {
     group: 'Páginas',

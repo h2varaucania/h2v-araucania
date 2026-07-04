@@ -1,7 +1,9 @@
 import type { GlobalConfig } from 'payload';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaHojaRuta: GlobalConfig = {
   slug: 'pagina-hoja-ruta',
+  hooks: { afterChange: [revalidaGlobal('/hidrogeno-verde/hoja-de-ruta')] },
   label: 'Hoja de Ruta',
   admin: {
     group: 'Páginas',

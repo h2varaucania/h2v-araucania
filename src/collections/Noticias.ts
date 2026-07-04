@@ -1,8 +1,10 @@
 import type { CollectionConfig } from 'payload';
 import { anyone, isAdmin, isAdminOrEditor } from '@/lib/access';
+import { revalidaColeccion, revalidaColeccionAlBorrar } from '@/hooks/revalidate';
 
 export const Noticias: CollectionConfig = {
   slug: 'noticias',
+  hooks: { afterChange: [revalidaColeccion(['/', '/noticias'], '/noticias')], afterDelete: [revalidaColeccionAlBorrar(['/', '/noticias'], '/noticias')] },
   labels: { singular: 'Noticia', plural: 'Noticias' },
   access: {
     read: anyone,

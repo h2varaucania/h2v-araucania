@@ -1,0 +1,4 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "TSX_TSCONFIG_PATH=./tsconfig.json npx payload migrate && npm run build"
+}

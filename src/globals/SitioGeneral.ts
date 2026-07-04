@@ -1,8 +1,10 @@
 import type { GlobalConfig } from 'payload';
 import { isAdmin } from '@/lib/access';
+import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const SitioGeneral: GlobalConfig = {
   slug: 'sitio-general',
+  hooks: { afterChange: [revalidaGlobal('/', '/contacto')] },
   label: 'Configuración General',
   // Configuración institucional: solo administradores pueden modificarla (F8).
   // Los editores publican contenido, pero no tocan la identidad del sitio.
@@ -43,6 +45,70 @@ export const SitioGeneral: GlobalConfig = {
       maxLength: 100,
       defaultValue: 'Programa Desarrollo Productivo Sostenible — CORFO',
       admin: { description: 'Segunda línea del footer. Ej: "Programa Desarrollo Productivo Sostenible — CORFO"' },
+    },
+    {
+      name: 'tituloNavegacion',
+      type: 'text',
+      maxLength: 40,
+      defaultValue: 'Navegación',
+      label: 'Título de la columna de navegación (footer)',
+      admin: { description: 'Encabezado de la lista de enlaces del pie de página. Ej: "Navegación"' },
+    },
+    {
+      name: 'tituloContactoFooter',
+      type: 'text',
+      maxLength: 40,
+      defaultValue: 'Contacto',
+      label: 'Título de la columna de contacto (footer)',
+      admin: { description: 'Encabezado de la columna de contacto del pie de página. Ej: "Contacto"' },
+    },
+    {
+      name: 'tituloApoyoFooter',
+      type: 'text',
+      maxLength: 60,
+      defaultValue: 'Proyecto apoyado por',
+      label: 'Leyenda de apoyo (footer)',
+      admin: { description: 'Leyenda sobre los logos de Corfo en el pie de página (exigida por el Manual de Comunicaciones).' },
+    },
+    {
+      name: 'derechos',
+      type: 'text',
+      maxLength: 80,
+      defaultValue: 'Todos los derechos reservados.',
+      label: 'Texto de derechos',
+      admin: { description: 'Aparece junto al año en el pie de página. Ej: "Todos los derechos reservados."' },
+    },
+    {
+      name: 'titulo404',
+      type: 'text',
+      maxLength: 60,
+      defaultValue: 'Página no encontrada',
+      label: 'Título de la página 404',
+      admin: { description: 'Se muestra cuando alguien entra a una dirección que no existe.' },
+    },
+    {
+      name: 'texto404',
+      type: 'textarea',
+      maxLength: 250,
+      defaultValue: 'La página que buscas no existe o fue movida. Puedes volver al inicio o explorar las secciones del programa.',
+      label: 'Texto de la página 404',
+      admin: { description: 'Explicación breve bajo el título del error 404.' },
+    },
+    {
+      name: 'boton404',
+      type: 'text',
+      maxLength: 40,
+      defaultValue: 'Volver al inicio',
+      label: 'Botón principal del 404',
+      admin: { description: 'Ej: "Volver al inicio"' },
+    },
+    {
+      name: 'boton404Secundario',
+      type: 'text',
+      maxLength: 40,
+      defaultValue: 'Ver proyectos',
+      label: 'Botón secundario del 404',
+      admin: { description: 'Ej: "Ver proyectos"' },
     },
     {
       name: 'instituciones',
