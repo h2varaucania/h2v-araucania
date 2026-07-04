@@ -97,20 +97,43 @@ export default async function Home() {
 
   return (
     <>
-      <section className="relative py-20 md:py-32 px-4 bg-gradient-to-br from-h2v-green to-h2v-blue">
+      <section className="relative py-24 md:py-36 px-4 bg-gradient-to-br from-h2v-green to-h2v-blue">
         <div className="max-w-4xl mx-auto text-center text-white">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">{hero.titulo}</h1>
-          <p className="text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto">{hero.subtitulo}</p>
+          <p className="eyebrow text-h2v-green-light mb-5">Bien Público 24BP-269085 · Programa Estratégico Regional</p>
+          <h1 className="text-5xl md:text-7xl font-semibold mb-6 leading-[1.05]">{hero.titulo}</h1>
+          <p className="text-lg md:text-xl text-white/90 mb-9 max-w-2xl mx-auto leading-relaxed">{hero.subtitulo}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/programa/quienes-somos" className="px-8 py-3 bg-white text-h2v-blue font-semibold rounded-full hover:bg-white/90 transition-colors">{hero.ctaPrimario}</Link>
-            <Link href="/proyectos" className="px-8 py-3 border-2 border-white/60 text-white font-semibold rounded-full hover:bg-white/10 transition-colors">{hero.ctaSecundario}</Link>
+            <Link href="/programa/quienes-somos" className="px-8 py-3.5 bg-h2v-gold text-[#3a2606] font-semibold rounded-full hover:brightness-105 transition-all">{hero.ctaPrimario}</Link>
+            <Link href="/proyectos" className="px-8 py-3.5 border border-white/50 text-white font-semibold rounded-full hover:bg-white/10 transition-colors">{hero.ctaSecundario}</Link>
           </div>
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      {/* Banda de indicadores */}
+      <section className="bg-h2v-blue border-t border-white/10 py-10 px-4">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+          {[
+            { n: '9', u: '', l: 'Instituciones' },
+            { n: '88.745', u: 't/año', l: 'Demanda H₂V al 2045' },
+            { n: '32', u: '', l: 'Comunas' },
+            { n: '2024–2050', u: '', l: 'Hoja de ruta' },
+          ].map((k) => (
+            <div key={k.l} className="pl-4 border-l-[3px] border-h2v-gold">
+              <div className="font-serif font-semibold text-3xl md:text-[2.5rem] leading-none text-white tracking-tight">
+                {k.n}{k.u && <span className="text-h2v-green-light text-xl md:text-2xl ml-1">{k.u}</span>}
+              </div>
+              <div className="eyebrow text-white/60 mt-2.5">{k.l}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="py-20 px-4 bg-gray-50 border-y border-gray-200">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-h2v-blue text-center mb-12">{seccionTitulo}</h2>
+          <div className="text-center mb-14">
+            <p className="eyebrow text-h2v-green mb-3">Explora</p>
+            <h2 className="text-3xl md:text-4xl font-semibold text-h2v-blue">{seccionTitulo}</h2>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {cards.map((card) => (
               <Link key={card.enlace} href={card.enlace} className="group bg-white rounded-xl p-6 shadow-sm hover:shadow-lg border border-gray-100 hover:border-h2v-green/30 transition-all duration-200">
@@ -129,12 +152,15 @@ export default async function Home() {
 
       {/* Latest Noticias */}
       {latestNoticias.length > 0 && (
-        <section className="py-16 px-4 bg-white">
+        <section className="py-20 px-4 bg-white">
           <div className="max-w-4xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-h2v-blue">Ultimas Noticias</h2>
-              <Link href="/noticias" className="text-sm font-medium text-h2v-green hover:underline">
-                Ver todas
+            <div className="flex items-end justify-between mb-8">
+              <div>
+                <p className="eyebrow text-h2v-green mb-2">Actualidad</p>
+                <h2 className="text-3xl md:text-4xl font-semibold text-h2v-blue">Ultimas Noticias</h2>
+              </div>
+              <Link href="/noticias" className="text-sm font-medium text-h2v-green hover:underline whitespace-nowrap">
+                Ver todas →
               </Link>
             </div>
             <div className="space-y-4">
@@ -166,14 +192,14 @@ export default async function Home() {
       <section className="py-12 px-4 bg-white border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
           {/* Financiador destacado — Manual de Comunicaciones Corfo Araucanía 2025 §1.2 */}
-          <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-6">Proyecto apoyado por</p>
+          <p className="eyebrow text-center text-gray-500 mb-6">Proyecto apoyado por</p>
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-12">
             {apoyoCorfo.map((logo) => (
               <Image key={logo.alt} src={logo.src} alt={logo.alt} width={200} height={90} className="h-14 md:h-20 w-auto" />
             ))}
           </div>
           {/* Instituciones participantes — secundarias, menores que Corfo (§1.2) */}
-          <p className="text-center text-sm text-gray-400 uppercase tracking-wider mb-8">Instituciones participantes</p>
+          <p className="eyebrow text-center text-gray-400 mb-8">Instituciones participantes</p>
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-10">
             {instituciones.map((logo) => (
               <Image key={logo.alt} src={logo.src} alt={logo.alt} width={100} height={50} className="h-9 md:h-10 w-auto grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />

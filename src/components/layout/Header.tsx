@@ -60,6 +60,18 @@ function filterNavByFeatures(items: NavItem[]): NavItem[] {
 function DropdownItem({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // hover-intent: abrir de inmediato, pero cerrar con un pequeño retardo. Así,
+  // mover el puntero del botón al menú (o rozar un borde) ya no lo cierra de golpe.
+  const openMenu = useCallback(() => {
+    if (closeTimer.current) { clearTimeout(closeTimer.current); closeTimer.current = null; }
+    setOpen(true);
+  }, []);
+  const scheduleClose = useCallback(() => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setOpen(false), 220);
+  }, []);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -82,6 +94,9 @@ function DropdownItem({ item }: { item: NavItem }) {
     return () => document.removeEventListener('mousedown', handler);
   }, [open]);
 
+  // Limpiar el timer al desmontar
+  useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current); }, []);
+
   if (!item.children || item.children.length === 0) {
     return (
       <div className="relative">
@@ -99,8 +114,8 @@ function DropdownItem({ item }: { item: NavItem }) {
     <div
       ref={dropdownRef}
       className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={openMenu}
+      onMouseLeave={scheduleClose}
     >
       <button
         className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors"
@@ -110,23 +125,31 @@ function DropdownItem({ item }: { item: NavItem }) {
         onKeyDown={handleKeyDown}
       >
         {item.label}
-        <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <svg
+          className={`w-3.5 h-3.5 opacity-60 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"
+        >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
       {open && (
-        <div className="absolute left-0 top-full mt-1 w-56 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50" role="menu">
-          {item.children.map((child) => (
-            <Link
-              key={child.href}
-              href={child.href}
-              role="menuitem"
-              className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-h2v-green/5 hover:text-h2v-green transition-colors"
-              onClick={() => setOpen(false)}
-            >
-              {child.label}
-            </Link>
-          ))}
+        // Envoltura pegada al botón (top-full, sin margen) con pt-1.5 de "puente":
+        // ese espacio visual ES área hover, así el puntero no cae en un hueco muerto
+        // al bajar del botón al menú. La caja blanca va dentro.
+        <div className="absolute left-0 top-full pt-1.5 w-56 z-50">
+          <div className="bg-white rounded-lg shadow-xl border border-gray-100 py-2" role="menu">
+            {item.children.map((child) => (
+              <Link
+                key={child.href}
+                href={child.href}
+                role="menuitem"
+                className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-h2v-green/5 hover:text-h2v-green transition-colors"
+                onClick={() => setOpen(false)}
+              >
+                {child.label}
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </div>

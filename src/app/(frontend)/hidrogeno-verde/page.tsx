@@ -103,7 +103,7 @@ export default async function HidrogenoVerde() {
     <div>
       <section className="bg-gradient-to-br from-h2v-green to-h2v-blue text-white py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">{heroTitulo}</h1>
+          <h1 className="text-4xl md:text-6xl font-semibold mb-4">{heroTitulo}</h1>
           <p className="text-lg opacity-90 max-w-2xl mx-auto">
             {heroSubtitulo}
           </p>

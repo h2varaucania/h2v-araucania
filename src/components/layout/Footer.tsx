@@ -28,9 +28,9 @@ export default function Footer({ texto, programa, email, ubicacion }: FooterProp
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Column 1: About */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-xl font-bold">H2V</span>
-              <span className="text-xl font-bold text-h2v-green-light">Araucanía</span>
+            <div className="flex items-baseline gap-2 mb-4 font-serif">
+              <span className="text-2xl font-semibold">H2V</span>
+              <span className="text-2xl font-semibold text-h2v-green-light">Araucanía</span>
             </div>
             <p className="text-sm text-white/70 leading-relaxed">
               {texto || 'Plataforma informativa del Bien Público 24BP-269085. Programa Estratégico Regional de Hidrógeno Verde en La Araucanía.'}
@@ -39,7 +39,7 @@ export default function Footer({ texto, programa, email, ubicacion }: FooterProp
 
           {/* Column 2: Quick links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 text-white/90">
+            <h3 className="eyebrow text-white/80 mb-4">
               Navegación
             </h3>
             <ul className="space-y-2">
@@ -62,13 +62,13 @@ export default function Footer({ texto, programa, email, ubicacion }: FooterProp
 
           {/* Column 3: Contact + Logos */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 text-white/90">
+            <h3 className="eyebrow text-white/80 mb-4">
               Contacto
             </h3>
             <p className="text-sm text-white/60 mb-1">{email || 'h2varaucania@gmail.com'}</p>
             <p className="text-sm text-white/60 mb-6">{ubicacion || 'Temuco, La Araucanía, Chile'}</p>
 
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-3 text-white/90">
+            <h3 className="eyebrow text-white/80 mb-3">
               Proyecto apoyado por
             </h3>
             <div className="inline-flex items-center gap-4 flex-wrap rounded-lg bg-white px-4 py-3">

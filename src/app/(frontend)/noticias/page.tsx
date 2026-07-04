@@ -48,7 +48,7 @@ export default async function Noticias({ searchParams }: { searchParams: SearchP
     <div>
       <section className="bg-h2v-blue text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Noticias</h1>
+          <h1 className="text-4xl md:text-6xl font-semibold mb-4">Noticias</h1>
           <p className="text-lg opacity-80">Ultimas noticias y actividades del programa.</p>
         </div>
       </section>

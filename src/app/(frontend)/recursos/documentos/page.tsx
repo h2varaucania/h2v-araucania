@@ -39,7 +39,7 @@ export default async function Documentos() {
     <div>
       <section className="bg-h2v-blue text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Recursos y Documentación</h1>
+          <h1 className="text-4xl md:text-6xl font-semibold mb-4">Recursos y Documentación</h1>
           <p className="text-lg opacity-80">
             Accede a documentos técnicos, estudios y material de difusión del programa.
           </p>

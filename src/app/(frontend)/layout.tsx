@@ -4,7 +4,14 @@ import Footer from "@/components/layout/Footer";
 import Analytics from "@/components/Analytics";
 import CookieBanner from "@/components/CookieBanner";
 import { getPayload } from "@/lib/payload/getPayload";
+import { Public_Sans, Spectral, IBM_Plex_Mono } from "next/font/google";
 import "../globals.css";
+
+// Tríada del sistema de diseño H2V. next/font las auto-hospeda en el build (sin
+// request externo en runtime → compatible con el CSP), con font-display: swap.
+const publicSans = Public_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-public-sans", display: "swap" });
+const spectral = Spectral({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-spectral", display: "swap" });
+const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-plex-mono", display: "swap" });
 
 export const dynamic = 'force-dynamic';
 
@@ -70,7 +77,7 @@ export default async function FrontendLayout({
   }
 
   return (
-    <html lang="es" className="h-full scroll-smooth">
+    <html lang="es" className={`h-full scroll-smooth ${publicSans.variable} ${spectral.variable} ${plexMono.variable}`}>
       <body className="min-h-full flex flex-col antialiased">
         <Analytics />
         <a href="#main-content" className="skip-link">

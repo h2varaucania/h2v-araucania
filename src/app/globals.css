@@ -24,12 +24,39 @@
   --color-h2v-gold: var(--h2v-gold);
   --color-h2v-gray: var(--h2v-gray);
   --color-h2v-gray-light: var(--h2v-gray-light);
+
+  /* Tríada del sistema de diseño (las carga next/font en layout.tsx, con fallback robusto):
+     Public Sans (UI/cuerpo) · Spectral (titulares editoriales) · IBM Plex Mono (kickers/datos). */
+  --font-sans: var(--font-public-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-spectral), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, Menlo, Consolas, monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem; /* 17px — cuerpo con más presencia */
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Titulares en serif editorial (Spectral) en TODO el sitio. Las utilidades de color
+   de Tailwind (text-white, text-h2v-blue) siguen mandando sobre esto. */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* Kicker / eyebrow editorial en mono mayúsculas. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 /* Skip link for accessibility */
