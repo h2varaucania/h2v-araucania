@@ -71,15 +71,15 @@ export default function Footer({ texto, programa, email, ubicacion }: FooterProp
             <h3 className="eyebrow text-white/80 mb-3">
               Proyecto apoyado por
             </h3>
-            <div className="inline-flex items-center gap-4 flex-wrap rounded-lg bg-white px-4 py-3">
+            <div className="inline-flex items-center gap-5 flex-wrap rounded-lg bg-white px-5 py-4">
               {logos.map((inst) => (
                 <Image
                   key={inst.nombre}
                   src={inst.logo}
                   alt={inst.nombre}
-                  width={110}
-                  height={48}
-                  className="h-9 w-auto"
+                  width={150}
+                  height={64}
+                  className="h-12 w-auto"
                 />
               ))}
             </div>

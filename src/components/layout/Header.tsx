@@ -198,17 +198,17 @@ export default function Header() {
   return (
     <header className="bg-h2v-blue sticky top-0 z-40 shadow-md" role="banner">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Navegacion principal">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0" aria-label="H2V Araucania - Inicio">
-            <span className="inline-flex items-center rounded-md bg-white px-2 py-1 shadow-sm">
+            <span className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 shadow-sm">
               <Image
                 src="/logos/BP H2V Araucanía - Logo Bien Público.png"
                 alt="H2V Araucania - Bien Publico Agro Productivo Araucania"
                 width={710}
                 height={555}
                 priority
-                className="h-10 w-auto md:h-11"
+                className="h-11 w-auto md:h-14"
               />
             </span>
           </Link>

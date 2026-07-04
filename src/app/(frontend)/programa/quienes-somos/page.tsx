@@ -142,8 +142,8 @@ export default async function QuienesSomos() {
             {instituciones.map((inst) => (
               <div key={inst.nombre} className="bg-white rounded-xl p-6 shadow-sm text-center border border-gray-100">
                 {inst.logo && (
-                  <div className="h-16 flex items-center justify-center mb-4">
-                    <Image src={inst.logo} alt={inst.nombre} width={120} height={60} className="h-12 w-auto object-contain" />
+                  <div className="h-24 flex items-center justify-center mb-4">
+                    <Image src={inst.logo} alt={inst.nombre} width={180} height={90} className="max-h-20 w-auto max-w-full object-contain" />
                   </div>
                 )}
                 <h3 className="font-semibold text-h2v-blue mb-1">{inst.nombre}</h3>

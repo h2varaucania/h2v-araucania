@@ -195,17 +195,17 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto">
           {/* Financiador destacado — Manual de Comunicaciones Corfo Araucanía 2025 §1.2 */}
           <p className="eyebrow text-center text-gray-500 mb-6">Proyecto apoyado por</p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-12">
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14 mb-12">
             {apoyoCorfo.map((logo) => (
-              <Image key={logo.alt} src={logo.src} alt={logo.alt} width={200} height={90} className="h-14 md:h-20 w-auto" />
+              <Image key={logo.alt} src={logo.src} alt={logo.alt} width={260} height={120} className="h-20 md:h-28 w-auto" />
             ))}
           </div>
           {/* Instituciones participantes — a todo color, en tarjetas uniformes. Secundarias y menores que Corfo (§1.2). */}
           <p className="eyebrow text-center text-gray-400 mb-8">Instituciones participantes</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-5 max-w-5xl mx-auto">
             {instituciones.map((logo) => (
-              <div key={logo.alt} className="flex items-center justify-center bg-white rounded-lg border border-gray-200 shadow-sm px-4 py-5 h-24 transition-shadow hover:shadow-md">
-                <Image src={logo.src} alt={logo.alt} width={150} height={70} className="max-h-14 w-auto object-contain" />
+              <div key={logo.alt} className="flex items-center justify-center bg-white rounded-lg border border-gray-200 shadow-sm px-5 py-6 h-32 md:h-36 transition-shadow hover:shadow-md">
+                <Image src={logo.src} alt={logo.alt} width={220} height={100} className="max-h-20 md:max-h-24 w-auto max-w-full object-contain" />
               </div>
             ))}
           </div>
