@@ -24,11 +24,23 @@ export async function POST(request: NextRequest) {
 
     const payload = await getPayload();
 
+    // Usuario logueado (si lo hay): el Modelo de Sustentabilidad exige "BBDD con los
+    // usuarios que descargaron", no solo el conteo. Antes no se capturaba.
+    // Los IDs de esta base son numéricos (Postgres serial).
+    let userId: number | undefined;
+    try {
+      const authed = await payload.auth({ headers: request.headers });
+      if (typeof authed?.user?.id === 'number') userId = authed.user.id;
+    } catch {
+      // Anónimo: se registra solo IP/navegador.
+    }
+
     // Record download
     await payload.create({
       collection: 'downloads',
       data: {
         documento: documentId,
+        ...(userId ? { user: userId } : {}),
         downloadedAt: new Date().toISOString(),
         ip,
         userAgent: request.headers.get('user-agent') || 'unknown',

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import { requireFeature } from '@/lib/featureGate';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import type { PaginaComunidad } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,7 +41,7 @@ export default async function Comunidad() {
   let heroTitulo = 'Comunidad y Participación';
   let heroSubtitulo = 'El desarrollo del hidrógeno verde en La Araucanía se construye con la participación activa de las comunidades y actores territoriales.';
   let glosario = defaultGlosario;
-  let introduccion: any = null;
+  let introduccion: PaginaComunidad['introduccion'] = null;
   let participacionTitulo = 'Participación en gobernanza';
   let participacionItems = defaultParticipacion;
   let compromisosTitulo = 'Compromiso con el territorio';
@@ -49,19 +50,19 @@ export default async function Comunidad() {
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-comunidad' });
-    if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
-    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
+    if (data?.hero?.titulo) heroTitulo = data.hero.titulo;
+    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo;
     if (data?.introduccion) introduccion = data.introduccion;
-    if (data?.participacion?.titulo) participacionTitulo = data.participacion.titulo as string;
-    if ((data?.participacion as any)?.items?.length > 0) {
-      participacionItems = ((data.participacion as any).items as any[]).map((i: any) => i.texto);
+    if (data?.participacion?.titulo) participacionTitulo = data.participacion.titulo;
+    if (data?.participacion?.items && data.participacion.items.length > 0) {
+      participacionItems = data.participacion.items.map((i) => i.texto);
     }
-    if (data?.compromisos?.titulo) compromisosTitulo = data.compromisos.titulo as string;
-    if ((data?.compromisos as any)?.items?.length > 0) {
-      compromisosItems = ((data.compromisos as any).items as any[]).map((i: any) => i.texto);
+    if (data?.compromisos?.titulo) compromisosTitulo = data.compromisos.titulo;
+    if (data?.compromisos?.items && data.compromisos.items.length > 0) {
+      compromisosItems = data.compromisos.items.map((i) => i.texto);
     }
-    if (data?.glosario?.length > 0) {
-      glosario = (data.glosario as any[]).map((g) => ({
+    if (data?.glosario && data.glosario.length > 0) {
+      glosario = data.glosario.map((g) => ({
         mapudungun: g.mapudungun,
         espanol: g.espanol,
       }));

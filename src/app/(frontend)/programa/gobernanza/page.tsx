@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getPayload } from '@/lib/payload/getPayload';
+import type { Miembro } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,7 +41,7 @@ export default async function Gobernanza() {
   let descripcion = 'El modelo de gobernanza del programa se divide en dos niveles — estratégico y operativo — para asegurar una gestión integral y sostenible del proyecto. Define quién tiene el poder y la responsabilidad, cómo se toman las decisiones, y cómo se supervisa y evalúa el desempeño.';
   const estrategico = { titulo: 'Consejo de Dirección del Hidrógeno Verde de Araucanía', descripcion: 'Instancia máxima de dirección estratégica compuesta por representantes del Gobierno Regional, Ministerios, universidades, asociaciones empresariales, comunidades indígenas y expertos independientes.', funciones: defaultFuncionesEstrategico, periodicidad: 'Trimestralmente — Presencial y/o videoconferencia' };
   const operativo = { titulo: 'Unidad de Coordinación y Gestión del Proyecto', descripcion: 'Compuesta por el Director del proyecto, equipo técnico, equipo de gestión financiera y equipo de comunicación y participación comunitaria.', funciones: defaultFuncionesOperativo, periodicidad: 'Cada 15 días — Presencial y/o videoconferencia' };
-  let unidadMiembros: any[] = [];
+  let unidadMiembros: Miembro[] = [];
   // Diagrama y galería editables desde el CMS (F6, Auditoria_traspaso.md).
   const diagrama = {
     consejo: 'Consejo de Dirección H2V',
@@ -58,31 +59,38 @@ export default async function Gobernanza() {
     if (data?.descripcion) descripcion = data.descripcion;
     if (data?.nivelEstrategico?.titulo) estrategico.titulo = data.nivelEstrategico.titulo;
     if (data?.nivelEstrategico?.descripcion) estrategico.descripcion = data.nivelEstrategico.descripcion;
-    if (data?.nivelEstrategico?.funciones?.length > 0) estrategico.funciones = data.nivelEstrategico.funciones.map((f: any) => f.texto);
+    if (data?.nivelEstrategico?.funciones && data.nivelEstrategico.funciones.length > 0) {
+      estrategico.funciones = data.nivelEstrategico.funciones.map((f) => f.texto);
+    }
     if (data?.nivelEstrategico?.periodicidad) estrategico.periodicidad = data.nivelEstrategico.periodicidad;
     if (data?.nivelOperativo?.titulo) operativo.titulo = data.nivelOperativo.titulo;
     if (data?.nivelOperativo?.descripcion) operativo.descripcion = data.nivelOperativo.descripcion;
-    if (data?.nivelOperativo?.funciones?.length > 0) operativo.funciones = data.nivelOperativo.funciones.map((f: any) => f.texto);
+    if (data?.nivelOperativo?.funciones && data.nivelOperativo.funciones.length > 0) {
+      operativo.funciones = data.nivelOperativo.funciones.map((f) => f.texto);
+    }
     if (data?.nivelOperativo?.periodicidad) operativo.periodicidad = data.nivelOperativo.periodicidad;
     if (data?.diagrama?.consejo) diagrama.consejo = data.diagrama.consejo;
     if (data?.diagrama?.comite) diagrama.comite = data.diagrama.comite;
     if (data?.diagrama?.unidad) diagrama.unidad = data.diagrama.unidad;
-    if ((data?.diagrama?.equipos as any[])?.length > 0) {
-      diagrama.equipos = (data.diagrama.equipos as any[]).map((e: any) => e.nombre as string);
+    if (data?.diagrama?.equipos && data.diagrama.equipos.length > 0) {
+      diagrama.equipos = data.diagrama.equipos.map((e) => e.nombre);
     }
-    if ((data?.actividades as any[])?.length > 0) {
-      actividades = (data.actividades as any[])
-        .map((a: any) => ({
-          url: a.foto?.url || '',
-          alt: a.foto?.alt || a.titulo || 'Actividad del programa',
-          titulo: a.titulo as string | undefined,
-        }))
+    if (data?.actividades && data.actividades.length > 0) {
+      actividades = data.actividades
+        .map((a) => {
+          const foto = typeof a.foto === 'object' && a.foto !== null ? a.foto : null;
+          return {
+            url: foto?.url || '',
+            alt: foto?.alt || a.titulo || 'Actividad del programa',
+            titulo: a.titulo ?? undefined,
+          };
+        })
         .filter((a) => a.url);
     }
 
     // Get miembros for the team table
     const miembrosResult = await payload.find({ collection: 'miembros', where: { instancia: { equals: 'unidad' } }, sort: 'orden', limit: 50 });
-    unidadMiembros = miembrosResult.docs as any[];
+    unidadMiembros = miembrosResult.docs;
   } catch {
     // keep default empty array
   }
@@ -169,7 +177,7 @@ export default async function Gobernanza() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
-                    {unidadMiembros.map((m: any, i: number) => (
+                    {unidadMiembros.map((m, i) => (
                       <tr key={m.id} className={i % 2 === 1 ? 'bg-gray-50' : ''}>
                         <td className="px-6 py-3 text-sm font-medium text-gray-900">{m.institucion}</td>
                         <td className="px-6 py-3 text-sm text-gray-600">{m.cargo}</td>

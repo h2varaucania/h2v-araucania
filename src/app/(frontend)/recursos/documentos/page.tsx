@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
+import type { Documento } from '@/payload-types';
 import DocumentosClient from './DocumentosClient';
 
 export const dynamic = 'force-dynamic';
@@ -14,9 +15,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Documentos() {
-  let docs: any[] = [];
+  let docs: Documento[] = [];
   let anios: number[] = [];
-  let tipos: string[] = [];
+  let tipos: Documento['tipo'][] = [];
 
   try {
     const payload = await getPayload();
@@ -28,8 +29,8 @@ export default async function Documentos() {
     docs = result.docs;
 
     // Extract unique years and types for filters
-    anios = [...new Set(docs.map((d: any) => d.anio))].sort((a: number, b: number) => b - a);
-    tipos = [...new Set(docs.map((d: any) => d.tipo))] as string[];
+    anios = [...new Set(docs.map((d) => d.anio))].sort((a, b) => b - a);
+    tipos = [...new Set(docs.map((d) => d.tipo))];
   } catch {
     // DB unavailable — render empty state
   }
@@ -47,8 +48,8 @@ export default async function Documentos() {
 
       <DocumentosClient
         documentos={JSON.parse(JSON.stringify(docs))}
-        anios={anios as number[]}
-        tipos={tipos as string[]}
+        anios={anios}
+        tipos={tipos}
       />
     </div>
   );

@@ -43,11 +43,13 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://s.ytimg.com",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https: http://localhost:*",
               "font-src 'self' data:",
-              "connect-src 'self' https://www.google-analytics.com https://api.mapbox.com https://events.mapbox.com",
+              "connect-src 'self' https://www.google-analytics.com https://api.mapbox.com https://events.mapbox.com https://player.vimeo.com https://www.youtube-nocookie.com",
+              // Reproductores incrustados de la Mediateca (YouTube nocookie / Vimeo).
+              "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

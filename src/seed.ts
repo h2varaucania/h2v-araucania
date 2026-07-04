@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { getPayload } from 'payload';
 import config from '@payload-config';
+import type { Evento, Miembro, Noticia, Proyecto } from '@/payload-types';
 
 async function seed() {
   console.log('🌱 Iniciando seed de H2V Araucanía...\n');
@@ -391,7 +391,7 @@ async function seed() {
   console.log('\n👔 Creando Miembros de Gobernanza...');
   const existingMiembros = await payload.find({ collection: 'miembros', limit: 1 });
   if (existingMiembros.totalDocs === 0) {
-    const miembros = [
+    const miembros: Array<Pick<Miembro, 'nombre' | 'cargo' | 'institucion' | 'instancia' | 'orden'>> = [
       // Consejo de Dirección
       { nombre: 'Por designar — GORE Araucanía', cargo: 'Representante Regional', institucion: 'Gobierno Regional de La Araucanía', instancia: 'consejo', orden: 1 },
       { nombre: 'Por designar — SEREMI Energía', cargo: 'SEREMI de Energía', institucion: 'Ministerio de Energía', instancia: 'consejo', orden: 2 },
@@ -422,7 +422,10 @@ async function seed() {
   console.log('📍 Creando Proyectos...');
   const existingProyectos = await payload.find({ collection: 'proyectos', limit: 1 });
   if (existingProyectos.totalDocs === 0) {
-    const proyectos = [
+    const proyectos: Array<
+      Pick<Proyecto, 'nombre' | 'descripcion' | 'empresa' | 'etapa' | 'region' | 'coordenadas'> &
+        Partial<Pick<Proyecto, 'capacidadMW' | 'produccionTonAnio'>>
+    > = [
       {
         nombre: 'Planta Piloto H₂V Temuco',
         descripcion: 'Proyecto demostrativo de producción de hidrógeno verde mediante electrolizador PEM de 1 MW, alimentado por energía eólica. Busca validar la viabilidad técnica y económica en contexto regional.',
@@ -485,7 +488,11 @@ async function seed() {
   console.log('📰 Creando Noticias...');
   const existingNoticias = await payload.find({ collection: 'noticias', limit: 1 });
   if (existingNoticias.totalDocs === 0) {
-    const noticias = [
+    // Nota: "imagen" es requerido por la colección pero el seed histórico no la incluye;
+    // se tipa como Partial<Noticia> para reflejar fielmente los datos sin inventar un valor.
+    const noticias: Array<
+      Partial<Noticia> & Pick<Noticia, 'titulo' | 'slug' | 'extracto' | 'contenido' | 'fecha' | 'categoria'>
+    > = [
       {
         titulo: 'Lanzamiento del Programa Estratégico de Hidrógeno Verde en La Araucanía',
         slug: 'lanzamiento-programa-h2v-araucania',
@@ -569,7 +576,9 @@ async function seed() {
       },
     ];
     for (const n of noticias) {
-      await payload.create({ collection: 'noticias', data: n });
+      // Cast inevitable: "imagen" es requerida por la colección pero el seed histórico
+      // nunca la ha incluido (se completa manualmente desde el admin después del seed).
+      await payload.create({ collection: 'noticias', data: n as Noticia });
     }
     console.log(`  ✓ ${noticias.length} noticias creadas`);
   } else {
@@ -582,7 +591,9 @@ async function seed() {
   console.log('📅 Creando Eventos...');
   const existingEventos = await payload.find({ collection: 'eventos', limit: 1 });
   if (existingEventos.totalDocs === 0) {
-    const eventos = [
+    const eventos: Array<
+      Pick<Evento, 'titulo' | 'fecha' | 'lugar' | 'tipo' | 'descripcion'> & Partial<Pick<Evento, 'fechaFin'>>
+    > = [
       {
         titulo: 'Seminario Internacional de Hidrógeno Verde — Temuco 2025',
         fecha: '2025-06-20',

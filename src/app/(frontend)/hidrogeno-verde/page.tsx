@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getPayload } from '@/lib/payload/getPayload';
 import { requireFeature } from '@/lib/featureGate';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import type { PaginaH2V } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,7 +55,7 @@ export default async function HidrogenoVerde() {
   let heroTitulo = 'Hidrógeno Verde';
   let heroSubtitulo = 'El hidrógeno verde es un vector energético producido mediante electrólisis del agua utilizando energías renovables. No genera emisiones de CO2 y es clave para la descarbonización de la economía.';
   let queEsTitulo = '¿Qué es el Hidrógeno Verde?';
-  let queEsContenido: any = null;
+  let queEsContenido: NonNullable<NonNullable<PaginaH2V['queEs']>['contenido']> | null = null;
   let electrolisisTitulo = 'Proceso de Electrólisis';
   let electrolisis = defaultElectrolisis;
   let electrolizadores = defaultElectrolizadores;
@@ -65,33 +66,33 @@ export default async function HidrogenoVerde() {
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-h2v' });
-    if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
-    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
-    if ((data?.queEs as any)?.titulo) queEsTitulo = (data.queEs as any).titulo as string;
-    if ((data?.queEs as any)?.contenido) queEsContenido = (data.queEs as any).contenido;
-    if ((data?.electrolisis as any)?.titulo) electrolisisTitulo = (data.electrolisis as any).titulo as string;
-    if (data?.electrolisis?.pasos?.length > 0) {
-      electrolisis = (data.electrolisis.pasos as any[]).map((p, i) => ({
+    if (data?.hero?.titulo) heroTitulo = data.hero.titulo;
+    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo;
+    if (data?.queEs?.titulo) queEsTitulo = data.queEs.titulo;
+    if (data?.queEs?.contenido) queEsContenido = data.queEs.contenido;
+    if (data?.electrolisis?.titulo) electrolisisTitulo = data.electrolisis.titulo;
+    if (data?.electrolisis?.pasos && data.electrolisis.pasos.length > 0) {
+      electrolisis = data.electrolisis.pasos.map((p, i) => ({
         step: String(i + 1), title: p.titulo, desc: p.descripcion,
       }));
     }
-    if (data?.electrolizadores?.length > 0) {
-      electrolizadores = (data.electrolizadores as any[]).map((e) => ({
+    if (data?.electrolizadores && data.electrolizadores.length > 0) {
+      electrolizadores = data.electrolizadores.map((e) => ({
         name: e.nombre, desc: e.descripcion, maturity: e.madurez || '', cost: e.costo || '',
       }));
     }
-    if (data?.cadenaValor?.length > 0) {
-      cadena = (data.cadenaValor as any[]).map((c) => ({
+    if (data?.cadenaValor && data.cadenaValor.length > 0) {
+      cadena = data.cadenaValor.map((c) => ({
         icon: c.icono || '•', title: c.titulo, desc: c.descripcion,
       }));
     }
-    if (data?.derivados?.length > 0) {
-      derivados = (data.derivados as any[]).map((d) => ({
+    if (data?.derivados && data.derivados.length > 0) {
+      derivados = data.derivados.map((d) => ({
         name: d.nombre, desc: d.descripcion, use: d.aplicacion || '',
       }));
     }
-    if ((data?.exploraMas as any[])?.length > 0) {
-      exploraMas = (data.exploraMas as any[]).map((l: any) => ({
+    if (data?.exploraMas && data.exploraMas.length > 0) {
+      exploraMas = data.exploraMas.map((l) => ({
         title: l.titulo, href: l.enlace, desc: l.descripcion,
       }));
     }

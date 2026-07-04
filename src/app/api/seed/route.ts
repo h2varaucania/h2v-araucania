@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getPayload } from '@/lib/payload/getPayload';
 import path from 'path';
 import fs from 'fs';
+import type { Miembro, Proyecto, Noticia, Evento } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -351,7 +352,7 @@ export async function POST(req: Request) {
     // ═══════ 13. MIEMBROS DE GOBERNANZA ═══════
     const existingMiembros = await payload.find({ collection: 'miembros', limit: 1 });
     if (existingMiembros.totalDocs === 0) {
-      const miembros = [
+      const miembros: Array<Pick<Miembro, 'nombre' | 'cargo' | 'institucion' | 'instancia' | 'orden'>> = [
         { nombre: 'Por designar — GORE Araucanía', cargo: 'Representante Regional', institucion: 'Gobierno Regional de La Araucanía', instancia: 'consejo', orden: 1 },
         { nombre: 'Por designar — SEREMI Energía', cargo: 'SEREMI de Energía', institucion: 'Ministerio de Energía', instancia: 'consejo', orden: 2 },
         { nombre: 'Por designar — CORFO', cargo: 'Director Regional', institucion: 'CORFO Araucanía', instancia: 'consejo', orden: 3 },
@@ -376,7 +377,10 @@ export async function POST(req: Request) {
     // ═══════ 14. PROYECTOS ═══════
     const existingProyectos = await payload.find({ collection: 'proyectos', limit: 1 });
     if (existingProyectos.totalDocs === 0) {
-      const proyectos = [
+      const proyectos: Array<
+        Pick<Proyecto, 'nombre' | 'descripcion' | 'empresa' | 'etapa' | 'region' | 'coordenadas'> &
+          Partial<Pick<Proyecto, 'capacidadMW' | 'produccionTonAnio'>>
+      > = [
         {
           nombre: 'Planta Piloto H₂V Temuco',
           descripcion: 'Proyecto demostrativo de producción de hidrógeno verde mediante electrolizador PEM de 1 MW, alimentado por energía eólica.',
@@ -437,7 +441,7 @@ export async function POST(req: Request) {
     let placeholderMediaId: number | null = null;
     const existingMedia = await payload.find({ collection: 'media', where: { alt: { equals: 'Placeholder H2V Araucanía' } }, limit: 1 });
     if (existingMedia.totalDocs > 0) {
-      placeholderMediaId = existingMedia.docs[0].id as number;
+      placeholderMediaId = existingMedia.docs[0].id;
     } else {
       const placeholderPath = path.resolve(process.cwd(), 'public/uploads/placeholder-h2v.png');
       if (fs.existsSync(placeholderPath)) {
@@ -453,7 +457,7 @@ export async function POST(req: Request) {
           data: { alt: 'Placeholder H2V Araucanía' },
           file,
         });
-        placeholderMediaId = media.id as number;
+        placeholderMediaId = media.id;
         log.push('✓ Imagen placeholder creada');
       }
     }
@@ -461,7 +465,9 @@ export async function POST(req: Request) {
     // ═══════ 15. NOTICIAS ═══════
     const existingNoticias = await payload.find({ collection: 'noticias', limit: 1 });
     if (existingNoticias.totalDocs === 0 && placeholderMediaId) {
-      const noticias = [
+      const noticias: Array<
+        Pick<Noticia, 'titulo' | 'slug' | 'extracto' | 'contenido' | 'fecha' | 'imagen' | 'categoria'>
+      > = [
         {
           titulo: 'Lanzamiento del Programa Estratégico de Hidrógeno Verde en La Araucanía',
           slug: 'lanzamiento-programa-h2v-araucania',
@@ -510,7 +516,9 @@ export async function POST(req: Request) {
     // ═══════ 16. EVENTOS ═══════
     const existingEventos = await payload.find({ collection: 'eventos', limit: 1 });
     if (existingEventos.totalDocs === 0) {
-      const eventos = [
+      const eventos: Array<
+        Pick<Evento, 'titulo' | 'fecha' | 'lugar' | 'tipo' | 'descripcion'> & Partial<Pick<Evento, 'fechaFin'>>
+      > = [
         {
           titulo: 'Seminario Internacional de Hidrógeno Verde — Temuco 2025',
           fecha: '2025-06-20',

@@ -93,15 +93,15 @@ export default async function Sectores() {
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-sectores' });
-    if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
-    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
-    if (data?.sectores?.length > 0) {
-      sectores = (data.sectores as any[]).map((s, i) => ({
+    if (data?.hero?.titulo) heroTitulo = data.hero.titulo;
+    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo;
+    if (data?.sectores && data.sectores.length > 0) {
+      sectores = data.sectores.map((s, i) => ({
         nombre: s.nombre,
         icon: s.icono || defaultSectores[i]?.icon || '•',
         color: defaultSectores[i]?.color || 'bg-gray-50 border-gray-200',
         desc: s.descripcion,
-        oportunidades: (s.oportunidades as any[])?.map((o: any) => o.texto) || [],
+        oportunidades: s.oportunidades?.map((o) => o.texto) || [],
       }));
     }
   } catch {

@@ -46,10 +46,10 @@ export default async function MarcoRegulatorio() {
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-marco-regulatorio' });
-    if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
-    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
-    if (data?.documentos?.length > 0) {
-      documentos = (data.documentos as any[]).map((d) => ({
+    if (data?.hero?.titulo) heroTitulo = data.hero.titulo;
+    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo;
+    if (data?.documentos && data.documentos.length > 0) {
+      documentos = data.documentos.map((d) => ({
         titulo: d.titulo,
         desc: d.descripcion,
         relevancia: d.relevancia || '',

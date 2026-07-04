@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import ProyectosMapLoader from '@/components/maps/ProyectosMapLoader';
+import type { Proyecto } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,8 +14,20 @@ export const metadata: Metadata = {
   },
 };
 
+type ProyectoMapa = {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  empresa: string;
+  etapa: string;
+  region: string;
+  coordenadas: { lat: number; lng: number };
+  capacidadMW?: number;
+  produccionTonAnio?: number;
+};
+
 export default async function Proyectos() {
-  let proyectos: any[] = [];
+  let proyectos: ProyectoMapa[] = [];
   // Defaults de respaldo; el CMS (global "Mapa de Proyectos") los sobreescribe.
   const hero = {
     titulo: 'Mapa de Proyectos',
@@ -31,7 +44,7 @@ export default async function Proyectos() {
       limit: 100,
     });
 
-    proyectos = docs.map((p: any) => ({
+    proyectos = docs.map((p: Proyecto) => ({
       id: String(p.id),
       nombre: p.nombre,
       descripcion: p.descripcion,
@@ -39,8 +52,8 @@ export default async function Proyectos() {
       etapa: p.etapa,
       region: p.region,
       coordenadas: p.coordenadas,
-      capacidadMW: p.capacidadMW,
-      produccionTonAnio: p.produccionTonAnio,
+      capacidadMW: p.capacidadMW ?? undefined,
+      produccionTonAnio: p.produccionTonAnio ?? undefined,
     }));
   } catch {
     // DB unavailable — render empty map

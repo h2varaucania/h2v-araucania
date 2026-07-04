@@ -1,6 +1,7 @@
 {
   "name": "h2v-araucania",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,7 +9,7 @@
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit",
-    "payload:generate": "payload generate:types",
+    "payload:generate": "tsx scripts/generate-types.mts",
     "seed": "tsx -r tsconfig-paths/register src/seed.ts",
     "migrate": "payload migrate",
     "migrate:create": "payload migrate:create",
@@ -22,6 +23,7 @@
     "@payloadcms/richtext-lexical": "^3.80.0",
     "@payloadcms/storage-vercel-blob": "^3.80.0",
     "@types/leaflet": "^1.9.21",
+    "@vimeo/player": "^2.30.4",
     "graphql": "^16.13.1",
     "leaflet": "^1.9.4",
     "next": "16.2.1",
@@ -33,6 +35,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@swc-node/register": "^1.11.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

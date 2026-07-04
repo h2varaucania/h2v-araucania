@@ -29,11 +29,11 @@ export default async function HojaDeRuta() {
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-hoja-ruta' });
-    if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
-    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
-    if (data?.notaFinal) notaFinal = data.notaFinal as string;
-    if (data?.hitos?.length > 0) {
-      hitos = (data.hitos as any[]).map((h, i) => ({
+    if (data?.hero?.titulo) heroTitulo = data.hero.titulo;
+    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo;
+    if (data?.notaFinal) notaFinal = data.notaFinal;
+    if (data?.hitos && data.hitos.length > 0) {
+      hitos = data.hitos.map((h, i) => ({
         year: h.periodo,
         title: h.titulo,
         desc: h.descripcion,

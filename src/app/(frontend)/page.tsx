@@ -48,15 +48,18 @@ export default async function Home() {
   let cards = defaultCards;
   let seccionTitulo = 'Explora el Programa';
   let instituciones = defaultParticipantes;
-  let latestNoticias: Array<{ id: string; titulo: string; slug: string; fecha: string; extracto: string; categoria?: string }> = [];
+  let latestNoticias: Array<{ id: number; titulo: string; slug: string; fecha: string; extracto: string; categoria?: string }> = [];
 
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-inicio' });
     const sitio = await payload.findGlobal({ slug: 'sitio-general' });
-    if ((sitio?.instituciones as any[])?.length > 0) {
-      instituciones = (sitio.instituciones as any[])
-        .map((inst: any) => ({ src: inst.logo?.url || '', alt: inst.nombre as string }))
+    if (sitio?.instituciones && sitio.instituciones.length > 0) {
+      instituciones = sitio.instituciones
+        .map((inst) => {
+          const logo = typeof inst.logo === 'object' ? inst.logo : null;
+          return { src: logo?.url || '', alt: inst.nombre };
+        })
         .filter((i) => i.src);
     }
     if (data?.hero?.titulo) hero.titulo = data.hero.titulo;
@@ -64,8 +67,8 @@ export default async function Home() {
     if (data?.hero?.ctaPrimario) hero.ctaPrimario = data.hero.ctaPrimario;
     if (data?.hero?.ctaSecundario) hero.ctaSecundario = data.hero.ctaSecundario;
     if (data?.seccionExplora?.titulo) seccionTitulo = data.seccionExplora.titulo;
-    if (data?.seccionExplora?.cards?.length > 0) {
-      cards = data.seccionExplora.cards.map((c: Record<string, string>, i: number) => ({
+    if (data?.seccionExplora?.cards && data.seccionExplora.cards.length > 0) {
+      cards = data.seccionExplora.cards.map((c, i) => ({
         titulo: c.titulo,
         descripcion: c.descripcion,
         enlace: c.enlace,
@@ -81,12 +84,12 @@ export default async function Home() {
       limit: 3,
     });
     latestNoticias = docs.map((n) => ({
-      id: n.id as string,
-      titulo: n.titulo as string,
-      slug: n.slug as string,
-      fecha: n.fecha as string,
-      extracto: n.extracto as string,
-      categoria: n.categoria as string | undefined,
+      id: n.id,
+      titulo: n.titulo,
+      slug: n.slug,
+      fecha: n.fecha,
+      extracto: n.extracto,
+      categoria: n.categoria || undefined,
     }));
   } catch {
     // Use defaults

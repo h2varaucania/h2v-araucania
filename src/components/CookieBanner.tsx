@@ -1,39 +1,36 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
 import Link from 'next/link';
 
 const CONSENT_KEY = 'h2v-cookie-consent';
 
-export default function CookieBanner() {
-  const [visible, setVisible] = useState(false);
+// El consentimiento vive fuera de React (localStorage): useSyncExternalStore es el
+// patrón correcto para leerlo — sin useState/useEffect. En SSR el banner no se
+// muestra (snapshot de servidor "pendiente"); al hidratar se lee el valor real.
+// Analytics lee localStorage por su cuenta, así que aquí solo persistimos y
+// notificamos los cambios.
+function subscribe(onChange: () => void) {
+  window.addEventListener('cookie-consent-changed', onChange);
+  return () => window.removeEventListener('cookie-consent-changed', onChange);
+}
+const getSnapshot = () => localStorage.getItem(CONSENT_KEY);
+const getServerSnapshot = () => 'ssr-pending';
 
-  useEffect(() => {
-    const consent = localStorage.getItem(CONSENT_KEY);
-    if (!consent) {
-      setVisible(true);
-    } else if (consent === 'accepted') {
-      enableAnalytics();
-    }
-  }, []);
-
-  function enableAnalytics() {
-    // Signal to Analytics component that consent was given
+function persist(value: 'accepted' | 'declined') {
+  localStorage.setItem(CONSENT_KEY, value);
+  window.dispatchEvent(new Event('cookie-consent-changed'));
+  if (value === 'accepted') {
+    // Señal que Analytics escucha para activarse al instante (sin recargar).
     window.dispatchEvent(new Event('cookie-consent-granted'));
   }
+}
 
-  function accept() {
-    localStorage.setItem(CONSENT_KEY, 'accepted');
-    setVisible(false);
-    enableAnalytics();
-  }
+export default function CookieBanner() {
+  const consent = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  function decline() {
-    localStorage.setItem(CONSENT_KEY, 'declined');
-    setVisible(false);
-  }
-
-  if (!visible) return null;
+  // Visible solo cuando el usuario aún no ha decidido (null en localStorage).
+  if (consent !== null) return null;
 
   return (
     <div
@@ -52,13 +49,13 @@ export default function CookieBanner() {
         </div>
         <div className="flex gap-2 shrink-0">
           <button
-            onClick={decline}
+            onClick={() => persist('declined')}
             className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
           >
             Rechazar
           </button>
           <button
-            onClick={accept}
+            onClick={() => persist('accepted')}
             className="px-4 py-2 text-sm text-white bg-h2v-green rounded-lg hover:bg-h2v-green/90 transition-colors font-medium"
           >
             Aceptar

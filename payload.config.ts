@@ -7,12 +7,13 @@ import sharp from 'sharp';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// NOTA (deuda conocida): este directory import resuelve bien en Next (dev y build de
-// producción), pero el loader tsx de la CLI de Payload no lo resuelve, así que
-// `payload generate:types` / `generate:importmap` fallan con ERR_MODULE_NOT_FOUND.
-// Workaround si necesitas regenerar: comenta temporalmente este import y `prodMigrations`,
-// corre el comando, y descomenta. (Probado: ./index y ./index.js tampoco resuelven en esa CLI.)
-import { migrations } from './src/migrations';
+// NOTA: import con extensión .ts explícita (+ allowImportingTsExtensions en tsconfig) para
+// que resuelva en los TRES toolchains: Next (dev/build), tsc, y el loader tsx de la CLI de
+// Payload (que no resuelve directory imports ni mapea .js→.ts tras el pathsMatcher). La CLI
+// además necesita TSX_TSCONFIG_PATH fijado al tsconfig del proyecto (ver script npm
+// `payload:generate`): sin eso, tsx no aplica los alias `@/` y los generate:* fallan con
+// ERR_MODULE_NOT_FOUND. Resuelto 2026-07-04.
+import { migrations } from './src/migrations/index.ts';
 
 // Collections
 import { Users } from '@/collections/Users';
@@ -22,6 +23,7 @@ import { Documentos } from '@/collections/Documentos';
 import { Proyectos } from '@/collections/Proyectos';
 import { Miembros } from '@/collections/Miembros';
 import { Downloads } from '@/collections/Downloads';
+import { VideoViews } from '@/collections/VideoViews';
 import { Eventos } from '@/collections/Eventos';
 
 // Globals (contenido editable de cada página)
@@ -66,6 +68,7 @@ export default buildConfig({
     Proyectos,
     Miembros,
     Downloads,
+    VideoViews,
     Eventos,
   ],
   globals: [

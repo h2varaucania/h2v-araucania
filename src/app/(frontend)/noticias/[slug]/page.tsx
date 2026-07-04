@@ -155,22 +155,10 @@ export default async function NoticiaDetalle({ params }: Props) {
             </p>
           )}
 
-          {/* Source link */}
-          {noticia.fuenteUrl && (
-            <div className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
-              <p className="text-sm text-gray-500">
-                Fuente original:{' '}
-                <a
-                  href={noticia.fuenteUrl as string}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-h2v-green hover:underline"
-                >
-                  {noticia.fuenteUrl as string}
-                </a>
-              </p>
-            </div>
-          )}
+          {/* Nota: se eliminó un bloque "Fuente original" que leía noticia.fuenteUrl,
+              campo que nunca existió en la colección Noticias (código muerto detectado
+              al generar payload-types.ts, 2026-07-04). Si se quiere esa función, hay
+              que agregar primero el campo fuenteUrl a src/collections/Noticias.ts. */}
         </div>
       </article>
 

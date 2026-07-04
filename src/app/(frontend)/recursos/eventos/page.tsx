@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import { requireFeature } from '@/lib/featureGate';
 import { publicados } from '@/lib/published';
+import type { Evento } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 
 export default async function Eventos() {
   requireFeature('eventos');
-  let eventos: any[] = [];
+  let eventos: Evento[] = [];
 
   try {
     const payload = await getPayload();
@@ -52,7 +53,7 @@ export default async function Eventos() {
             </div>
           ) : (
             <div className="space-y-4">
-              {eventos.map((evento: any) => (
+              {eventos.map((evento) => (
                 <div key={evento.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex gap-6">
                   <div className="shrink-0 w-16 text-center">
                     <div className="text-2xl font-bold text-h2v-green">

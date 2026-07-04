@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getPayload } from '@/lib/payload/getPayload';
 import { publicados } from '@/lib/published';
 import { categoriasColor } from '@/lib/categorias';
+import type { Noticia } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,7 +24,7 @@ export default async function Noticias({ searchParams }: { searchParams: SearchP
   const params = await searchParams;
   const currentPage = Math.max(1, parseInt(params.page || '1', 10));
 
-  let noticias: any[] = [];
+  let noticias: Noticia[] = [];
   let totalDocs = 0;
   let totalPages = 1;
 
@@ -66,21 +67,21 @@ export default async function Noticias({ searchParams }: { searchParams: SearchP
             noticias.map((noticia) => (
               <article key={noticia.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:border-h2v-green/20 transition-all">
                 <div className="flex items-center gap-3 mb-3">
-                  <time className="text-sm text-gray-400" dateTime={noticia.fecha as string}>
-                    {new Date(noticia.fecha as string).toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  <time className="text-sm text-gray-400" dateTime={noticia.fecha}>
+                    {new Date(noticia.fecha).toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </time>
                   {noticia.categoria && (
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${categoriasColor[noticia.categoria as string] || 'bg-gray-100 text-gray-600'}`}>
-                      {noticia.categoria as string}
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${categoriasColor[noticia.categoria] || 'bg-gray-100 text-gray-600'}`}>
+                      {noticia.categoria}
                     </span>
                   )}
                 </div>
                 <Link href={`/noticias/${noticia.slug}`}>
                   <h2 className="text-xl font-semibold text-h2v-blue hover:text-h2v-green transition-colors mb-2">
-                    {noticia.titulo as string}
+                    {noticia.titulo}
                   </h2>
                 </Link>
-                <p className="text-gray-600 text-sm leading-relaxed">{noticia.extracto as string}</p>
+                <p className="text-gray-600 text-sm leading-relaxed">{noticia.extracto}</p>
                 <Link href={`/noticias/${noticia.slug}`} className="inline-block mt-3 text-sm font-medium text-h2v-green hover:underline">
                   Leer mas
                 </Link>

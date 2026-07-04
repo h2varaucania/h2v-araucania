@@ -1,10 +1,20 @@
 'use client';
 
 import Script from 'next/script';
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const CONSENT_KEY = 'h2v-cookie-consent';
+
+// El consentimiento vive fuera de React (localStorage + evento del CookieBanner):
+// useSyncExternalStore es el patrón correcto para leerlo — sin estado ni efectos,
+// SSR-safe (en servidor siempre "no consentido").
+function subscribe(onChange: () => void) {
+  window.addEventListener('cookie-consent-granted', onChange);
+  return () => window.removeEventListener('cookie-consent-granted', onChange);
+}
+const getSnapshot = () => localStorage.getItem(CONSENT_KEY) === 'accepted';
+const getServerSnapshot = () => false;
 
 /**
  * Google Analytics 4 — solo se activa si:
@@ -12,21 +22,7 @@ const CONSENT_KEY = 'h2v-cookie-consent';
  * 2. El usuario aceptó cookies (localStorage)
  */
 export default function Analytics() {
-  const [consented, setConsented] = useState(false);
-
-  useEffect(() => {
-    // Check initial consent
-    if (localStorage.getItem(CONSENT_KEY) === 'accepted') {
-      setConsented(true);
-    }
-
-    // Listen for consent granted from CookieBanner
-    function onConsent() {
-      setConsented(true);
-    }
-    window.addEventListener('cookie-consent-granted', onConsent);
-    return () => window.removeEventListener('cookie-consent-granted', onConsent);
-  }, []);
+  const consented = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   if (!GA_ID || !consented) return null;
 

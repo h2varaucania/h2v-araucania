@@ -58,14 +58,14 @@ describe('Downloads collection is read-only', () => {
     const createFn = Downloads.access?.create;
     expect(createFn).toBeDefined();
     // The create function always returns false regardless of arguments
-    const result = (createFn as Function)({ req: { user: { role: 'admin' } } });
+    const result = (createFn as (args: unknown) => boolean)({ req: { user: { role: 'admin' } } });
     expect(result).toBe(false);
   });
 
   it('update access returns false', () => {
     const updateFn = Downloads.access?.update;
     expect(updateFn).toBeDefined();
-    const result = (updateFn as Function)({ req: { user: { role: 'admin' } } });
+    const result = (updateFn as (args: unknown) => boolean)({ req: { user: { role: 'admin' } } });
     expect(result).toBe(false);
   });
 });

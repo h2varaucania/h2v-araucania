@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getPayload } from '@/lib/payload/getPayload';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import type { PaginaQuienesSomo } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,6 +22,8 @@ const defaultInstituciones = [
   { nombre: 'Seremi de Energía Araucanía', rol: 'Mandante — Subsecretaría de Energía', logo: '/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png' },
 ];
 
+type Institucion = { nombre: string; rol: string; logo: string };
+
 export default async function QuienesSomos() {
   const payload = await getPayload();
 
@@ -28,8 +31,8 @@ export default async function QuienesSomos() {
   let heroTitulo = 'Quiénes Somos';
   let heroSubtitulo = 'El Programa Estratégico Regional de Hidrógeno Verde de La Araucanía impulsa el crecimiento socioeconómico regional mediante tecnologías de hidrógeno verde.';
   let bienPublicoTitulo = 'El Bien Público';
-  let bienPublicoContenido: any = null;
-  let instituciones = defaultInstituciones;
+  let bienPublicoContenido: NonNullable<PaginaQuienesSomo['bienPublico']>['contenido'] | null = null;
+  let instituciones: Institucion[] = defaultInstituciones;
   let consejoTitulo = 'Consejo de Dirección del Hidrógeno Verde de Araucanía';
   let consejoDesc = 'Instancia estratégica encargada de definir la visión, aprobar planes de desarrollo y supervisar el progreso del proyecto.';
   let comiteTitulo = 'Comité Consultivo Técnico Científico';
@@ -37,21 +40,21 @@ export default async function QuienesSomos() {
 
   try {
     const global = await payload.findGlobal({ slug: 'pagina-quienes-somos' });
-    if (global?.hero?.titulo) heroTitulo = global.hero.titulo as string;
-    if (global?.hero?.subtitulo) heroSubtitulo = global.hero.subtitulo as string;
-    if ((global?.bienPublico as any)?.titulo) bienPublicoTitulo = (global.bienPublico as any).titulo as string;
-    if ((global?.bienPublico as any)?.contenido) bienPublicoContenido = (global.bienPublico as any).contenido;
-    if ((global?.instituciones as any[])?.length > 0) {
-      instituciones = (global.instituciones as any[]).map((inst: any) => ({
+    if (global?.hero?.titulo) heroTitulo = global.hero.titulo;
+    if (global?.hero?.subtitulo) heroSubtitulo = global.hero.subtitulo;
+    if (global?.bienPublico?.titulo) bienPublicoTitulo = global.bienPublico.titulo;
+    if (global?.bienPublico?.contenido) bienPublicoContenido = global.bienPublico.contenido;
+    if (global?.instituciones && global.instituciones.length > 0) {
+      instituciones = global.instituciones.map((inst) => ({
         nombre: inst.nombre,
         rol: inst.rol,
-        logo: inst.logo?.url || inst.logo || '',
+        logo: (typeof inst.logo === 'object' ? inst.logo?.url : null) || '',
       }));
     }
-    if (global?.consejoTitulo) consejoTitulo = global.consejoTitulo as string;
-    if (global?.consejoDescripcion) consejoDesc = global.consejoDescripcion as string;
-    if (global?.comiteTitulo) comiteTitulo = global.comiteTitulo as string;
-    if (global?.comiteDescripcion) comiteDesc = global.comiteDescripcion as string;
+    if (global?.consejoTitulo) consejoTitulo = global.consejoTitulo;
+    if (global?.consejoDescripcion) consejoDesc = global.consejoDescripcion;
+    if (global?.comiteTitulo) comiteTitulo = global.comiteTitulo;
+    if (global?.comiteDescripcion) comiteDesc = global.comiteDescripcion;
   } catch {
     // Use defaults
   }
@@ -90,7 +93,7 @@ export default async function QuienesSomos() {
   ];
 
   const consejoData = consejo.length > 0
-    ? consejo.map((m: any) => ({ inst: m.institucion, cargo: m.cargo, titular: m.nombre, aporte: m.aporte || '' }))
+    ? consejo.map((m) => ({ inst: m.institucion, cargo: m.cargo, titular: m.nombre, aporte: m.aporte || '' }))
     : consejoFallback;
 
   return (
@@ -158,7 +161,7 @@ export default async function QuienesSomos() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {consejoData.map((row: any, i: number) => (
+                {consejoData.map((row, i) => (
                   <tr key={i} className={i % 2 === 1 ? 'bg-gray-50' : ''}>
                     <td className="px-6 py-3 text-sm font-medium text-gray-900">{row.inst}</td>
                     <td className="px-6 py-3 text-sm text-gray-600">{row.cargo}</td>
@@ -184,7 +187,7 @@ export default async function QuienesSomos() {
           </p>
           {comite.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {comite.map((m: any) => (
+              {comite.map((m) => (
                 <div key={m.id} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-h2v-green/10 flex items-center justify-center shrink-0">
                     <span className="text-h2v-green font-bold text-lg">{m.nombre?.charAt(0) || '?'}</span>
@@ -223,7 +226,7 @@ export default async function QuienesSomos() {
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl font-bold text-h2v-blue mb-6">Unidad de Coordinación y Gestión</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {unidad.map((m: any) => (
+              {unidad.map((m) => (
                 <div key={m.id} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
                   <p className="font-semibold text-h2v-blue">{m.nombre}</p>
                   <p className="text-sm text-h2v-green">{m.cargo}</p>

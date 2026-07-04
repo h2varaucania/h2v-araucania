@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import { requireFeature } from '@/lib/featureGate';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import type { PaginaCapitalHumano } from '@/payload-types';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,20 +33,20 @@ export default async function CapitalHumano() {
   requireFeature('capitalHumano');
   let heroTitulo = 'Capital Humano';
   let heroSubtitulo = 'Formación y desarrollo de competencias para la industria del hidrógeno verde en La Araucanía.';
-  let perfiles = defaultPerfiles;
-  let programas = defaultProgramas;
-  let introduccion: any = null;
-  let notaOportunidad: any = null;
+  let perfiles: string[] = defaultPerfiles;
+  let programas: string[] = defaultProgramas;
+  let introduccion: PaginaCapitalHumano['introduccion'] = null;
+  let notaOportunidad: PaginaCapitalHumano['notaOportunidad'] = null;
 
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-capital-humano' });
-    if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
-    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
+    if (data?.hero?.titulo) heroTitulo = data.hero.titulo;
+    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo;
     if (data?.introduccion) introduccion = data.introduccion;
     if (data?.notaOportunidad) notaOportunidad = data.notaOportunidad;
-    if (data?.perfiles?.length > 0) perfiles = (data.perfiles as any[]).map((p) => p.texto);
-    if (data?.programas?.length > 0) programas = (data.programas as any[]).map((p) => p.texto);
+    if (data?.perfiles && data.perfiles.length > 0) perfiles = data.perfiles.map((p) => p.texto);
+    if (data?.programas && data.programas.length > 0) programas = data.programas.map((p) => p.texto);
   } catch {
     // Use defaults
   }

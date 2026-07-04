@@ -34,6 +34,7 @@ yarn-error.log*
 .env
 .env.local
 .env.production
+.env*.local
 
 # keep example
 !.env.example
@@ -41,8 +42,9 @@ yarn-error.log*
 # uploads (CMS managed)
 /public/uploads
 
-# payload generated
-/src/payload-types.ts
+# payload generated — SÍ se commitea: el código lo importa (@/payload-types) y el
+# build de Vercel (checkout limpio) lo necesita. Regenerar con `npm run payload:generate`
+# tras cambiar colecciones/globals.
 
 # vercel
 .vercel

@@ -27,11 +27,11 @@ export default async function Transparencia() {
   try {
     const payload = await getPayload();
     const data = await payload.findGlobal({ slug: 'pagina-transparencia' });
-    if (data?.hero?.titulo) heroTitulo = data.hero.titulo as string;
-    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo as string;
-    if (data?.introduccion) introduccion = data.introduccion as string;
-    if ((data?.items as any)?.length > 0) {
-      items = (data.items as any[]).map((i) => ({
+    if (data?.hero?.titulo) heroTitulo = data.hero.titulo;
+    if (data?.hero?.subtitulo) heroSubtitulo = data.hero.subtitulo;
+    if (data?.introduccion) introduccion = data.introduccion;
+    if (data?.items && data.items.length > 0) {
+      items = data.items.map((i) => ({
         titulo: i.titulo,
         descripcion: i.descripcion,
         estado: i.estado || '',
