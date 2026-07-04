@@ -10,6 +10,7 @@
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit",
     "payload:generate": "tsx scripts/generate-types.mts",
+    "payload:importmap": "TSX_TSCONFIG_PATH=./tsconfig.json BLOB_READ_WRITE_TOKEN=vercel_blob_rw_dummygen0000_dummygen0000 payload generate:importmap",
     "seed": "tsx -r tsconfig-paths/register src/seed.ts",
     "migrate": "payload migrate",
     "migrate:create": "payload migrate:create",

@@ -94,6 +94,10 @@ export default buildConfig({
   // Persistencia de uploads (F1, Auditoria_traspaso.md): el disco de Vercel es efímero, así que
   // en producción los archivos de Media van a Vercel Blob. Se activa solo si existe el token
   // (lo inyecta Vercel al conectar un Blob store al proyecto); en dev local se sigue usando disco.
+  // ⚠ GOTCHA (2026-07-04): al ser condicional, el importMap del admin DEBE generarse con el
+  // plugin ACTIVO (`npm run payload:importmap`, que fija un token dummy con formato válido).
+  // Si se genera sin token, falta VercelBlobClientUploadHandler en el mapa y el admin de
+  // producción queda EN NEGRO (error solo visible en los logs de runtime de Vercel).
   plugins: [
     ...(process.env.BLOB_READ_WRITE_TOKEN
       ? [
