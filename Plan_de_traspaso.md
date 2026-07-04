@@ -63,7 +63,7 @@ Tras la capacitación, se transfiere la capa de infraestructura y Carlos cesa su
 ### Precondiciones (capacitación cumplida)
 - El destinatario opera el `/admin` con soltura (publica, edita, sube, restaura versiones) sin apoyo.
 - La Seremi designa un **responsable técnico permanente** (o acepta un proveedor de mantención).
-- Respaldo automatizado de la DB andando y **restauración probada al menos una vez** (Fase 2 de la skill).
+- Respaldo automatizado de la DB andando ✅ (GitHub Action diario, pg_dump) y **restauración probada** ✅ (2026-07-04, conteos calzan). Ver `scripts/restore-db.md`. En el traspaso, mover el secret `DATABASE_URI_UNPOOLED` a la cuenta institucional o dejar el workflow bajo la nueva propiedad del repo.
 - Dominio propio definido (Fase 3, opcional: `h2varaucania.cl`).
 
 ### Qué se transfiere y cómo
