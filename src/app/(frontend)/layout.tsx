@@ -25,6 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(siteUrl),
+    // Pre-lanzamiento: el sitio NO se indexa en buscadores mientras se puebla el contenido.
+    // Para permitir indexación en el lanzamiento: setear SITE_INDEXABLE=true en Vercel y redeployar.
+    ...(process.env.SITE_INDEXABLE === 'true'
+      ? {}
+      : { robots: { index: false, follow: false, googleBot: { index: false, follow: false } } }),
     title: {
       default: `${siteName} — Hidrógeno Verde en La Araucanía`,
       template: `%s | ${siteName}`,

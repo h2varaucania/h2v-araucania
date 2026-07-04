@@ -17,10 +17,16 @@ const nextConfig: NextConfig = {
     ],
   },
   async headers() {
+    // Pre-lanzamiento: header noindex en TODAS las respuestas (señal más fuerte para Google,
+    // cubre también PDFs/API). Se apaga seteando SITE_INDEXABLE=true en Vercel y redeployando.
+    const indexable = process.env.SITE_INDEXABLE === "true";
     return [
       {
         source: "/(.*)",
         headers: [
+          ...(indexable
+            ? []
+            : [{ key: "X-Robots-Tag", value: "noindex, nofollow" }]),
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
