@@ -196,6 +196,31 @@ export default function Header() {
   }, [mobileOpen]);
 
   return (
+    <>
+      {/* Franja de crédito Corfo (Manual §1.2 + QA #15): el lockup "Proyecto
+          apoyado por CORFO" y el programa DPS van ARRIBA a la izquierda en toda
+          página. Fuera del <header> sticky a propósito: se desplaza con el
+          contenido y no roba viewport permanente. */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center gap-4 sm:gap-6">
+          <Image
+            src="/logos/BP H2V Araucanía - Logo Corfo Azul recortado.png"
+            alt="Proyecto apoyado por CORFO"
+            width={1534}
+            height={828}
+            priority
+            className="h-12 w-auto md:h-14"
+          />
+          <div className="h-10 w-px bg-gray-200 md:h-12" aria-hidden="true" />
+          <Image
+            src="/logos/BP H2V Araucanía - DPS Corfo color azul.png"
+            alt="Programa Desarrollo Productivo Sostenible — CORFO"
+            width={1936}
+            height={1000}
+            className="h-12 w-auto md:h-14"
+          />
+        </div>
+      </div>
     <header className="bg-h2v-blue sticky top-0 z-40 shadow-md" role="banner">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Navegacion principal">
         <div className="flex items-center justify-between h-16 md:h-20">
@@ -274,5 +299,6 @@ export default function Header() {
         )}
       </nav>
     </header>
+    </>
   );
 }

@@ -45,8 +45,8 @@ export async function POST(req: Request) {
       data: {
         email: 'h2varaucania@gmail.com',
         ubicacion: 'Temuco, Región de La Araucanía, Chile',
-        ejecutor1: 'CODESSER — Corporación de Desarrollo Social del Sector Rural',
-        ejecutor2: 'Universidad de Talca — Co-ejecutor técnico',
+        ejecutor1: 'CODESSER (Beneficiario) — Corporación de Desarrollo Social del Sector Rural',
+        ejecutor2: 'Universidad de Talca — Coejecutor',
         mandante: 'Subsecretaría de Energía — Ministerio de Energía',
         codigoBP: 'Bien Público 24BP-269085',
       },
@@ -91,8 +91,8 @@ export async function POST(req: Request) {
           contenido: { root: { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', text: 'El Bien Público 24BP-269085 "Programa Estratégico Regional de Hidrógeno Verde en La Araucanía" es una iniciativa financiada por CORFO a través del instrumento Bienes Públicos para la Competitividad. Su objetivo es articular a los actores regionales del ecosistema de hidrógeno verde, desarrollar una hoja de ruta estratégica, fortalecer el capital humano y contribuir al marco regulatorio para posicionar a La Araucanía como polo de desarrollo del H₂V en Chile.', version: 1 }], version: 1 }], direction: 'ltr', format: '', indent: 0, version: 1 } },
         },
         instituciones: [
-          { nombre: 'CODESSER', rol: 'Ejecutor principal — Corporación de Desarrollo Social del Sector Rural' },
-          { nombre: 'Universidad de Talca', rol: 'Co-ejecutor técnico — Investigación y desarrollo' },
+          { nombre: 'CODESSER', rol: 'Beneficiario — Corporación de Desarrollo Social del Sector Rural' },
+          { nombre: 'Universidad de Talca', rol: 'Coejecutor — Investigación y desarrollo' },
           { nombre: 'Subsecretaría de Energía', rol: 'Mandante — Ministerio de Energía' },
           { nombre: 'CORFO', rol: 'Financiamiento — Programa Bien Público' },
           { nombre: 'Gobierno Regional de La Araucanía', rol: 'Apoyo institucional regional' },
@@ -362,9 +362,11 @@ export async function POST(req: Request) {
         { nombre: 'Por designar — Investigador UTalca', cargo: 'Investigador Principal', institucion: 'Universidad de Talca', instancia: 'comite', orden: 7 },
         { nombre: 'Por designar — Investigador UFRO', cargo: 'Investigador Asociado', institucion: 'Universidad de La Frontera', instancia: 'comite', orden: 8 },
         { nombre: 'Por designar — Experto H₂V', cargo: 'Asesor Técnico', institucion: 'Consultor independiente', instancia: 'comite', orden: 9 },
-        { nombre: 'Por designar — Director BP', cargo: 'Director del Programa', institucion: 'CODESSER', instancia: 'unidad', orden: 10 },
-        { nombre: 'Por designar — Coord. Técnico', cargo: 'Coordinador Técnico', institucion: 'Universidad de Talca', instancia: 'unidad', orden: 11 },
-        { nombre: 'Por designar — Coord. Comunicaciones', cargo: 'Coordinador de Comunicaciones', institucion: 'CODESSER', instancia: 'unidad', orden: 12 },
+        // Unidad de Coordinación: solo los cargos del Modelo, "Por definir" (QA #9/#10)
+        { nombre: 'Por definir', cargo: 'Director del proyecto', institucion: 'Por definir', instancia: 'unidad', orden: 10 },
+        { nombre: 'Por definir', cargo: 'Equipo técnico', institucion: 'Por definir', instancia: 'unidad', orden: 11 },
+        { nombre: 'Por definir', cargo: 'Equipo de gestión financiera', institucion: 'Por definir', instancia: 'unidad', orden: 12 },
+        { nombre: 'Por definir', cargo: 'Equipo de comunicación y participación comunitaria', institucion: 'Por definir', instancia: 'unidad', orden: 13 },
       ];
       for (const m of miembros) {
         await payload.create({ collection: 'miembros', data: m });

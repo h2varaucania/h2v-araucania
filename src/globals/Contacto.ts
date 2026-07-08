@@ -97,18 +97,18 @@ export const ContactoGlobal: GlobalConfig = {
             {
               name: 'ejecutor1',
               type: 'text',
-              label: 'Ejecutor principal',
+              label: 'Beneficiario (entidad ejecutora)',
               maxLength: 100,
               defaultValue: d.ejecutor1,
-              admin: { description: 'Nombre completo del ejecutor principal del Bien Público.' },
+              admin: { description: 'Beneficiario del Bien Público según las bases: CODESSER.' },
             },
             {
               name: 'ejecutor2',
               type: 'text',
-              label: 'Co-ejecutor',
+              label: 'Coejecutor',
               maxLength: 100,
               defaultValue: d.ejecutor2,
-              admin: { description: 'Nombre del co-ejecutor técnico.' },
+              admin: { description: 'Coejecutor del Bien Público según las bases: Universidad de Talca.' },
             },
             {
               name: 'mandante',

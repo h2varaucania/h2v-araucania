@@ -24,6 +24,8 @@ type ProyectoMapa = {
   coordenadas: { lat: number; lng: number };
   capacidadMW?: number;
   produccionTonAnio?: number;
+  imagen?: { url: string; alt?: string };
+  url?: string;
 };
 
 export default async function Proyectos() {
@@ -44,17 +46,22 @@ export default async function Proyectos() {
       limit: 100,
     });
 
-    proyectos = docs.map((p: Proyecto) => ({
-      id: String(p.id),
-      nombre: p.nombre,
-      descripcion: p.descripcion,
-      empresa: p.empresa,
-      etapa: p.etapa,
-      region: p.region,
-      coordenadas: p.coordenadas,
-      capacidadMW: p.capacidadMW ?? undefined,
-      produccionTonAnio: p.produccionTonAnio ?? undefined,
-    }));
+    proyectos = docs.map((p: Proyecto) => {
+      const imagenDoc = p.imagen && typeof p.imagen === 'object' ? p.imagen : null;
+      return {
+        id: String(p.id),
+        nombre: p.nombre,
+        descripcion: p.descripcion,
+        empresa: p.empresa,
+        etapa: p.etapa,
+        region: p.region,
+        coordenadas: p.coordenadas,
+        capacidadMW: p.capacidadMW ?? undefined,
+        produccionTonAnio: p.produccionTonAnio ?? undefined,
+        imagen: imagenDoc?.url ? { url: imagenDoc.url, alt: imagenDoc.alt ?? undefined } : undefined,
+        url: p.url ?? undefined,
+      };
+    });
   } catch {
     // DB unavailable — render empty map
   }

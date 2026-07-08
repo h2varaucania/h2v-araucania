@@ -14,6 +14,8 @@ type Proyecto = {
   coordenadas: { lat: number; lng: number };
   capacidadMW?: number;
   produccionTonAnio?: number;
+  imagen?: { url: string; alt?: string };
+  url?: string;
 };
 
 export default function ProyectosMapLoader({ proyectos }: { proyectos: Proyecto[] }) {

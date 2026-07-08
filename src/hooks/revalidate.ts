@@ -18,8 +18,16 @@ export const revalidaColeccion = (
   paths: string[],
   slugPrefix?: string,
 ): CollectionAfterChangeHook =>
-  ({ doc, context }) => {
-    if (!context?.disableRevalidate) {
+  ({ doc, previousDoc, context }) => {
+    // Guardar un BORRADOR no cambia lo público → no revalida. Imprescindible
+    // además porque, con autosave, el borrador inicial de "Crear nuevo" se crea
+    // DURANTE el render del server component del admin, donde revalidatePath es
+    // ilegal (Next aborta y la vista queda en blanco — QA #12, 07-07-26). Solo
+    // publicar, editar algo publicado o despublicar revalidan; en colecciones
+    // sin versions no existe _status y se revalida siempre.
+    const esBorrador = doc?._status && doc._status !== 'published';
+    const veniaPublicado = previousDoc?._status === 'published';
+    if (!context?.disableRevalidate && (!esBorrador || veniaPublicado)) {
       paths.forEach((p) => revalidatePath(p));
       if (slugPrefix && doc?.slug) revalidatePath(`${slugPrefix}/${doc.slug}`);
     }

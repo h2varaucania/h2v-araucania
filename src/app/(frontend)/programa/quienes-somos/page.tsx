@@ -15,10 +15,13 @@ export const metadata: Metadata = {
   },
 };
 
+// Roles según las bases del concurso (QA #7/#8): CODESSER es "Beneficiario",
+// UTalca es "Coejecutor". Aquí va el logo Corfo SIN la leyenda "Proyecto
+// apoyado por" (QA #6): el crédito ya está en la franja superior del sitio.
 const defaultInstituciones = [
-  { nombre: 'CORFO', rol: 'Financiamiento del Bien Público', logo: '/logos/BP H2V Araucanía - Logo Corfo Azul.png' },
-  { nombre: 'CODESSER', rol: 'Ejecutor principal — Corporación de Desarrollo Social del Sector Rural', logo: '/logos/BP H2V Araucanía - Logo Codesser.png' },
-  { nombre: 'Universidad de Talca', rol: 'Co-ejecutor técnico', logo: '/logos/BP H2V Araucanía - Logo Utalca.png' },
+  { nombre: 'CORFO', rol: 'Financiamiento del Bien Público', logo: '/logos/BP H2V Araucanía - Logo Corfo Azul sin leyenda.png' },
+  { nombre: 'CODESSER', rol: 'Beneficiario — Corporación de Desarrollo Social del Sector Rural', logo: '/logos/BP H2V Araucanía - Logo Codesser.png' },
+  { nombre: 'Universidad de Talca', rol: 'Coejecutor', logo: '/logos/BP H2V Araucanía - Logo Utalca.png' },
   { nombre: 'Seremi de Energía Araucanía', rol: 'Mandante — Subsecretaría de Energía', logo: '/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png' },
 ];
 
@@ -28,7 +31,7 @@ type Institucion = { nombre: string; rol: string; logo: string };
 // logo oficial del repo (no puede quedar el ejecutor sin su logo — Manual §1.2).
 function logoOficial(nombre: string): string {
   const n = nombre.toLowerCase();
-  if (n.includes('corfo')) return '/logos/BP H2V Araucanía - Logo Corfo Azul.png';
+  if (n.includes('corfo')) return '/logos/BP H2V Araucanía - Logo Corfo Azul sin leyenda.png';
   if (n.includes('codesser')) return '/logos/BP H2V Araucanía - Logo Codesser.png';
   if (n.includes('talca')) return '/logos/BP H2V Araucanía - Logo Utalca.png';
   if (n.includes('energía') || n.includes('energia')) return '/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png';

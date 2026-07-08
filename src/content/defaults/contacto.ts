@@ -40,8 +40,10 @@ export const contactoDefaults = {
   email: 'h2varaucania@gmail.com',
   ubicacion: 'Temuco, Región de La Araucanía, Chile',
   codigoBP: 'Bien Público 24BP-269085',
-  ejecutor1: 'CODESSER — Corporación de Desarrollo Social del Sector Rural',
-  ejecutor2: 'Universidad de Talca — Co-ejecutor técnico',
+  // Términos oficiales de las bases (QA #7/#8): CODESSER es el "Beneficiario"
+  // y la Universidad de Talca el "Coejecutor" del Bien Público.
+  ejecutor1: 'CODESSER (Beneficiario) — Corporación de Desarrollo Social del Sector Rural',
+  ejecutor2: 'Universidad de Talca — Coejecutor',
   mandante: 'Subsecretaría de Energía — Ministerio de Energía',
 } as const;
 

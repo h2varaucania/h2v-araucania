@@ -37,7 +37,7 @@ export const PaginaQuienesSomos: GlobalConfig = {
       admin: { description: 'Instituciones que participan en el programa (CORFO, CODESSER, UTalca, etc.).' },
       fields: [
         { name: 'nombre', type: 'text', required: true, maxLength: 80, admin: { description: 'Nombre de la institución.' } },
-        { name: 'rol', type: 'text', required: true, maxLength: 100, admin: { description: 'Rol en el programa. Ej: "Ejecutor principal", "Co-ejecutor técnico"' } },
+        { name: 'rol', type: 'text', required: true, maxLength: 100, admin: { description: 'Rol según las bases. Ej: "Beneficiario", "Coejecutor", "Mandante"' } },
         { name: 'logo', type: 'upload', relationTo: 'media', label: 'Logo (opcional)' },
       ],
     },

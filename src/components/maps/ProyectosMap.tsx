@@ -14,7 +14,12 @@ type Proyecto = {
   coordenadas: { lat: number; lng: number };
   capacidadMW?: number;
   produccionTonAnio?: number;
+  imagen?: { url: string; alt?: string };
+  url?: string;
 };
+
+// Solo enlaces web reales llegan al href del popup (el campo es texto libre).
+const enlaceSeguro = (url?: string) => (url && /^https?:\/\//i.test(url) ? url : null);
 
 const etapaColor: Record<string, string> = {
   planificacion: '#F59E0B',
@@ -86,8 +91,10 @@ export default function ProyectosMap({ proyectos }: { proyectos: Proyecto[] }) {
       const color = etapaColor[p.etapa] || '#6B7280';
       const icon = createIcon(color);
 
+      const enlace = enlaceSeguro(p.url);
       const popupContent = `
         <div style="font-family:system-ui,sans-serif;max-width:260px;">
+          ${p.imagen?.url ? `<img src="${escapeHtml(p.imagen.url)}" alt="${escapeHtml(p.imagen.alt || p.nombre)}" style="display:block;width:100%;height:120px;object-fit:cover;border-radius:8px;margin:0 0 8px;">` : ''}
           <h3 style="margin:0 0 4px;font-size:15px;font-weight:700;color:var(--h2v-blue,#1B3A5C);">${escapeHtml(p.nombre)}</h3>
           <p style="margin:0 0 6px;font-size:12px;color:var(--h2v-green,#0D7377);">${escapeHtml(p.empresa)}</p>
           <p style="margin:0 0 8px;font-size:13px;color:#4B5563;">${escapeHtml(p.descripcion)}</p>
@@ -96,6 +103,7 @@ export default function ProyectosMap({ proyectos }: { proyectos: Proyecto[] }) {
             ${p.capacidadMW ? `<span><strong>Capacidad:</strong> ${p.capacidadMW} MW</span>` : ''}
             ${p.produccionTonAnio ? `<span><strong>Produccion:</strong> ${p.produccionTonAnio.toLocaleString()} ton/ano</span>` : ''}
           </div>
+          ${enlace ? `<a href="${escapeHtml(enlace)}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:600;color:var(--h2v-green,#0D7377);">Ver sitio del proyecto →</a>` : ''}
         </div>
       `;
 
@@ -189,6 +197,16 @@ export default function ProyectosMap({ proyectos }: { proyectos: Proyecto[] }) {
                     {p.capacidadMW && <span>{p.capacidadMW} MW</span>}
                     {p.produccionTonAnio && <span>{p.produccionTonAnio.toLocaleString()} ton/ano</span>}
                   </div>
+                )}
+                {enlaceSeguro(p.url) && (
+                  <a
+                    href={enlaceSeguro(p.url)!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-3 text-sm font-medium text-h2v-green hover:underline"
+                  >
+                    Ver sitio del proyecto →
+                  </a>
                 )}
               </div>
             ))}

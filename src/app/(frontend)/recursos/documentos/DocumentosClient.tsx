@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 type Documento = {
   id: string;
@@ -10,6 +11,7 @@ type Documento = {
   anio: number;
   descargas: number;
   archivo?: { url?: string };
+  thumbnail?: { url?: string; alt?: string } | number | null;
 };
 
 const tipoLabel: Record<string, string> = {
@@ -121,13 +123,27 @@ export default function DocumentosClient({
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((doc) => (
+              {filtered.map((doc) => {
+                const portada = doc.thumbnail && typeof doc.thumbnail === 'object' ? doc.thumbnail : null;
+                return (
                 <div key={doc.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md hover:border-h2v-green/20 transition-all group">
+                  {portada?.url ? (
+                    <div className="relative h-40">
+                      <Image
+                        src={portada.url}
+                        alt={portada.alt || doc.titulo}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
                   <div className="h-40 bg-gradient-to-br from-h2v-green/5 to-h2v-blue/10 flex items-center justify-center">
                     <svg className="w-12 h-12 text-h2v-green/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                   </div>
+                  )}
                   <div className="p-5">
                     <div className="flex items-center gap-2 mb-2">
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${tipoColor[doc.tipo] || 'bg-gray-100 text-gray-600'}`}>
@@ -141,7 +157,9 @@ export default function DocumentosClient({
                     <h3 className="font-semibold text-h2v-blue group-hover:text-h2v-green transition-colors mb-2">
                       {doc.titulo}
                     </h3>
-                    <p className="text-sm text-gray-500 line-clamp-2">{doc.descripcion}</p>
+                    {/* Sin line-clamp: el admin acota a 400 chars y esa es la
+                        descripción completa que el dueño espera ver (QA #2). */}
+                    <p className="text-sm text-gray-500">{doc.descripcion}</p>
                     <button
                       onClick={() => handleDownload(doc)}
                       className="mt-4 flex items-center gap-2 text-sm font-medium text-h2v-green hover:underline"
@@ -153,7 +171,8 @@ export default function DocumentosClient({
                     </button>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

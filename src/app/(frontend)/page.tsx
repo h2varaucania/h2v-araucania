@@ -36,9 +36,9 @@ const apoyoCorfo = [
 ];
 
 // Instituciones participantes (ejecutor + colaboradores). Secundarias y NUNCA mayores que Corfo (§1.2).
-// CODESSER va primero: es la entidad ejecutora del Bien Público (seed.ts / Modelo de Sustentabilidad).
+// CODESSER va primero: es el Beneficiario (entidad ejecutora) del Bien Público según las bases.
 const defaultParticipantes = [
-  { src: "/logos/BP H2V Araucanía - Logo Codesser.png", alt: "CODESSER — entidad ejecutora" },
+  { src: "/logos/BP H2V Araucanía - Logo Codesser.png", alt: "CODESSER — Beneficiario del Bien Público" },
   { src: "/logos/BP H2V Araucanía - Logo Utalca.png", alt: "Universidad de Talca" },
   { src: "/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png", alt: "Seremi de Energia Araucania" },
   { src: "/logos/BP H2V Araucanía - Logo CES4.0.png", alt: "CES 4.0" },

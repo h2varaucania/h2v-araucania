@@ -1100,11 +1100,11 @@ export interface Contacto {
    */
   telefono?: string | null;
   /**
-   * Nombre completo del ejecutor principal del Bien Público.
+   * Beneficiario del Bien Público según las bases: CODESSER.
    */
   ejecutor1?: string | null;
   /**
-   * Nombre del co-ejecutor técnico.
+   * Coejecutor del Bien Público según las bases: Universidad de Talca.
    */
   ejecutor2?: string | null;
   /**
@@ -1277,7 +1277,7 @@ export interface PaginaQuienesSomo {
          */
         nombre: string;
         /**
-         * Rol en el programa. Ej: "Ejecutor principal", "Co-ejecutor técnico"
+         * Rol según las bases. Ej: "Beneficiario", "Coejecutor", "Mandante"
          */
         rol: string;
         logo?: (number | null) | Media;
