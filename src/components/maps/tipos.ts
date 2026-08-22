@@ -54,4 +54,7 @@ export type MapaProps = {
   etapas: EtapaVista[];
   mapasBase: MapaBaseVista[];
   textos: TextosMapaVista;
+  /** Flag mapaAvanzado resuelto EN EL SERVIDOR (el módulo features no se inlinea en
+   *  el cliente por su acceso dinámico a process.env). Gate de las funciones KMZ. */
+  kmzOn: boolean;
 };

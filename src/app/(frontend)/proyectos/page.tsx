@@ -3,6 +3,7 @@ import { getPayload } from '@/lib/payload/getPayload';
 import ProyectosMapLoader from '@/components/maps/ProyectosMapLoader';
 import type { CapaMeta, EtapaVista, MapaBaseVista, ProyectoMapa, TextosMapaVista } from '@/components/maps/tipos';
 import type { Proyecto } from '@/payload-types';
+import { features } from '@/lib/features';
 import {
   etapas as etapasDefault,
   mapasBase as mapasBaseDefault,
@@ -35,6 +36,8 @@ function capaMeta(capa: unknown): CapaMeta | undefined {
 }
 
 export default async function Proyectos() {
+  // El flag se resuelve AQUÍ (servidor): el módulo features no se inlinea en el cliente.
+  const kmzOn = features.mapaAvanzado;
   let proyectos: ProyectoMapa[] = [];
   let capasReferencia: CapaMeta[] = [];
   let etapas: EtapaVista[] = etapasDefault;
@@ -76,9 +79,12 @@ export default async function Proyectos() {
       };
     });
 
-    // Capas de referencia (contexto): metadatos, apagadas por defecto en el mapa.
-    const ref = await payload.find({ collection: 'capas-geo', where: { tipo: { equals: 'referencia' } }, limit: 50, depth: 0 });
-    capasReferencia = ref.docs.map((c) => capaMeta(c)).filter((c): c is CapaMeta => !!c);
+    // Capas de referencia (contexto): metadatos, apagadas por defecto. Solo si el flag
+    // KMZ está activo (si no, no se dibujan capas y no hace falta la consulta).
+    if (kmzOn) {
+      const ref = await payload.find({ collection: 'capas-geo', where: { tipo: { equals: 'referencia' } }, limit: 50, depth: 0 });
+      capasReferencia = ref.docs.map((c) => capaMeta(c)).filter((c): c is CapaMeta => !!c);
+    }
   } catch {
     // DB no disponible — mapa vacío.
   }
@@ -98,6 +104,7 @@ export default async function Proyectos() {
         etapas={etapas}
         mapasBase={mapasBase}
         textos={textos}
+        kmzOn={kmzOn}
       />
     </div>
   );

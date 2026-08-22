@@ -5,13 +5,18 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { EtapaVista, MapaProps, ProyectoMapa } from './tipos';
 
+// Las funciones KMZ (dibujar capas, descargas, capas de referencia) van detrás del
+// flag `mapaAvanzado`, que llega YA RESUELTO desde el servidor (prop kmzOn): apagadas
+// por defecto, el mapa se comporta como antes (solo marcadores). El sostenedor las
+// prende cuando las quiere (NEXT_PUBLIC_FEAT_MAPA_PLUS=true).
+
 function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 const enlaceSeguro = (url?: string) => (url && /^https?:\/\/[^\s]+$/i.test(url) ? url : null);
 
-export default function ProyectosMap({ proyectos, capasReferencia, etapas, mapasBase, textos }: MapaProps) {
+export default function ProyectosMap({ proyectos, capasReferencia, etapas, mapasBase, textos, kmzOn }: MapaProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markersRef = useRef<L.LayerGroup | null>(null);
@@ -58,7 +63,7 @@ export default function ProyectosMap({ proyectos, capasReferencia, etapas, mapas
     if (p.capacidadMW) filas.push(`<p style="margin:0 0 2px;font-size:11px;color:#6B7280;">${p.capacidadMW} MW</p>`);
     const ext = enlaceSeguro(p.url);
     if (ext) filas.push(`<a href="${escapeHtml(ext)}" target="_blank" rel="noopener noreferrer" style="font-size:12px;color:#0D7377;">${escapeHtml(textos.textoVerProyecto)}</a><br/>`);
-    filas.push(`<a href="/api/geo/proyectos/${encodeURIComponent(p.id)}/kmz" style="display:inline-block;margin-top:6px;font-size:12px;font-weight:600;color:#0D7377;">${escapeHtml(textos.botonDescargarProyecto)}</a>`);
+    if (kmzOn) filas.push(`<a href="/api/geo/proyectos/${encodeURIComponent(p.id)}/kmz" style="display:inline-block;margin-top:6px;font-size:12px;font-weight:600;color:#0D7377;">${escapeHtml(textos.botonDescargarProyecto)}</a>`);
     return `<div style="font-family:system-ui,sans-serif;max-width:260px;">${filas.join('')}</div>`;
   }
 
@@ -107,13 +112,16 @@ export default function ProyectosMap({ proyectos, capasReferencia, etapas, mapas
     capasRef.current = L.layerGroup().addTo(map);
 
     // Capas de referencia como overlays apagados; su geojson se pide al prenderlas.
+    // Solo con el flag KMZ activo.
     const overlays: Record<string, L.LayerGroup> = {};
-    for (const ref of capasReferencia) {
-      const grupo = L.layerGroup();
-      overlays[ref.titulo || `Capa ${ref.id}`] = grupo;
-      grupo.on('add', () => {
-        if (grupo.getLayers().length === 0) dibujarCapa(ref.id, grupo, ref.color || '#1B3A5C');
-      });
+    if (kmzOn) {
+      for (const ref of capasReferencia) {
+        const grupo = L.layerGroup();
+        overlays[ref.titulo || `Capa ${ref.id}`] = grupo;
+        grupo.on('add', () => {
+          if (grupo.getLayers().length === 0) dibujarCapa(ref.id, grupo, ref.color || '#1B3A5C');
+        });
+      }
     }
 
     const control = L.control.layers(bases, overlays, { position: 'topright' }).addTo(map);
@@ -134,12 +142,13 @@ export default function ProyectosMap({ proyectos, capasReferencia, etapas, mapas
 
     filtered.forEach((p) => {
       const color = colorDe(p.etapa);
-      if (p.mostrarMarcador !== false || !p.capa) {
+      // Con el flag apagado nunca se dibuja la capa, así que el marcador va siempre.
+      if (!kmzOn || p.mostrarMarcador !== false || !p.capa) {
         L.marker([p.coordenadas.lat, p.coordenadas.lng], { icon: iconoEtapa(color) })
           .bindPopup(popupHtml(p))
           .addTo(markers);
       }
-      if (p.capa) dibujarCapa(p.capa.id, capas, p.capa.color || color);
+      if (kmzOn && p.capa) dibujarCapa(p.capa.id, capas, p.capa.color || color);
     });
 
     centrar();
@@ -158,8 +167,8 @@ export default function ProyectosMap({ proyectos, capasReferencia, etapas, mapas
 
   return (
     <>
-      {/* Descargas KMZ / Google Earth */}
-      {hayProyectos && (
+      {/* Descargas KMZ / Google Earth (solo con el flag mapaAvanzado activo) */}
+      {hayProyectos && kmzOn && (
         <section className="py-6 px-4 bg-gray-50 border-b border-gray-200">
           <div className="max-w-6xl mx-auto flex flex-wrap items-center gap-3">
             <div className="mr-auto">
@@ -252,9 +261,11 @@ export default function ProyectosMap({ proyectos, capasReferencia, etapas, mapas
                       {textos.textoVerProyecto}
                     </a>
                   )}
-                  <a href={`/api/geo/proyectos/${encodeURIComponent(p.id)}/kmz`} className="text-sm font-medium text-h2v-green hover:underline">
-                    {textos.botonDescargarProyecto}
-                  </a>
+                  {kmzOn && (
+                    <a href={`/api/geo/proyectos/${encodeURIComponent(p.id)}/kmz`} className="text-sm font-medium text-h2v-green hover:underline">
+                      {textos.botonDescargarProyecto}
+                    </a>
+                  )}
                 </div>
               </div>
             ))}

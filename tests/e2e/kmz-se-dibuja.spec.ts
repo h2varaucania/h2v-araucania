@@ -11,6 +11,18 @@ test('una capa KMZ subida se dibuja en el mapa público', async ({ request, page
   const token = (await login.json()).token as string;
   const auth = { Authorization: `JWT ${token}` };
 
+  // El dibujo de capas va detrás del flag mapaAvanzado (NEXT_PUBLIC_FEAT_MAPA_PLUS),
+  // resuelto en el servidor. Si está apagado (default), no hay funciones KMZ y se omite
+  // el test. El mapa es ssr:false, así que hay que esperar a que hidrate para decidir.
+  await page.goto('/proyectos');
+  let flagOn = true;
+  try {
+    await page.getByRole('link', { name: /Descargar todos/i }).waitFor({ state: 'visible', timeout: 8000 });
+  } catch {
+    flagOn = false;
+  }
+  test.skip(!flagOn, 'mapaAvanzado apagado en este build (NEXT_PUBLIC_FEAT_MAPA_PLUS)');
+
   const buf = readFileSync(fileURLToPath(new URL('../fixtures/geo/google_earth_pro.kmz', import.meta.url)));
   let capaId: string | number | undefined;
   let proyId: string | number | undefined;
