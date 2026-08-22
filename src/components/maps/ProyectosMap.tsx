@@ -1,213 +1,261 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import type { EtapaVista, MapaProps, ProyectoMapa } from './tipos';
 
-type Proyecto = {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  empresa: string;
-  etapa: string;
-  region: string;
-  coordenadas: { lat: number; lng: number };
-  capacidadMW?: number;
-  produccionTonAnio?: number;
-  imagen?: { url: string; alt?: string };
-  url?: string;
-};
-
-// Solo enlaces web reales llegan al href del popup (el campo es texto libre).
-const enlaceSeguro = (url?: string) => (url && /^https?:\/\//i.test(url) ? url : null);
-
-const etapaColor: Record<string, string> = {
-  planificacion: '#F59E0B',
-  pilotaje: '#3B82F6',
-  desarrollo: '#8B5CF6',
-  operacion: '#10B981',
-};
-
-const etapaLabel: Record<string, string> = {
-  planificacion: 'Planificacion',
-  pilotaje: 'Pilotaje',
-  desarrollo: 'Desarrollo',
-  operacion: 'Operacion',
-};
-
-function createIcon(color: string) {
-  return L.divIcon({
-    className: '',
-    html: `<div style="width:24px;height:24px;border-radius:50%;background:${color};border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-    popupAnchor: [0, -14],
-  });
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-export default function ProyectosMap({ proyectos }: { proyectos: Proyecto[] }) {
+const enlaceSeguro = (url?: string) => (url && /^https?:\/\/[^\s]+$/i.test(url) ? url : null);
+
+export default function ProyectosMap({ proyectos, capasReferencia, etapas, mapasBase, textos }: MapaProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markersRef = useRef<L.LayerGroup | null>(null);
+  const capasRef = useRef<L.LayerGroup | null>(null);
+  const geojsonCache = useRef<Map<string, unknown>>(new Map());
   const [filtroRegion, setFiltroRegion] = useState<string>('todos');
   const [filtroEtapa, setFiltroEtapa] = useState<string>('todos');
 
-  const filtered = proyectos.filter((p) => {
-    if (filtroRegion !== 'todos' && p.region !== filtroRegion) return false;
-    if (filtroEtapa !== 'todos' && p.etapa !== filtroEtapa) return false;
-    return true;
-  });
+  const colorDe = useMemo(() => {
+    const m = new Map(etapas.map((e) => [e.valor, e.color]));
+    return (etapa: string) => m.get(etapa) || '#6B7280';
+  }, [etapas]);
+  const etiquetaDe = useMemo(() => {
+    const m = new Map(etapas.map((e) => [e.valor, e.etiqueta]));
+    return (etapa: string) => m.get(etapa) || etapa;
+  }, [etapas]);
 
-  // Initialize map once
+  const filtered = useMemo(
+    () => proyectos.filter((p) => {
+      if (filtroRegion !== 'todos' && p.region !== filtroRegion) return false;
+      if (filtroEtapa !== 'todos' && p.etapa !== filtroEtapa) return false;
+      return true;
+    }),
+    [proyectos, filtroRegion, filtroEtapa],
+  );
+
+  function iconoEtapa(color: string) {
+    return L.divIcon({
+      className: '',
+      html: `<div style="width:22px;height:22px;border-radius:50%;background:${color};border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
+      iconSize: [22, 22],
+      iconAnchor: [11, 11],
+      popupAnchor: [0, -13],
+    });
+  }
+
+  function popupHtml(p: ProyectoMapa): string {
+    const filas: string[] = [
+      `<h3 style="margin:0 0 4px;font-size:15px;font-weight:700;color:#1B3A5C;">${escapeHtml(p.nombre)}</h3>`,
+    ];
+    if (p.empresa) filas.push(`<p style="margin:0 0 4px;font-size:12px;color:#0D7377;">${escapeHtml(p.empresa)}</p>`);
+    if (p.descripcion) filas.push(`<p style="margin:0 0 6px;font-size:13px;color:#4B5563;">${escapeHtml(p.descripcion)}</p>`);
+    filas.push(`<p style="margin:0 0 2px;font-size:11px;color:#6B7280;"><strong>${escapeHtml(textos.etiquetaEtapa)}:</strong> ${escapeHtml(etiquetaDe(p.etapa))}</p>`);
+    if (p.capacidadMW) filas.push(`<p style="margin:0 0 2px;font-size:11px;color:#6B7280;">${p.capacidadMW} MW</p>`);
+    const ext = enlaceSeguro(p.url);
+    if (ext) filas.push(`<a href="${escapeHtml(ext)}" target="_blank" rel="noopener noreferrer" style="font-size:12px;color:#0D7377;">${escapeHtml(textos.textoVerProyecto)}</a><br/>`);
+    filas.push(`<a href="/api/geo/proyectos/${encodeURIComponent(p.id)}/kmz" style="display:inline-block;margin-top:6px;font-size:12px;font-weight:600;color:#0D7377;">${escapeHtml(textos.botonDescargarProyecto)}</a>`);
+    return `<div style="font-family:system-ui,sans-serif;max-width:260px;">${filas.join('')}</div>`;
+  }
+
+  // Dibuja el GeoJSON de una capa (desde caché o pidiéndolo) en un LayerGroup.
+  async function dibujarCapa(id: string, destino: L.LayerGroup, color: string) {
+    try {
+      let geojson = geojsonCache.current.get(id);
+      if (!geojson) {
+        const r = await fetch(`/api/geo/capas/${encodeURIComponent(id)}/geojson`);
+        if (!r.ok) return;
+        geojson = await r.json();
+        geojsonCache.current.set(id, geojson);
+      }
+      const capa = L.geoJSON(geojson as GeoJSON.GeoJsonObject, {
+        style: { color, weight: 2, fillColor: color, fillOpacity: 0.25 },
+        pointToLayer: (_f, latlng) => L.circleMarker(latlng, { radius: 5, color, fillColor: color, fillOpacity: 0.6 }),
+      });
+      destino.addLayer(capa);
+    } catch {
+      // capa no disponible: se ignora, el marcador del proyecto queda igual
+    }
+  }
+
+  // ── Inicializar el mapa una sola vez ──
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return;
+    const map = L.map(mapContainer.current, { center: [-38.74, -72.59], zoom: 7, zoomControl: true });
+    mapRef.current = map;
 
-    mapRef.current = L.map(mapContainer.current, {
-      center: [-38.74, -72.59], // Temuco
-      zoom: 7,
-      zoomControl: true,
-    });
+    // Mapas base editables. El satelital (legacy) cae al primero no-satelital en error.
+    const bases: Record<string, L.TileLayer> = {};
+    const noSatelital = mapasBase.find((m) => !m.esSatelital) || mapasBase[0];
+    let base0: L.TileLayer | null = null;
+    for (const mb of mapasBase) {
+      const capa = L.tileLayer(mb.urlPlantilla, { attribution: mb.atribucion, maxZoom: mb.maxZoom || 18 });
+      bases[mb.nombre] = capa;
+      if (mb.esSatelital && noSatelital && noSatelital !== mb) {
+        capa.on('tileerror', () => {
+          if (map.hasLayer(capa)) { map.removeLayer(capa); bases[noSatelital.nombre]?.addTo(map); }
+        });
+      }
+      if (!base0) { capa.addTo(map); base0 = capa; }
+    }
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxZoom: 18,
-    }).addTo(mapRef.current);
+    markersRef.current = L.layerGroup().addTo(map);
+    capasRef.current = L.layerGroup().addTo(map);
 
-    markersRef.current = L.layerGroup().addTo(mapRef.current);
+    // Capas de referencia como overlays apagados; su geojson se pide al prenderlas.
+    const overlays: Record<string, L.LayerGroup> = {};
+    for (const ref of capasReferencia) {
+      const grupo = L.layerGroup();
+      overlays[ref.titulo || `Capa ${ref.id}`] = grupo;
+      grupo.on('add', () => {
+        if (grupo.getLayers().length === 0) dibujarCapa(ref.id, grupo, ref.color || '#1B3A5C');
+      });
+    }
 
-    return () => {
-      mapRef.current?.remove();
-      mapRef.current = null;
-    };
+    const control = L.control.layers(bases, overlays, { position: 'topright' }).addTo(map);
+    // a11y: etiquetar el botón del control en español.
+    const botón = control.getContainer()?.querySelector('a.leaflet-control-layers-toggle');
+    if (botón) botón.setAttribute('aria-label', textos.ariaControlCapas);
+
+    return () => { map.remove(); mapRef.current = null; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Update markers when filters change
+  // ── Dibujar marcadores + capas de proyecto, y encuadrar, cuando cambia el filtro ──
   useEffect(() => {
-    if (!mapRef.current || !markersRef.current) return;
-
-    markersRef.current.clearLayers();
+    const map = mapRef.current, markers = markersRef.current, capas = capasRef.current;
+    if (!map || !markers || !capas) return;
+    markers.clearLayers();
+    capas.clearLayers();
 
     filtered.forEach((p) => {
-      const color = etapaColor[p.etapa] || '#6B7280';
-      const icon = createIcon(color);
-
-      const enlace = enlaceSeguro(p.url);
-      const popupContent = `
-        <div style="font-family:system-ui,sans-serif;max-width:260px;">
-          ${p.imagen?.url ? `<img src="${escapeHtml(p.imagen.url)}" alt="${escapeHtml(p.imagen.alt || p.nombre)}" style="display:block;width:100%;height:120px;object-fit:cover;border-radius:8px;margin:0 0 8px;">` : ''}
-          <h3 style="margin:0 0 4px;font-size:15px;font-weight:700;color:var(--h2v-blue,#1B3A5C);">${escapeHtml(p.nombre)}</h3>
-          <p style="margin:0 0 6px;font-size:12px;color:var(--h2v-green,#0D7377);">${escapeHtml(p.empresa)}</p>
-          <p style="margin:0 0 8px;font-size:13px;color:#4B5563;">${escapeHtml(p.descripcion)}</p>
-          <div style="display:flex;gap:12px;font-size:11px;color:#6B7280;">
-            <span><strong>Etapa:</strong> ${etapaLabel[p.etapa] || p.etapa}</span>
-            ${p.capacidadMW ? `<span><strong>Capacidad:</strong> ${p.capacidadMW} MW</span>` : ''}
-            ${p.produccionTonAnio ? `<span><strong>Produccion:</strong> ${p.produccionTonAnio.toLocaleString()} ton/ano</span>` : ''}
-          </div>
-          ${enlace ? `<a href="${escapeHtml(enlace)}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:600;color:var(--h2v-green,#0D7377);">Ver sitio del proyecto →</a>` : ''}
-        </div>
-      `;
-
-      L.marker([p.coordenadas.lat, p.coordenadas.lng], { icon })
-        .bindPopup(popupContent)
-        .addTo(markersRef.current!);
+      const color = colorDe(p.etapa);
+      if (p.mostrarMarcador !== false || !p.capa) {
+        L.marker([p.coordenadas.lat, p.coordenadas.lng], { icon: iconoEtapa(color) })
+          .bindPopup(popupHtml(p))
+          .addTo(markers);
+      }
+      if (p.capa) dibujarCapa(p.capa.id, capas, p.capa.color || color);
     });
 
-    // Fit bounds if markers exist
-    if (filtered.length > 0) {
-      const bounds = L.latLngBounds(filtered.map((p) => [p.coordenadas.lat, p.coordenadas.lng]));
-      mapRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 10 });
-    }
+    centrar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtered]);
+
+  function centrar() {
+    const map = mapRef.current;
+    if (!map || filtered.length === 0) return;
+    const bounds = L.latLngBounds(filtered.map((p) => [p.coordenadas.lat, p.coordenadas.lng] as [number, number]));
+    map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10 });
+  }
+
+  const hayProyectos = proyectos.length > 0;
+  const regiones: Array<[string, string]> = [['todos', 'Todos'], ['araucania', 'Araucanía'], ['nacional', 'Nacional']];
 
   return (
     <>
-      {/* Map */}
+      {/* Descargas KMZ / Google Earth */}
+      {hayProyectos && (
+        <section className="py-6 px-4 bg-gray-50 border-b border-gray-200">
+          <div className="max-w-6xl mx-auto flex flex-wrap items-center gap-3">
+            <div className="mr-auto">
+              <h2 className="text-sm font-semibold text-h2v-blue">{textos.tituloDescargas}</h2>
+              <p className="text-xs text-gray-500">{textos.ayudaKmz}</p>
+            </div>
+            {/* Descargas de archivo (no páginas): <a> es lo correcto, no <Link>. */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a href="/api/geo/proyectos/kmz" className="px-3 py-1.5 text-sm rounded-full bg-h2v-green text-white hover:opacity-90">
+              {textos.botonDescargarTodo}
+            </a>
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a href="/api/geo/proyectos/kml" className="px-3 py-1.5 text-sm rounded-full border border-h2v-green text-h2v-green hover:bg-h2v-green/5">
+              {textos.botonAbrirGoogleEarth}
+            </a>
+          </div>
+        </section>
+      )}
+
+      {/* Mapa */}
       <div className="relative">
-        {proyectos.length > 0 ? (
-          <div ref={mapContainer} className="h-[60vh] min-h-[400px] w-full" />
+        {hayProyectos ? (
+          <div ref={mapContainer} className="h-[60vh] min-h-[400px] w-full" role="application" aria-label="Mapa de proyectos" />
         ) : (
           <div className="h-[60vh] min-h-[400px] bg-gradient-to-br from-h2v-green/10 to-h2v-blue/10 flex items-center justify-center">
             <div className="text-center p-8 bg-white/80 backdrop-blur rounded-xl shadow-sm max-w-md">
-              <svg className="w-16 h-16 mx-auto mb-4 text-h2v-green/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-              </svg>
               <h2 className="text-xl font-semibold text-h2v-blue mb-2">Mapa interactivo</h2>
-              <p className="text-sm text-gray-500">
-                El mapa se activara cuando se registren proyectos en el sistema.
-              </p>
+              <p className="text-sm text-gray-500">El mapa se activará cuando se registren proyectos en el sistema.</p>
             </div>
           </div>
         )}
-
-        {/* Legend */}
-        {proyectos.length > 0 && (
+        {hayProyectos && (
           <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur rounded-lg shadow-md p-3 text-xs z-[1000]">
-            {Object.entries(etapaLabel).map(([key, label]) => (
-              <div key={key} className="flex items-center gap-2 mb-1">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: etapaColor[key] }} />
-                <span className="text-gray-700">{label}</span>
+            {etapas.map((e: EtapaVista) => (
+              <div key={e.valor} className="flex items-center gap-2 mb-1">
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: e.color }} />
+                <span className="text-gray-700">{e.etiqueta}</span>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Filters */}
-      <section className="py-6 px-4 bg-gray-50 border-t border-gray-200">
-        <div className="max-w-6xl mx-auto flex flex-wrap gap-3 items-center">
-          <span className="text-sm font-medium text-gray-500">Ubicacion:</span>
-          {[['todos', 'Todos'], ['araucania', 'Araucania'], ['nacional', 'Nacional']].map(([v, l]) => (
-            <button
-              key={v}
-              onClick={() => setFiltroRegion(v)}
-              className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroRegion === v ? 'bg-h2v-green text-white border-h2v-green' : 'border-gray-200 bg-white text-gray-600 hover:border-h2v-green'}`}
-            >
-              {l}
+      {/* Filtros */}
+      {hayProyectos && (
+        <section className="py-6 px-4 bg-gray-50 border-t border-gray-200">
+          <div className="max-w-6xl mx-auto flex flex-wrap gap-3 items-center">
+            <span className="text-sm font-medium text-gray-500">{textos.etiquetaUbicacion}:</span>
+            {regiones.map(([v, l]) => (
+              <button key={v} onClick={() => setFiltroRegion(v)}
+                className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroRegion === v ? 'bg-h2v-green text-white border-h2v-green' : 'border-gray-200 bg-white text-gray-600 hover:border-h2v-green'}`}>
+                {l}
+              </button>
+            ))}
+            <span className="text-sm font-medium text-gray-500 ml-4">{textos.etiquetaEtapa}:</span>
+            <button onClick={() => setFiltroEtapa('todos')}
+              className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroEtapa === 'todos' ? 'bg-h2v-green text-white border-h2v-green' : 'border-gray-200 bg-white text-gray-600 hover:border-h2v-green'}`}>
+              Todas
             </button>
-          ))}
-          <span className="text-sm font-medium text-gray-500 ml-4">Etapa:</span>
-          {[['todos', 'Todas'], ...Object.entries(etapaLabel)].map(([v, l]) => (
-            <button
-              key={v}
-              onClick={() => setFiltroEtapa(v)}
-              className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroEtapa === v ? 'bg-h2v-green text-white border-h2v-green' : 'border-gray-200 bg-white text-gray-600 hover:border-h2v-green'}`}
-            >
-              {l}
+            {etapas.map((e) => (
+              <button key={e.valor} onClick={() => setFiltroEtapa(e.valor)}
+                className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${filtroEtapa === e.valor ? 'bg-h2v-green text-white border-h2v-green' : 'border-gray-200 bg-white text-gray-600 hover:border-h2v-green'}`}>
+                {e.etiqueta}
+              </button>
+            ))}
+            <button onClick={centrar} className="ml-auto px-3 py-1.5 text-sm rounded-full border border-gray-200 bg-white text-gray-600 hover:border-h2v-green">
+              {textos.botonCentrar}
             </button>
-          ))}
-          <span className="ml-auto text-sm text-gray-400">{filtered.length} proyecto{filtered.length !== 1 ? 's' : ''}</span>
-        </div>
-      </section>
+            <span className="text-sm text-gray-400">{filtered.length} proyecto{filtered.length !== 1 ? 's' : ''}</span>
+          </div>
+        </section>
+      )}
 
-      {/* Project list below map */}
+      {/* Lista de tarjetas (equivalente accesible por teclado a los marcadores) */}
       {filtered.length > 0 && (
         <section className="py-8 px-4">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filtered.map((p) => (
               <div key={p.id} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: etapaColor[p.etapa] || '#6B7280' }} />
-                  <span className="text-xs text-gray-400">{etapaLabel[p.etapa] || p.etapa} — {p.region === 'araucania' ? 'Araucania' : 'Nacional'}</span>
+                  <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: colorDe(p.etapa) }} />
+                  <span className="text-xs text-gray-400">{etiquetaDe(p.etapa)} — {p.region === 'araucania' ? 'Araucanía' : 'Nacional'}</span>
                 </div>
                 <h3 className="font-semibold text-h2v-blue mb-1">{p.nombre}</h3>
-                <p className="text-sm text-h2v-green mb-2">{p.empresa}</p>
+                {p.empresa && <p className="text-sm text-h2v-green mb-2">{p.empresa}</p>}
                 <p className="text-sm text-gray-500 line-clamp-2">{p.descripcion}</p>
-                {(p.capacidadMW || p.produccionTonAnio) && (
-                  <div className="flex gap-4 mt-3 text-xs text-gray-400">
-                    {p.capacidadMW && <span>{p.capacidadMW} MW</span>}
-                    {p.produccionTonAnio && <span>{p.produccionTonAnio.toLocaleString()} ton/ano</span>}
-                  </div>
-                )}
-                {enlaceSeguro(p.url) && (
-                  <a
-                    href={enlaceSeguro(p.url)!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-3 text-sm font-medium text-h2v-green hover:underline"
-                  >
-                    Ver sitio del proyecto →
+                <div className="flex flex-wrap gap-3 mt-3">
+                  {enlaceSeguro(p.url) && (
+                    <a href={enlaceSeguro(p.url)!} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-h2v-green hover:underline">
+                      {textos.textoVerProyecto}
+                    </a>
+                  )}
+                  <a href={`/api/geo/proyectos/${encodeURIComponent(p.id)}/kmz`} className="text-sm font-medium text-h2v-green hover:underline">
+                    {textos.botonDescargarProyecto}
                   </a>
-                )}
+                </div>
               </div>
             ))}
           </div>
@@ -215,13 +263,4 @@ export default function ProyectosMap({ proyectos }: { proyectos: Proyecto[] }) {
       )}
     </>
   );
-}
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
 }

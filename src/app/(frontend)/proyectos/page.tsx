@@ -1,7 +1,14 @@
 import type { Metadata } from 'next';
 import { getPayload } from '@/lib/payload/getPayload';
 import ProyectosMapLoader from '@/components/maps/ProyectosMapLoader';
+import type { CapaMeta, EtapaVista, MapaBaseVista, ProyectoMapa, TextosMapaVista } from '@/components/maps/tipos';
 import type { Proyecto } from '@/payload-types';
+import {
+  etapas as etapasDefault,
+  mapasBase as mapasBaseDefault,
+  textosMapa as textosMapaDefault,
+  proyectosDefaults,
+} from '@/content/defaults/proyectos';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,26 +21,28 @@ export const metadata: Metadata = {
   },
 };
 
-type ProyectoMapa = {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  empresa: string;
-  etapa: string;
-  region: string;
-  coordenadas: { lat: number; lng: number };
-  capacidadMW?: number;
-  produccionTonAnio?: number;
-  imagen?: { url: string; alt?: string };
-  url?: string;
-};
+// Extrae los metadatos de una capa relacionada SIN su geojson (que se excluye por
+// defaultPopulate): la geometría se pide aparte, para no cargar la página.
+function capaMeta(capa: unknown): CapaMeta | undefined {
+  if (!capa || typeof capa !== 'object') return undefined;
+  const c = capa as { id?: number | string; titulo?: string; color?: string; nFeatures?: number; bbox?: { minLng?: number; minLat?: number; maxLng?: number; maxLat?: number } };
+  if (c.id == null) return undefined;
+  const b = c.bbox;
+  const bbox = b && typeof b.minLng === 'number' && typeof b.minLat === 'number' && typeof b.maxLng === 'number' && typeof b.maxLat === 'number'
+    ? ([b.minLng, b.minLat, b.maxLng, b.maxLat] as [number, number, number, number])
+    : undefined;
+  return { id: String(c.id), titulo: c.titulo, color: c.color || undefined, nFeatures: c.nFeatures, bbox };
+}
 
 export default async function Proyectos() {
   let proyectos: ProyectoMapa[] = [];
-  // Defaults de respaldo; el CMS (global "Mapa de Proyectos") los sobreescribe.
-  const hero = {
-    titulo: 'Mapa de Proyectos',
-    subtitulo: 'Proyectos de hidrógeno verde en desarrollo y ejecución a nivel regional y nacional.',
+  let capasReferencia: CapaMeta[] = [];
+  let etapas: EtapaVista[] = etapasDefault;
+  let mapasBase: MapaBaseVista[] = mapasBaseDefault;
+  let textos: TextosMapaVista = textosMapaDefault;
+  const hero: { titulo: string; subtitulo: string } = {
+    titulo: proyectosDefaults.heroTitulo,
+    subtitulo: proyectosDefaults.heroSubtitulo,
   };
 
   try {
@@ -41,11 +50,13 @@ export default async function Proyectos() {
     const data = await payload.findGlobal({ slug: 'pagina-proyectos' });
     if (data?.hero?.titulo) hero.titulo = data.hero.titulo;
     if (data?.hero?.subtitulo) hero.subtitulo = data.hero.subtitulo;
-    const { docs } = await payload.find({
-      collection: 'proyectos',
-      limit: 100,
-    });
+    const g = data as unknown as { etapas?: EtapaVista[]; mapasBase?: MapaBaseVista[]; textosMapa?: Partial<TextosMapaVista> };
+    if (g.etapas?.length) etapas = g.etapas.filter((e) => e.valor && e.etiqueta && e.color);
+    if (g.mapasBase?.length) mapasBase = g.mapasBase;
+    if (g.textosMapa) textos = { ...textosMapaDefault, ...g.textosMapa };
 
+    // Proyectos: depth 1 pobla la capa con sus metadatos (defaultPopulate excluye geojson).
+    const { docs } = await payload.find({ collection: 'proyectos', limit: 100, depth: 1 });
     proyectos = docs.map((p: Proyecto) => {
       const imagenDoc = p.imagen && typeof p.imagen === 'object' ? p.imagen : null;
       return {
@@ -60,10 +71,16 @@ export default async function Proyectos() {
         produccionTonAnio: p.produccionTonAnio ?? undefined,
         imagen: imagenDoc?.url ? { url: imagenDoc.url, alt: imagenDoc.alt ?? undefined } : undefined,
         url: p.url ?? undefined,
+        capa: capaMeta((p as unknown as { capa?: unknown }).capa),
+        mostrarMarcador: (p as unknown as { mostrarMarcador?: boolean }).mostrarMarcador ?? true,
       };
     });
+
+    // Capas de referencia (contexto): metadatos, apagadas por defecto en el mapa.
+    const ref = await payload.find({ collection: 'capas-geo', where: { tipo: { equals: 'referencia' } }, limit: 50, depth: 0 });
+    capasReferencia = ref.docs.map((c) => capaMeta(c)).filter((c): c is CapaMeta => !!c);
   } catch {
-    // DB unavailable — render empty map
+    // DB no disponible — mapa vacío.
   }
 
   return (
@@ -75,7 +92,13 @@ export default async function Proyectos() {
         </div>
       </section>
 
-      <ProyectosMapLoader proyectos={proyectos} />
+      <ProyectosMapLoader
+        proyectos={proyectos}
+        capasReferencia={capasReferencia}
+        etapas={etapas}
+        mapasBase={mapasBase}
+        textos={textos}
+      />
     </div>
   );
 }

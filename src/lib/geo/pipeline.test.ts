@@ -200,6 +200,25 @@ describe('generarKml / generarKmz', () => {
     expect(kml.split('<![CDATA[').length - 1).toBe(kml.split(']]></description>').length - 1);
   });
 
+  it('mapea polígono con agujero a outer/innerBoundaryIs y usa tessellate/clampToGround', () => {
+    const conAgujero: ProyectoKml[] = [{
+      id: 9, nombre: 'Con agujero', etapa: 'operacion', punto: { lat: -38.7, lng: -72.5 },
+      geometria: {
+        type: 'Polygon',
+        coordinates: [
+          [[-72.6, -38.75], [-72.4, -38.75], [-72.4, -38.65], [-72.6, -38.65], [-72.6, -38.75]],
+          [[-72.55, -38.72], [-72.45, -38.72], [-72.45, -38.68], [-72.55, -38.68], [-72.55, -38.72]],
+        ],
+      },
+      mostrarMarcador: false,
+    }];
+    const kml = generarKml(conAgujero, { etapas, textos: textosKml });
+    expect(kml).toContain('<outerBoundaryIs>');
+    expect(kml).toContain('<innerBoundaryIs>');
+    expect(kml).toContain('<tessellate>1</tessellate>');
+    expect(kml).toContain('<altitudeMode>clampToGround</altitudeMode>');
+  });
+
   it('empaqueta un KMZ con doc.kml primero y round-trip por togeojson', () => {
     const kml = generarKml(proyectos, { etapas, textos: textosKml });
     const kmz = generarKmz(kml);
