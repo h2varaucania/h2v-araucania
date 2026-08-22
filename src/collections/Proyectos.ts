@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import { anyone, isAdmin, isAdminOrEditor } from '@/lib/access';
 import { revalidaColeccion, revalidaColeccionAlBorrar } from '@/hooks/revalidate';
+import { etapas } from '@/content/defaults/proyectos';
 
 export const Proyectos: CollectionConfig = {
   slug: 'proyectos',
@@ -49,12 +50,9 @@ export const Proyectos: CollectionConfig = {
       type: 'select',
       required: true,
       label: 'Etapa actual',
-      options: [
-        { label: 'Planificación', value: 'planificacion' },
-        { label: 'Pilotaje', value: 'pilotaje' },
-        { label: 'Desarrollo', value: 'desarrollo' },
-        { label: 'Operación', value: 'operacion' },
-      ],
+      // Fuente única del vocabulario de etapas (src/content/defaults/proyectos.ts):
+      // el mismo arreglo alimenta el mapa, la leyenda, el popup y el KML.
+      options: etapas.map((e) => ({ label: e.etiqueta, value: e.valor })),
       admin: { position: 'sidebar', description: 'En qué etapa se encuentra el proyecto actualmente.' },
     },
     {
@@ -102,6 +100,25 @@ export const Proyectos: CollectionConfig = {
       type: 'text',
       label: 'Enlace externo (opcional)',
       admin: { description: 'URL al sitio web del proyecto o empresa, si existe.' },
+    },
+    {
+      name: 'capa',
+      type: 'upload',
+      relationTo: 'capas-geo',
+      label: 'Capa geográfica (KMZ, opcional)',
+      admin: {
+        description: 'Sube en Contenido → Capas geográficas un KMZ/KML con el polígono o trazado del proyecto, y elígelo aquí para dibujarlo en el mapa. Si no eliges ninguna, el proyecto se muestra solo con su marcador de punto.',
+      },
+    },
+    {
+      name: 'mostrarMarcador',
+      type: 'checkbox',
+      defaultValue: true,
+      label: 'Mostrar también el marcador de punto',
+      admin: {
+        position: 'sidebar',
+        description: 'Si el proyecto tiene una capa, muestra igualmente el marcador del punto encima de la geometría.',
+      },
     },
   ],
 };

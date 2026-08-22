@@ -26,6 +26,7 @@ import { Miembros } from '@/collections/Miembros';
 import { Downloads } from '@/collections/Downloads';
 import { VideoViews } from '@/collections/VideoViews';
 import { Eventos } from '@/collections/Eventos';
+import { CapasGeo } from '@/collections/CapasGeo';
 
 // Globals (contenido editable de cada página)
 import { PaginaInicio } from '@/globals/PaginaInicio';
@@ -71,6 +72,7 @@ export default buildConfig({
     Downloads,
     VideoViews,
     Eventos,
+    CapasGeo,
   ],
   globals: [
     SitioGeneral,
@@ -115,8 +117,16 @@ export default buildConfig({
     ...(process.env.BLOB_READ_WRITE_TOKEN
       ? [
           vercelBlobStorage({
-            collections: { media: true },
+            collections: {
+              media: true,
+              // Capas KMZ: el .kmz original queda público por diseño del plugin.
+              'capas-geo': true,
+            },
             token: process.env.BLOB_READ_WRITE_TOKEN,
+            // Sufijo aleatorio (opción global del plugin): al re-subir un archivo con
+            // el mismo nombre, toma una URL nueva y no queda servida la versión vieja
+            // un año en el CDN (docs/PLAN_MAPA_KMZ.md §4.1). Solo afecta subidas nuevas.
+            addRandomSuffix: true,
           }),
         ]
       : []),

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { CollectionConfig } from 'payload';
 
+import { CapasGeo } from '@/collections/CapasGeo';
 import { Documentos } from '@/collections/Documentos';
 import { Downloads } from '@/collections/Downloads';
 import { Eventos } from '@/collections/Eventos';
@@ -11,6 +12,7 @@ import { Proyectos } from '@/collections/Proyectos';
 import { Users } from '@/collections/Users';
 
 const collections: CollectionConfig[] = [
+  CapasGeo,
   Documentos,
   Downloads,
   Eventos,

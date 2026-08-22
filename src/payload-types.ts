@@ -76,6 +76,7 @@ export interface Config {
     downloads: Download;
     'video-views': VideoView;
     eventos: Evento;
+    'capas-geo': CapasGeo;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +93,7 @@ export interface Config {
     downloads: DownloadsSelect<false> | DownloadsSelect<true>;
     'video-views': VideoViewsSelect<false> | VideoViewsSelect<true>;
     eventos: EventosSelect<false> | EventosSelect<true>;
+    'capas-geo': CapasGeoSelect<false> | CapasGeoSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -403,8 +405,81 @@ export interface Proyecto {
    * URL al sitio web del proyecto o empresa, si existe.
    */
   url?: string | null;
+  /**
+   * Sube en Contenido → Capas geográficas un KMZ/KML con el polígono o trazado del proyecto, y elígelo aquí para dibujarlo en el mapa. Si no eliges ninguna, el proyecto se muestra solo con su marcador de punto.
+   */
+  capa?: (number | null) | CapasGeo;
+  /**
+   * Si el proyecto tiene una capa, muestra igualmente el marcador del punto encima de la geometría.
+   */
+  mostrarMarcador?: boolean | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * Sube un archivo KMZ o KML (exportado desde Google Earth) con la geometría de un proyecto (polígono del predio, trazado) o una capa de referencia. Se valida y simplifica automáticamente al subir. Para asociarla a un proyecto, ve a Contenido → Proyectos y elígela en el campo "Capa geográfica".
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "capas-geo".
+ */
+export interface CapasGeo {
+  id: number;
+  /**
+   * Nombre descriptivo. Ej: "Predio planta Temuco", "Proyectos SEIA Araucanía".
+   */
+  titulo: string;
+  /**
+   * Breve descripción de qué muestra la capa.
+   */
+  descripcion?: string | null;
+  /**
+   * Las de "referencia" aparecen apagadas en el mapa y el visitante las prende si quiere.
+   */
+  tipo: 'proyecto' | 'referencia';
+  /**
+   * Color hex (ej: #0D7377) para dibujar la capa. Si se deja vacío, usa el color de la etapa del proyecto.
+   */
+  color?: string | null;
+  /**
+   * Qué se detectó al subir el archivo (geometrías, simplificación, avisos). Lo completa el sistema.
+   */
+  resumenValidacion?: string | null;
+  nFeatures?: number | null;
+  nVertices?: number | null;
+  tiposGeometria?: string | null;
+  geojson?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  bbox?: {
+    minLng?: number | null;
+    minLat?: number | null;
+    maxLng?: number | null;
+    maxLat?: number | null;
+  };
+  /**
+   * Centro de la capa. Útil para copiar como coordenadas del proyecto si aún no las tienes.
+   */
+  centroide?: {
+    lat?: number | null;
+    lng?: number | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * Gestiona los integrantes del Consejo de Dirección, Comité Consultivo y Unidad de Coordinación. Aparecen en las páginas "Quiénes Somos" y "Gobernanza".
@@ -617,6 +692,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'eventos';
         value: number | Evento;
+      } | null)
+    | ({
+        relationTo: 'capas-geo';
+        value: number | CapasGeo;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -788,6 +867,8 @@ export interface ProyectosSelect<T extends boolean = true> {
   produccionTonAnio?: T;
   imagen?: T;
   url?: T;
+  capa?: T;
+  mostrarMarcador?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -853,6 +934,46 @@ export interface EventosSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "capas-geo_select".
+ */
+export interface CapasGeoSelect<T extends boolean = true> {
+  titulo?: T;
+  descripcion?: T;
+  tipo?: T;
+  color?: T;
+  resumenValidacion?: T;
+  nFeatures?: T;
+  nVertices?: T;
+  tiposGeometria?: T;
+  geojson?: T;
+  bbox?:
+    | T
+    | {
+        minLng?: T;
+        minLat?: T;
+        maxLng?: T;
+        maxLat?: T;
+      };
+  centroide?:
+    | T
+    | {
+        lat?: T;
+        lng?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1876,7 +1997,7 @@ export interface PaginaMediateca {
   createdAt?: string | null;
 }
 /**
- * Encabezado de la página del Mapa de Proyectos. Los proyectos que aparecen en el mapa se gestionan en Contenido → Proyectos.
+ * Encabezado, textos y configuración del Mapa de Proyectos. Los proyectos que aparecen en el mapa se gestionan en Contenido → Proyectos; sus geometrías, en Contenido → Capas geográficas.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pagina-proyectos".
@@ -1892,6 +2013,69 @@ export interface PaginaProyecto {
      * Texto debajo del título.
      */
     subtitulo?: string | null;
+  };
+  /**
+   * Vocabulario y color de cada etapa. Se usa en el mapa, la leyenda, los filtros y el KMZ. El "valor" debe coincidir con el de la etapa en cada proyecto.
+   */
+  etapas?:
+    | {
+        /**
+         * Clave interna (no cambiar): planificacion, pilotaje, desarrollo, operacion.
+         */
+        valor: string;
+        /**
+         * Nombre visible. Ej: "Pilotaje".
+         */
+        etiqueta: string;
+        /**
+         * Color hex. Ej: "#F59E0B".
+         */
+        color: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Capas de fondo del mapa (calle, satélite). El visitante elige. Cambiar el proveedor aquí no requiere programar.
+   */
+  mapasBase?:
+    | {
+        nombre: string;
+        /**
+         * Plantilla de teselas con {z}/{x}/{y}.
+         */
+        urlPlantilla: string;
+        /**
+         * Crédito del proveedor (obligatorio legalmente).
+         */
+        atribucion: string;
+        maxZoom?: number | null;
+        esSatelital?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  textosMapa?: {
+    tituloDescargas?: string | null;
+    ayudaKmz?: string | null;
+    botonDescargarTodo?: string | null;
+    botonDescargarProyecto?: string | null;
+    botonAbrirGoogleEarth?: string | null;
+    botonCentrar?: string | null;
+    etiquetaUbicacion?: string | null;
+    etiquetaEtapa?: string | null;
+    ariaControlCapas?: string | null;
+    textoVerProyecto?: string | null;
+  };
+  textosKml?: {
+    nombreDocumento?: string | null;
+    etiquetaEmpresa?: string | null;
+    etiquetaEtapa?: string | null;
+    etiquetaRegion?: string | null;
+    etiquetaCapacidad?: string | null;
+    etiquetaProduccion?: string | null;
+    textoVerSitio?: string | null;
+    textoEnlaceExterno?: string | null;
+    licencia?: string | null;
+    nombreNetworkLink?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -2685,6 +2869,52 @@ export interface PaginaProyectosSelect<T extends boolean = true> {
     | {
         titulo?: T;
         subtitulo?: T;
+      };
+  etapas?:
+    | T
+    | {
+        valor?: T;
+        etiqueta?: T;
+        color?: T;
+        id?: T;
+      };
+  mapasBase?:
+    | T
+    | {
+        nombre?: T;
+        urlPlantilla?: T;
+        atribucion?: T;
+        maxZoom?: T;
+        esSatelital?: T;
+        id?: T;
+      };
+  textosMapa?:
+    | T
+    | {
+        tituloDescargas?: T;
+        ayudaKmz?: T;
+        botonDescargarTodo?: T;
+        botonDescargarProyecto?: T;
+        botonAbrirGoogleEarth?: T;
+        botonCentrar?: T;
+        etiquetaUbicacion?: T;
+        etiquetaEtapa?: T;
+        ariaControlCapas?: T;
+        textoVerProyecto?: T;
+      };
+  textosKml?:
+    | T
+    | {
+        nombreDocumento?: T;
+        etiquetaEmpresa?: T;
+        etiquetaEtapa?: T;
+        etiquetaRegion?: T;
+        etiquetaCapacidad?: T;
+        etiquetaProduccion?: T;
+        textoVerSitio?: T;
+        textoEnlaceExterno?: T;
+        licencia?: T;
+        nombreNetworkLink?: T;
       };
   updatedAt?: T;
   createdAt?: T;

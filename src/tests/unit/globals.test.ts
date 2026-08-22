@@ -10,6 +10,7 @@ import { PaginaH2V } from '@/globals/PaginaH2V';
 import { PaginaHojaRuta } from '@/globals/PaginaHojaRuta';
 import { PaginaInicio } from '@/globals/PaginaInicio';
 import { PaginaMarcoRegulatorio } from '@/globals/PaginaMarcoRegulatorio';
+import { PaginaProyectos } from '@/globals/PaginaProyectos';
 import { PaginaQuienesSomos } from '@/globals/PaginaQuienesSomos';
 import { PaginaSectores } from '@/globals/PaginaSectores';
 import { SitioGeneral } from '@/globals/SitioGeneral';
@@ -24,6 +25,7 @@ const globals: GlobalConfig[] = [
   PaginaHojaRuta,
   PaginaInicio,
   PaginaMarcoRegulatorio,
+  PaginaProyectos,
   PaginaQuienesSomos,
   PaginaSectores,
   SitioGeneral,
