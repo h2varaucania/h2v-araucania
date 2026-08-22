@@ -55,3 +55,8 @@ next-env.d.ts
 
 # higiene pre-push (EDITABILIDAD_TOTAL §6)
 *recovery-codes*
+
+# Manual de usuario: capturas crudas y auxiliares LaTeX (regenerables)
+docs/manual-usuario/capturas/*.png
+docs/manual-usuario/salida/
+docs/manual-usuario/herramientas/__pycache__/
