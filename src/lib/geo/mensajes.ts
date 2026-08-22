@@ -13,6 +13,7 @@ export const MENSAJES = {
   sinGeometria: 'El archivo no contiene ninguna geometría (punto, línea o polígono). Dibuja al menos una forma antes de exportarlo.',
   soloNetworkLink: 'Este archivo es un enlace a un mapa en línea (NetworkLink), no contiene las geometrías. En Google My Maps usa "Exportar a KML/KMZ" y desmarca "Mantener los datos actualizados".',
   demasiadasFeatures: 'El archivo tiene demasiadas geometrías (más de 5.000). Esta plataforma es de difusión; sube una capa acotada al proyecto.',
+  limiteCapas: 'Se alcanzó el máximo de 50 capas. Borra alguna capa que ya no uses antes de subir otra.',
   fueraDeRango: 'El archivo tiene coordenadas fuera de rango. ¿Quizás la latitud y la longitud están invertidas?',
   desconocido: 'No se pudo procesar el archivo. Verifica que sea un KMZ o KML válido exportado desde Google Earth.',
 } as const;

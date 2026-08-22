@@ -58,7 +58,13 @@ export const CapasGeo: CollectionConfig = {
   },
   hooks: {
     beforeChange: [
-      async ({ req, data }) => {
+      async ({ req, data, operation }) => {
+        // Tope total de capas: la página es de difusión, no un repositorio SIG.
+        if (operation === 'create') {
+          const { totalDocs } = await req.payload.count({ collection: 'capas-geo' });
+          if (totalDocs >= 50) throw new APIError(MENSAJES.limiteCapas, 400, undefined, true);
+        }
+
         const file = req.file;
         // Edición de metadatos sin archivo nuevo: conservar los derivados intactos.
         if (!file) return data;

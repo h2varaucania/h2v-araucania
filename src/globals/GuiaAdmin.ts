@@ -92,6 +92,42 @@ El proyecto aparecerá como un punto en el mapa interactivo.
 (El título de la página del mapa se edita en Páginas → Mapa de Proyectos.)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔵 PASO 3.5: DIBUJAR UN PROYECTO EN EL MAPA CON UN KMZ (OPCIONAL)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Además del punto, un proyecto puede mostrar su forma real (el polígono del predio, un
+trazado) subiendo un archivo KMZ o KML hecho en Google Earth. Es OPCIONAL: si no subes
+nada, el proyecto se ve igual con su marcador de punto.
+
+A) Dibujar la forma en Google Earth (gratis, en earth.google.com o Google Earth Pro):
+   1. Ubica el lugar del proyecto.
+   2. Usa la herramienta de polígono (o línea) y dibuja el contorno.
+   3. Clic derecho sobre lo dibujado → "Guardar lugar como…" → formato KMZ (o KML).
+
+B) Subir la capa al sitio:
+   1. Menú lateral → Contenido → "Capas geográficas (KMZ)" → "Crear nuevo".
+   2. Título: un nombre claro (ej: "Predio planta Temuco").
+   3. Tipo: "Geometría de un proyecto".
+   4. Archivo: sube el .kmz o .kml. Al guardar, el sistema lo valida y te muestra en
+      "Resultado del procesamiento" qué encontró (cuántas geometrías, avisos). Si el
+      archivo tiene un problema, verás un mensaje en español explicando qué corregir.
+   5. Guardar.
+
+C) Asociarla al proyecto:
+   1. Menú lateral → Contenido → Proyectos → abre el proyecto (o créalo).
+   2. En "Capa geográfica (KMZ)", elige la capa que subiste.
+   3. Guardar. La forma aparecerá dibujada en el mapa, con el color de la etapa.
+
+Notas:
+• Límites: máximo 4 MB por archivo y 50 capas en total. Un KMZ de predio pesa unos pocos KB.
+• "Capa de referencia (contexto)": si en vez de un proyecto quieres una capa de fondo
+  (por ejemplo, todos los proyectos SEIA de la región), súbela con Tipo = "referencia".
+  Aparecerá apagada en el mapa, dentro del control de capas (ícono arriba a la derecha),
+  y el visitante la prende si quiere.
+• Los visitantes pueden descargar los proyectos como KMZ desde la página del mapa
+  ("Descargar todos (KMZ)" / "Abrir en Google Earth"). No tienes que hacer nada para eso.
+• Verifica el resultado abriendo la página pública del mapa (Proyectos).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔵 PASO 4: AGREGAR MIEMBROS DE GOBERNANZA
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. En el menú lateral, haz clic en "Miembros de Gobernanza"
@@ -150,7 +186,8 @@ En el menú lateral, bajo el grupo "Páginas", encontrarás una entrada por pág
 • Marco Regulatorio: documentos normativos
 • Transparencia: ítems de transparencia
 • Mediateca: recursos audiovisuales
-• Mapa de Proyectos: título y subtítulo de la página del mapa
+• Mapa de Proyectos: título y subtítulo, y en la pestaña "Mapa y KMZ" las etapas
+  (nombre y color), los mapas base y los textos de las descargas KMZ
 • Política de Privacidad: fecha de actualización y texto legal
 • Accesibilidad: texto de la declaración
 En todas: lo que dejes vacío usa el texto estándar del sitio; lo que escribas lo reemplaza.
@@ -191,7 +228,7 @@ Para crear un editor: Usuarios → Crear nuevo → rol "Editor" (solo un adminis
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📎 SOBRE LOS ARCHIVOS (fotos y PDFs)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• Imágenes: JPG, PNG o WebP. Documentos: PDF o Word.
+• Imágenes: JPG, PNG o WebP. Documentos: PDF o Word. Mapas: KMZ o KML (ver Paso 3.5).
 • Los archivos se guardan en un almacenamiento en la nube y quedan disponibles
   de forma permanente.
 • Antes de subir, ponles un nombre claro (ej: "seminario-temuco-2026.pdf").
