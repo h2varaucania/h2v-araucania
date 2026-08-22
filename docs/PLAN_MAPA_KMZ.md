@@ -1,5 +1,12 @@
 # Plan v2: Mapa de proyectos con capas KMZ (compatible con Google Earth)
 
+> **ESTADO DE IMPLEMENTACIÓN (2026-08-22):** F0, F1, F2 y F3 **implementadas y verificadas
+> en local** (commits locales 1f3d67e, 4f0fb03, 0b2d179, 5898e80; sin push). Suite: 162
+> vitest + 16 e2e verde, typecheck y lint limpios, build de producción OK, migración
+> validada en base vacía y sobre esquema existente. Falta **F4**: el push a producción
+> (coordinado con Carlos, con respaldo previo de la BD) y la prueba del dueño en Google
+> Earth (ver docs/PRUEBA_DUENO_MAPA_KMZ.md). El bloque va detrás del flag `mapaAvanzado`.
+
 Estado: **v2, 2026-08-21, lista para aprobación final de Carlos.** La v1 (misma fecha) pasó por una
 revisión adversarial con 57 agentes (5 críticos por lente, un verificador por hallazgo con mandato
 de refutar, segundo verificador en los graves, y un crítico de completitud): 30 hallazgos
