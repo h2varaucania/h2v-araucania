@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+	<name>Mi mapa H2V</name>
+	<NetworkLink>
+		<name>Mi mapa H2V</name>
+		<Link><href>https://www.google.com/maps/d/kml?mid=SOMEID&amp;forcekml=1</href></Link>
+	</NetworkLink>
+</Document>
+</kml>
