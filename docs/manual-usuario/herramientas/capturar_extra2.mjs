@@ -74,7 +74,7 @@ if (!noticia && imgId) {
   // segunda versión (para la pestaña Versiones)
   if (noticia) await req.patch(`${LOCAL}/api/noticias/${noticia.id}?draft=false`, { data: { extracto: noticia.extracto + ' Revisa las presentaciones en Documentos.', _status: 'published' } });
 }
-const pdfs = ['public/docs'].flatMap(() => []); // (los PDFs oficiales son pesados; usamos uno pequeño si existe)
+// (los PDFs oficiales son pesados; usamos uno pequeño si existe)
 let docId = null;
 try {
   const { readdirSync, statSync } = await import('node:fs');
