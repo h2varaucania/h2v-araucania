@@ -1,8 +1,8 @@
 ---
 titulo: Manual de Usuario del Sitio Web H2V Araucanía
 subtitulo: Cómo administrar y editar completamente el sitio desde el panel de administración
-version: 1.0
-fecha: 21 de agosto de 2026
+version: 1.1
+fecha: 28 de agosto de 2026
 destinatario: Secretaría Regional Ministerial de Energía, Región de La Araucanía
 elaborado: Bien Público "Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde" (código CORFO 24BP-269085). Beneficiario: CODESSER. Coejecutor: Universidad de Talca.
 sitio: https://h2v-araucania.vercel.app
@@ -365,6 +365,56 @@ El **Mapa de Proyectos** del sitio muestra un punto por cada proyecto de hidróg
 
 ![Así se ve el Mapa de Proyectos del sitio público.](46-web-proyectos.png)
 
+## Dibujar la forma de un proyecto en el mapa (con un archivo KMZ)
+
+Además del punto, un proyecto puede mostrar en el mapa su **forma real**: el polígono del predio, el trazado de una línea, etc. La forma se dibuja subiendo un archivo **KMZ o KML** hecho en Google Earth (el mismo tipo de archivo que usa, por ejemplo, el mapa de proyectos del Servicio de Evaluación Ambiental). Es **totalmente opcional**: si no sube nada, el proyecto se ve igual que siempre, con su marcador de punto.
+
+> ℹ️ Nota: estas funciones vienen **apagadas de fábrica** y el sitio funciona igual que siempre sin ellas. Para encenderlas (o volver a apagarlas) hay que pedirle al equipo informático que active un interruptor en el servidor; el cambio es inmediato y no requiere tocar el sitio (vea el Anexo D). Con el interruptor apagado, las capas no se dibujan y los botones de descarga no aparecen, aunque ya haya capas subidas: no se pierde nada.
+
+**Paso 1. Dibujar la forma en Google Earth** (gratis, en `earth.google.com`, o con el programa Google Earth Pro):
+
+1. Ubique el lugar del proyecto.
+2. Use la herramienta de **polígono** (o de ruta, si es un trazado) y dibuje el contorno.
+3. Clic derecho sobre lo dibujado → **Guardar lugar como...** → elija el formato **KMZ** (o KML).
+
+**Paso 2. Subir la capa al sitio:**
+
+1. Menú lateral → **Contenido** → **Capas geográficas (KMZ)** → **Crear nuevo**.
+2. Complete:
+
+| Campo | Qué escribir | Obligatorio |
+|---|---|---|
+| **Título de la capa** | Un nombre claro. Ejemplo: "Predio planta Temuco". | Sí |
+| **Tipo de capa** | "Geometría de un proyecto" (el caso normal; para el otro tipo, vea el consejo más abajo). | Sí |
+| **Color** (barra lateral) | Solo si quiere un color distinto; si lo deja vacío, la forma usa el color de la etapa del proyecto. | No |
+| **Archivo** | El .kmz o .kml que guardó desde Google Earth. | Sí |
+
+3. Pulse **Guardar**.
+
+![La capa ya guardada: título (1), tipo (2), el archivo KMZ subido (3), el resultado del procesamiento que completa el sistema (4) y Guardar (5).](13b-capa-kmz.png)
+
+> ✅ Resultado: al guardar, el sistema valida y simplifica el archivo automáticamente. El campo **"Resultado del procesamiento"** dice "Sin observaciones." (o le avisa qué encontró), y se completan solos el número de geometrías, los vértices y el **centroide** (útil para copiarlo como coordenadas del proyecto si aún no las tiene).
+
+> ⚠️ Atención: el archivo puede pesar **hasta 4 MB** (el KMZ de un predio pesa unos pocos KB) y el sitio acepta **hasta 50 capas** en total. Si el archivo viene con algún problema (sin geometrías, mal formado, demasiado grande), el panel se lo explica con un mensaje en español; corrija en Google Earth y vuelva a subirlo.
+
+**Paso 3. Asociar la capa al proyecto:**
+
+1. Menú lateral → **Contenido** → **Proyectos** → abra el proyecto (o créelo como se explicó antes).
+2. Al final del formulario, en **"Capa geográfica (KMZ, opcional)"**, elija la capa que subió.
+3. Pulse **Guardar**. La forma queda dibujada en el mapa público, con el color de la etapa del proyecto.
+
+En la barra lateral del proyecto, la casilla **"Mostrar también el marcador de punto"** (marcada de fábrica) controla si el punto se muestra encima de la forma; desmárquela solo si prefiere que se vea únicamente el polígono.
+
+![El campo "Capa geográfica (KMZ, opcional)" al final del formulario del proyecto (1).](13c-proyecto-capa.png)
+
+**Qué ve el visitante cuando las funciones están encendidas:** la forma dibujada sobre el mapa y, arriba, los botones **"Descargar todos (KMZ)"** y **"Abrir en Google Earth"** (1), que le permiten llevarse los proyectos y explorarlos en 3D. En el control de capas (2) puede cambiar el mapa base (calles o satélite) y prender las capas de referencia. Todo eso es automático: usted no tiene que hacer nada más.
+
+![El mapa público con la forma del proyecto dibujada, los botones de descarga (1) y el control de capas (2).](46b-web-proyectos-kmz.png)
+
+> 💡 Consejo: si en vez de la forma de UN proyecto quiere una capa de contexto para toda la región (por ejemplo, todos los proyectos del SEIA en La Araucanía exportados como KMZ), súbala con **Tipo de capa = "Capa de referencia (contexto)"** y no la asocie a ningún proyecto. Aparecerá **apagada** en el control de capas del mapa, y cada visitante decide si la prende.
+
+<<<salto>>>
+
 ## Actualizar la gobernanza (personas)
 
 Las personas de la gobernanza se administran en **Miembros de Gobernanza** y aparecen automáticamente en las páginas **Quiénes Somos** y **Gobernanza** del sitio, agrupadas en tres instancias:
@@ -625,6 +675,8 @@ Esta lista resume lo que debe hacerse el día en que la SEREMI toma el control d
 | Crear un evento | Contenido → Eventos → Crear nuevo → Publicar cambios |
 | Subir un documento para descarga | Contenido → Documentos → Crear nuevo → Guardar |
 | Agregar un proyecto al mapa | Contenido → Proyectos → Crear nuevo → Guardar |
+| Dibujar la forma (polígono) de un proyecto en el mapa | Contenido → Capas geográficas (KMZ) → Crear nuevo; luego Contenido → Proyectos → (el proyecto) → Capa geográfica |
+| Encender o apagar las funciones KMZ del mapa | No se hace desde el panel: lo activa el equipo informático (Anexo D) |
 | Cambiar una persona del Comité Estratégico | Contenido → Miembros de Gobernanza → (la fila del cargo) → cambiar nombre → Guardar |
 | Poner nombre a un cargo "Por definir" de la Unidad de Coordinación | Contenido → Miembros de Gobernanza → (la fila) → cambiar nombre e institución → Guardar |
 | Subir fotos de una sesión o taller | Páginas → Gobernanza → Evidencia de Actividades → Añadir fila |
@@ -654,6 +706,7 @@ Esta lista resume lo que debe hacerse el día en que la SEREMI toma el control d
 | Logo de institución | PNG con fondo transparente (o SVG) | Al menos 400 píxeles de ancho |
 | Portada de documento | JPG o PNG | 800 x 600 aprox. |
 | Documento para descarga | PDF (también Word, PowerPoint, Excel) | Lo más liviano posible; comprima los PDF grandes |
+| Capa geográfica de un proyecto | KMZ o KML (guardado desde Google Earth) | Menos de 4 MB; el predio de un proyecto pesa unos pocos KB |
 | Imagen dentro del texto de una noticia | JPG o PNG | 1200 píxeles de ancho máximo |
 
 Límites de texto más importantes: título de noticia 120 caracteres; resumen 300; descripción de documento 400; descripción de proyecto 400; URL amigable solo minúsculas, números y guiones.
@@ -692,7 +745,8 @@ Esta ficha resume la información que el equipo informático de la SEREMI necesi
 | Destino del formulario de contacto | Variable `CONTACT_EMAIL` en Vercel (si no existe, se usa un correo por defecto). **No se edita desde el panel.** | Vercel → Settings → Environment Variables. |
 | Actualizaciones del esquema | Migraciones disciplinadas que corren en cada despliegue (`payload migrate` en el comando de build de Vercel). No se hacen cambios manuales en la base de datos. | `src/migrations/` en el repositorio. |
 | Pruebas automáticas | Suite e2e (Playwright) que verifica que el panel abre, que los contenidos reales se editan y que los cambios se reflejan en el sitio. | `tests/e2e/` en el repositorio. |
-| Respaldo | La base de datos Neon mantiene respaldos y historial; el contenido también queda versionado en el panel (noticias y eventos). | Consola de Neon. |
+| Respaldo | La base de datos Neon mantiene respaldos y historial; además, un respaldo diario automatizado (`pg_dump`) se guarda fuera de Neon como artefacto de GitHub Actions, con 90 días de retención (cómo restaurar: `scripts/restore-db.md` del repositorio). El contenido también queda versionado en el panel (noticias y eventos). | Consola de Neon y pestaña Actions del repositorio en GitHub. |
+| Funciones KMZ del mapa (opcional) | El dibujo de capas KMZ y las descargas para Google Earth vienen **apagados**. Se encienden creando la variable `NEXT_PUBLIC_FEAT_MAPA_PLUS` con valor `true` (efecto en minutos, sin recompilar); se apagan borrándola. Apagadas, el mapa muestra solo los marcadores, como siempre. | Vercel → Settings → Environment Variables. |
 | Accesos a las cuentas de servicio | Vercel, Neon, Resend, GitHub y el registrador del dominio. | Deben traspasarse formalmente a la SEREMI (o a quien esta designe) en el acta de traspaso, con cambio de contraseñas. |
 
 Qué no es editable desde el panel (requiere a un desarrollador): el diseño y la estructura de las páginas, el menú de navegación, el crédito obligatorio a CORFO, las variables de entorno (correo de destino, claves de servicios) y el dominio.
@@ -702,3 +756,4 @@ Qué no es editable desde el panel (requiere a un desarrollador): el diseño y l
 | Versión | Fecha | Cambios | Autor |
 |---|---|---|---|
 | 1.0 | 21 de agosto de 2026 | Primera versión completa, con capturas del panel en producción (versión del sitio de agosto de 2026). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
+| 1.1 | 28 de agosto de 2026 | Nueva sección "Dibujar la forma de un proyecto en el mapa (con un archivo KMZ)"; anexos A, B y D actualizados (capas KMZ, interruptor de las funciones y respaldo diario automatizado). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |

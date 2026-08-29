@@ -1,11 +1,14 @@
 # Plan v2: Mapa de proyectos con capas KMZ (compatible con Google Earth)
 
-> **ESTADO DE IMPLEMENTACIÓN (2026-08-22):** F0, F1, F2 y F3 **implementadas y verificadas
-> en local** (commits locales 1f3d67e, 4f0fb03, 0b2d179, 5898e80; sin push). Suite: 162
-> vitest + 16 e2e verde, typecheck y lint limpios, build de producción OK, migración
-> validada en base vacía y sobre esquema existente. Falta **F4**: el push a producción
-> (coordinado con Carlos, con respaldo previo de la BD) y la prueba del dueño en Google
-> Earth (ver docs/PRUEBA_DUENO_MAPA_KMZ.md). El bloque va detrás del flag `mapaAvanzado`.
+> **ESTADO DE IMPLEMENTACIÓN (2026-08-28): COMPLETO Y EN PRODUCCIÓN.** F0–F4 desplegadas
+> (push autorizado por Carlos, con respaldo previo de la BD vía `backup-db.yml` y
+> verificación en prod: migración corrió, `/proyectos` y `/admin` 200, KMZ válido con
+> URLs absolutas correctas, CDN cachea — `x-vercel-cache: HIT`). El flag
+> `NEXT_PUBLIC_FEAT_MAPA_PLUS` queda **APAGADO** en producción: los visitantes ven el
+> mapa igual que antes hasta que el sostenedor lo encienda en Vercel (efecto en runtime,
+> sin recompilar). Suite: 162 vitest + 16 e2e verde, typecheck y lint limpios. Pendiente
+> del dueño: la prueba en Google Earth (docs/PRUEBA_DUENO_MAPA_KMZ.md) y la capa SEIA de
+> referencia. El Manual de Usuario v1.1 documenta la función (sección 4.6 y Anexos A/B/D).
 
 Estado: **v2, 2026-08-21, lista para aprobación final de Carlos.** La v1 (misma fecha) pasó por una
 revisión adversarial con 57 agentes (5 críticos por lente, un verificador por hallazgo con mandato

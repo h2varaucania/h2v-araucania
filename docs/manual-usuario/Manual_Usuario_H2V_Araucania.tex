@@ -54,8 +54,8 @@
 {\color{h2vverde}\rule{\textwidth}{1.2pt}}\vspace{1.6cm}
 
 \begin{tabular}{@{}p{3.6cm}p{11.5cm}@{}}
-\textbf{\color{h2vazul}Versión} & 1.0 \\[3pt]
-\textbf{\color{h2vazul}Fecha} & 21 de agosto de 2026 \\[3pt]
+\textbf{\color{h2vazul}Versión} & 1.1 \\[3pt]
+\textbf{\color{h2vazul}Fecha} & 28 de agosto de 2026 \\[3pt]
 \textbf{\color{h2vazul}Destinatario} & Secretaría Regional Ministerial de Energía, Región de La Araucanía \\[3pt]
 \textbf{\color{h2vazul}Elaborado por} & Bien Público ''Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde'' (código CORFO 24BP-269085). Beneficiario: CODESSER. Coejecutor: Universidad de Talca. \\[3pt]
 \textbf{\color{h2vazul}Sitio web} & \url{https://h2v-araucania.vercel.app} \\
@@ -472,6 +472,62 @@ El \textbf{Mapa de Proyectos} del sitio muestra un punto por cada proyecto de hi
 \includegraphics[width=\linewidth,keepaspectratio]{46-web-proyectos.png}
 \caption{Así se ve el Mapa de Proyectos del sitio público.}
 \end{figure}
+\section{Dibujar la forma de un proyecto en el mapa (con un archivo KMZ)}
+Además del punto, un proyecto puede mostrar en el mapa su \textbf{forma real}: el polígono del predio, el trazado de una línea, etc. La forma se dibuja subiendo un archivo \textbf{KMZ o KML} hecho en Google Earth (el mismo tipo de archivo que usa, por ejemplo, el mapa de proyectos del Servicio de Evaluación Ambiental). Es \textbf{totalmente opcional}: si no sube nada, el proyecto se ve igual que siempre, con su marcador de punto.
+
+\begin{recuadro}{cNota}{bNota}\textbf{\color{bNota}Nota:} estas funciones vienen \textbf{apagadas de fábrica} y el sitio funciona igual que siempre sin ellas. Para encenderlas (o volver a apagarlas) hay que pedirle al equipo informático que active un interruptor en el servidor; el cambio es inmediato y no requiere tocar el sitio (vea el Anexo D). Con el interruptor apagado, las capas no se dibujan y los botones de descarga no aparecen, aunque ya haya capas subidas: no se pierde nada.\end{recuadro}
+\textbf{Paso 1. Dibujar la forma en Google Earth} (gratis, en \texttt{earth.google.com}, o con el programa Google Earth Pro):
+
+\begin{enumerate}
+  \item Ubique el lugar del proyecto.
+  \item Use la herramienta de \textbf{polígono} (o de ruta, si es un trazado) y dibuje el contorno.
+  \item Clic derecho sobre lo dibujado $\rightarrow$ \textbf{Guardar lugar como...} $\rightarrow$ elija el formato \textbf{KMZ} (o KML).
+\end{enumerate}
+\textbf{Paso 2. Subir la capa al sitio:}
+
+\begin{enumerate}
+  \item Menú lateral $\rightarrow$ \textbf{Contenido} $\rightarrow$ \textbf{Capas geográficas (KMZ)} $\rightarrow$ \textbf{Crear nuevo}.
+  \item Complete:
+\end{enumerate}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.163\textwidth}>{\raggedright\arraybackslash}p{0.613\textwidth}>{\raggedright\arraybackslash}p{0.155\textwidth}}
+\rowcolor{h2vazul}\textbf{\color{white}Campo} & \textbf{\color{white}Qué escribir} & \textbf{\color{white}Obligatorio} \\
+\endfirsthead
+\rowcolor{h2vazul}\textbf{\color{white}Campo} & \textbf{\color{white}Qué escribir} & \textbf{\color{white}Obligatorio} \\
+\endhead
+\textbf{Título de la capa} & Un nombre claro. Ejemplo: ''Predio planta Temuco''. & Sí \\ \midrule
+\rowcolor{filaalt}\textbf{Tipo de capa} & ''Geometría de un proyecto'' (el caso normal; para el otro tipo, vea el consejo más abajo). & Sí \\ \midrule
+\textbf{Color} (barra lateral) & Solo si quiere un color distinto; si lo deja vacío, la forma usa el color de la etapa del proyecto. & No \\ \midrule
+\rowcolor{filaalt}\textbf{Archivo} & El .kmz o .kml que guardó desde Google Earth. & Sí \\ \bottomrule
+\end{longtable}
+\begin{enumerate}
+  \item Pulse \textbf{Guardar}.
+\end{enumerate}
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth,keepaspectratio]{13b-capa-kmz.png}
+\caption{La capa ya guardada: título (1), tipo (2), el archivo KMZ subido (3), el resultado del procesamiento que completa el sistema (4) y Guardar (5).}
+\end{figure}
+\begin{recuadro}{cResultado}{bResultado}\textbf{\color{bResultado}Resultado:} al guardar, el sistema valida y simplifica el archivo automáticamente. El campo \textbf{''Resultado del procesamiento''} dice ''Sin observaciones.'' (o le avisa qué encontró), y se completan solos el número de geometrías, los vértices y el \textbf{centroide} (útil para copiarlo como coordenadas del proyecto si aún no las tiene).\end{recuadro}
+\begin{recuadro}{cAtencion}{bAtencion}\textbf{\color{bAtencion}Atención:} el archivo puede pesar \textbf{hasta 4 MB} (el KMZ de un predio pesa unos pocos KB) y el sitio acepta \textbf{hasta 50 capas} en total. Si el archivo viene con algún problema (sin geometrías, mal formado, demasiado grande), el panel se lo explica con un mensaje en español; corrija en Google Earth y vuelva a subirlo.\end{recuadro}
+\textbf{Paso 3. Asociar la capa al proyecto:}
+
+\begin{enumerate}
+  \item Menú lateral $\rightarrow$ \textbf{Contenido} $\rightarrow$ \textbf{Proyectos} $\rightarrow$ abra el proyecto (o créelo como se explicó antes).
+  \item Al final del formulario, en \textbf{''Capa geográfica (KMZ, opcional)''}, elija la capa que subió.
+  \item Pulse \textbf{Guardar}. La forma queda dibujada en el mapa público, con el color de la etapa del proyecto.
+\end{enumerate}
+En la barra lateral del proyecto, la casilla \textbf{''Mostrar también el marcador de punto''} (marcada de fábrica) controla si el punto se muestra encima de la forma; desmárquela solo si prefiere que se vea únicamente el polígono.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth,keepaspectratio]{13c-proyecto-capa.png}
+\caption{El campo ''Capa geográfica (KMZ, opcional)'' al final del formulario del proyecto (1).}
+\end{figure}
+\textbf{Qué ve el visitante cuando las funciones están encendidas:} la forma dibujada sobre el mapa y, arriba, los botones \textbf{''Descargar todos (KMZ)''} y \textbf{''Abrir en Google Earth''} (1), que le permiten llevarse los proyectos y explorarlos en 3D. En el control de capas (2) puede cambiar el mapa base (calles o satélite) y prender las capas de referencia. Todo eso es automático: usted no tiene que hacer nada más.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth,keepaspectratio]{46b-web-proyectos-kmz.png}
+\caption{El mapa público con la forma del proyecto dibujada, los botones de descarga (1) y el control de capas (2).}
+\end{figure}
+\begin{recuadro}{cConsejo}{bConsejo}\textbf{\color{bConsejo}Consejo:} si en vez de la forma de UN proyecto quiere una capa de contexto para toda la región (por ejemplo, todos los proyectos del SEIA en La Araucanía exportados como KMZ), súbala con \textbf{Tipo de capa = ''Capa de referencia (contexto)''} y no la asocie a ningún proyecto. Aparecerá \textbf{apagada} en el control de capas del mapa, y cada visitante decide si la prende.\end{recuadro}
 \section{Actualizar la gobernanza (personas)}
 Las personas de la gobernanza se administran en \textbf{Miembros de Gobernanza} y aparecen automáticamente en las páginas \textbf{Quiénes Somos} y \textbf{Gobernanza} del sitio, agrupadas en tres instancias:
 
@@ -762,7 +818,7 @@ La página del panel se ve en blanco o con un error & Falla temporal o cambio t�
 \end{longtable}
 \chapter{Anexos}
 \section{Anexo A. Quiero cambiar... ¿a dónde voy?}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.354\textwidth}>{\raggedright\arraybackslash}p{0.576\textwidth}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.351\textwidth}>{\raggedright\arraybackslash}p{0.579\textwidth}}
 \rowcolor{h2vazul}\textbf{\color{white}Quiero...} & \textbf{\color{white}Voy a...} \\
 \endfirsthead
 \rowcolor{h2vazul}\textbf{\color{white}Quiero...} & \textbf{\color{white}Voy a...} \\
@@ -773,6 +829,8 @@ Que una noticia deje de verse & Contenido $\rightarrow$ Noticias $\rightarrow$ (
 \rowcolor{filaalt}Crear un evento & Contenido $\rightarrow$ Eventos $\rightarrow$ Crear nuevo $\rightarrow$ Publicar cambios \\ \midrule
 Subir un documento para descarga & Contenido $\rightarrow$ Documentos $\rightarrow$ Crear nuevo $\rightarrow$ Guardar \\ \midrule
 \rowcolor{filaalt}Agregar un proyecto al mapa & Contenido $\rightarrow$ Proyectos $\rightarrow$ Crear nuevo $\rightarrow$ Guardar \\ \midrule
+Dibujar la forma (polígono) de un proyecto en el mapa & Contenido $\rightarrow$ Capas geográficas (KMZ) $\rightarrow$ Crear nuevo; luego Contenido $\rightarrow$ Proyectos $\rightarrow$ (el proyecto) $\rightarrow$ Capa geográfica \\ \midrule
+\rowcolor{filaalt}Encender o apagar las funciones KMZ del mapa & No se hace desde el panel: lo activa el equipo informático (Anexo D) \\ \midrule
 Cambiar una persona del Comité Estratégico & Contenido $\rightarrow$ Miembros de Gobernanza $\rightarrow$ (la fila del cargo) $\rightarrow$ cambiar nombre $\rightarrow$ Guardar \\ \midrule
 \rowcolor{filaalt}Poner nombre a un cargo ''Por definir'' de la Unidad de Coordinación & Contenido $\rightarrow$ Miembros de Gobernanza $\rightarrow$ (la fila) $\rightarrow$ cambiar nombre e institución $\rightarrow$ Guardar \\ \midrule
 Subir fotos de una sesión o taller & Páginas $\rightarrow$ Gobernanza $\rightarrow$ Evidencia de Actividades $\rightarrow$ Añadir fila \\ \midrule
@@ -792,7 +850,7 @@ Cambiar mi contraseña & Mi cuenta (círculo superior derecho) $\rightarrow$ Cam
 Leer la guía rápida dentro del panel & Ayuda $\rightarrow$ Guía de uso \\ \bottomrule
 \end{longtable}
 \section{Anexo B. Formatos y tamaños recomendados}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.327\textwidth}>{\raggedright\arraybackslash}p{0.190\textwidth}>{\raggedright\arraybackslash}p{0.413\textwidth}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.309\textwidth}>{\raggedright\arraybackslash}p{0.206\textwidth}>{\raggedright\arraybackslash}p{0.415\textwidth}}
 \rowcolor{h2vazul}\textbf{\color{white}Elemento} & \textbf{\color{white}Formato} & \textbf{\color{white}Tamaño recomendado} \\
 \endfirsthead
 \rowcolor{h2vazul}\textbf{\color{white}Elemento} & \textbf{\color{white}Formato} & \textbf{\color{white}Tamaño recomendado} \\
@@ -804,7 +862,8 @@ Foto de persona (gobernanza) & JPG o PNG & Cuadrada, mínimo 200 x 200 \\ \midru
 Logo de institución & PNG con fondo transparente (o SVG) & Al menos 400 píxeles de ancho \\ \midrule
 \rowcolor{filaalt}Portada de documento & JPG o PNG & 800 x 600 aprox. \\ \midrule
 Documento para descarga & PDF (también Word, PowerPoint, Excel) & Lo más liviano posible; comprima los PDF grandes \\ \midrule
-\rowcolor{filaalt}Imagen dentro del texto de una noticia & JPG o PNG & 1200 píxeles de ancho máximo \\ \bottomrule
+\rowcolor{filaalt}Capa geográfica de un proyecto & KMZ o KML (guardado desde Google Earth) & Menos de 4 MB; el predio de un proyecto pesa unos pocos KB \\ \midrule
+Imagen dentro del texto de una noticia & JPG o PNG & 1200 píxeles de ancho máximo \\ \bottomrule
 \end{longtable}
 Límites de texto más importantes: título de noticia 120 caracteres; resumen 300; descripción de documento 400; descripción de proyecto 400; URL amigable solo minúsculas, números y guiones.
 
@@ -833,7 +892,7 @@ Límites de texto más importantes: título de noticia 120 caracteres; resumen 3
 \section{Anexo D. Ficha técnica de la plataforma (para el equipo informático)}
 Esta ficha resume la información que el equipo informático de la SEREMI necesita conocer. El detalle completo está en el repositorio del proyecto, en el documento \texttt{docs/INTERFAZ\_\allowbreak{}ADMIN\_\allowbreak{}TECNICA.md}, y en el estándar \texttt{docs/EDITABILIDAD\_\allowbreak{}TOTAL.md}.
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.202\textwidth}>{\raggedright\arraybackslash}p{0.375\textwidth}>{\raggedright\arraybackslash}p{0.353\textwidth}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.202\textwidth}>{\raggedright\arraybackslash}p{0.371\textwidth}>{\raggedright\arraybackslash}p{0.357\textwidth}}
 \rowcolor{h2vazul}\textbf{\color{white}Componente} & \textbf{\color{white}Qué es} & \textbf{\color{white}Dónde está} \\
 \endfirsthead
 \rowcolor{h2vazul}\textbf{\color{white}Componente} & \textbf{\color{white}Qué es} & \textbf{\color{white}Dónde está} \\
@@ -846,17 +905,19 @@ Correo saliente & Resend: envía la recuperación de contraseña y los mensajes 
 \rowcolor{filaalt}Destino del formulario de contacto & Variable \texttt{CONTACT\_\allowbreak{}EMAIL} en Vercel (si no existe, se usa un correo por defecto). \textbf{No se edita desde el panel.} & Vercel $\rightarrow$ Settings $\rightarrow$ Environment Variables. \\ \midrule
 Actualizaciones del esquema & Migraciones disciplinadas que corren en cada despliegue (\texttt{payload migrate} en el comando de build de Vercel). No se hacen cambios manuales en la base de datos. & \texttt{src/migrations/} en el repositorio. \\ \midrule
 \rowcolor{filaalt}Pruebas automáticas & Suite e2e (Playwright) que verifica que el panel abre, que los contenidos reales se editan y que los cambios se reflejan en el sitio. & \texttt{tests/e2e/} en el repositorio. \\ \midrule
-Respaldo & La base de datos Neon mantiene respaldos y historial; el contenido también queda versionado en el panel (noticias y eventos). & Consola de Neon. \\ \midrule
-\rowcolor{filaalt}Accesos a las cuentas de servicio & Vercel, Neon, Resend, GitHub y el registrador del dominio. & Deben traspasarse formalmente a la SEREMI (o a quien esta designe) en el acta de traspaso, con cambio de contraseñas. \\ \bottomrule
+Respaldo & La base de datos Neon mantiene respaldos y historial; además, un respaldo diario automatizado (\texttt{pg\_\allowbreak{}dump}) se guarda fuera de Neon como artefacto de GitHub Actions, con 90 días de retención (cómo restaurar: \texttt{scripts/restore-db.md} del repositorio). El contenido también queda versionado en el panel (noticias y eventos). & Consola de Neon y pestaña Actions del repositorio en GitHub. \\ \midrule
+\rowcolor{filaalt}Funciones KMZ del mapa (opcional) & El dibujo de capas KMZ y las descargas para Google Earth vienen \textbf{apagados}. Se encienden creando la variable \texttt{NEXT\_\allowbreak{}PUBLIC\_\allowbreak{}FEAT\_\allowbreak{}MAPA\_\allowbreak{}PLUS} con valor \texttt{true} (efecto en minutos, sin recompilar); se apagan borrándola. Apagadas, el mapa muestra solo los marcadores, como siempre. & Vercel $\rightarrow$ Settings $\rightarrow$ Environment Variables. \\ \midrule
+Accesos a las cuentas de servicio & Vercel, Neon, Resend, GitHub y el registrador del dominio. & Deben traspasarse formalmente a la SEREMI (o a quien esta designe) en el acta de traspaso, con cambio de contraseñas. \\ \bottomrule
 \end{longtable}
 Qué no es editable desde el panel (requiere a un desarrollador): el diseño y la estructura de las páginas, el menú de navegación, el crédito obligatorio a CORFO, las variables de entorno (correo de destino, claves de servicios) y el dominio.
 
 \section{Anexo E. Control de cambios de este manual}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.108\textwidth}>{\raggedright\arraybackslash}p{0.104\textwidth}>{\raggedright\arraybackslash}p{0.449\textwidth}>{\raggedright\arraybackslash}p{0.270\textwidth}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.108\textwidth}>{\raggedright\arraybackslash}p{0.097\textwidth}>{\raggedright\arraybackslash}p{0.454\textwidth}>{\raggedright\arraybackslash}p{0.271\textwidth}}
 \rowcolor{h2vazul}\textbf{\color{white}Versión} & \textbf{\color{white}Fecha} & \textbf{\color{white}Cambios} & \textbf{\color{white}Autor} \\
 \endfirsthead
 \rowcolor{h2vazul}\textbf{\color{white}Versión} & \textbf{\color{white}Fecha} & \textbf{\color{white}Cambios} & \textbf{\color{white}Autor} \\
 \endhead
-1.0 & 21 de agosto de 2026 & Primera versión completa, con capturas del panel en producción (versión del sitio de agosto de 2026). & Equipo del Bien Público H2V Araucanía (Universidad de Talca) \\ \bottomrule
+1.0 & 21 de agosto de 2026 & Primera versión completa, con capturas del panel en producción (versión del sitio de agosto de 2026). & Equipo del Bien Público H2V Araucanía (Universidad de Talca) \\ \midrule
+\rowcolor{filaalt}1.1 & 28 de agosto de 2026 & Nueva sección ''Dibujar la forma de un proyecto en el mapa (con un archivo KMZ)''; anexos A, B y D actualizados (capas KMZ, interruptor de las funciones y respaldo diario automatizado). & Equipo del Bien Público H2V Araucanía (Universidad de Talca) \\ \bottomrule
 \end{longtable}
 \end{document}
