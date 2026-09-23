@@ -5,8 +5,9 @@
 > verificación en prod: migración corrió, `/proyectos` y `/admin` 200, KMZ válido con
 > URLs absolutas correctas, CDN cachea — `x-vercel-cache: HIT`). El flag
 > `NEXT_PUBLIC_FEAT_MAPA_PLUS` queda **APAGADO** en producción: los visitantes ven el
-> mapa igual que antes hasta que el sostenedor lo encienda en Vercel (efecto en runtime,
-> sin recompilar). Suite: 162 vitest + 16 e2e verde, typecheck y lint limpios. Pendiente
+> mapa igual que antes hasta que el sostenedor lo encienda en Vercel (el flag se lee en el
+> servidor, pero Vercel solo aplica cambios de variables a despliegues NUEVOS: tras crear la
+> variable hay que hacer Redeploy). Suite: 162 vitest + 16 e2e verde, typecheck y lint limpios. Pendiente
 > del dueño: la prueba en Google Earth (docs/PRUEBA_DUENO_MAPA_KMZ.md) y la capa SEIA de
 > referencia. El Manual de Usuario v1.1 documenta la función (sección 4.6 y Anexos A/B/D).
 
@@ -40,7 +41,7 @@ Se traduce en reglas duras, todas verificables (criterio de aceptación 8):
 | Carga bajo demanda | La página trae solo puntos + cajas envolventes; la geometría de cada proyecto se pide **después** de montar el mapa desde un endpoint cacheado; las capas de referencia van apagadas y se descargan solo al prenderlas |
 | Descargas, no hosting | KMZ generado al vuelo desde datos que ya están en la base, con caché y límite de tasa; sin tiles, sin WMS, sin buscador tipo SEIA; tope de 50 capas en total |
 | Subida simple para Daniel | Un campo "Capa KMZ" en la ficha del proyecto, 4 MB máximo, errores en español; nada más que configurar |
-| Interruptor | Todo el bloque KMZ va detrás del flag ya existente `mapaAvanzado` (`NEXT_PUBLIC_FEAT_MAPA_PLUS`): se puede desplegar apagado y apagar en producción sin redeploy de código |
+| Interruptor | Todo el bloque KMZ va detrás del flag ya existente `mapaAvanzado` (`NEXT_PUBLIC_FEAT_MAPA_PLUS`): se puede desplegar apagado y encender/apagar en producción sin cambiar código (basta cambiar la variable y hacer Redeploy: Vercel solo aplica variables a despliegues nuevos) |
 
 Fuera de alcance, explícito: visor SIG tipo SEA (clusters, medición, selección por polígono, 29 mil
 puntos), edición de geometrías en el admin, previsualización de mapa dentro del admin (se verifica en
