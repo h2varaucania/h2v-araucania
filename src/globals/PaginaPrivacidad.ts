@@ -1,8 +1,11 @@
 import type { GlobalConfig } from 'payload';
+import { isAdminOrEditor } from '@/lib/access';
 import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaPrivacidad: GlobalConfig = {
   slug: 'pagina-privacidad',
+  // Sin regla propia, Payload deja modificar a cualquier usuario con sesión (incluso "registrado").
+  access: { update: isAdminOrEditor },
   hooks: { afterChange: [revalidaGlobal('/politica-privacidad')] },
   label: 'Política de Privacidad',
   admin: {

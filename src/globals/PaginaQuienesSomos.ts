@@ -1,8 +1,11 @@
 import type { GlobalConfig } from 'payload';
+import { isAdminOrEditor } from '@/lib/access';
 import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaQuienesSomos: GlobalConfig = {
   slug: 'pagina-quienes-somos',
+  // Sin regla propia, Payload deja modificar a cualquier usuario con sesión (incluso "registrado").
+  access: { update: isAdminOrEditor },
   hooks: { afterChange: [revalidaGlobal('/programa/quienes-somos')] },
   label: 'Quiénes Somos',
   admin: {

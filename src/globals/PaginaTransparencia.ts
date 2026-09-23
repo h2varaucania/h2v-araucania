@@ -1,8 +1,11 @@
 import type { GlobalConfig } from 'payload';
+import { isAdminOrEditor } from '@/lib/access';
 import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaTransparencia: GlobalConfig = {
   slug: 'pagina-transparencia',
+  // Sin regla propia, Payload deja modificar a cualquier usuario con sesión (incluso "registrado").
+  access: { update: isAdminOrEditor },
   hooks: { afterChange: [revalidaGlobal('/programa/transparencia')] },
   label: 'Transparencia',
   admin: {

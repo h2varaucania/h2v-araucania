@@ -1,8 +1,11 @@
 import type { GlobalConfig } from 'payload';
+import { isAdminOrEditor } from '@/lib/access';
 import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaAccesibilidad: GlobalConfig = {
   slug: 'pagina-accesibilidad',
+  // Sin regla propia, Payload deja modificar a cualquier usuario con sesión (incluso "registrado").
+  access: { update: isAdminOrEditor },
   hooks: { afterChange: [revalidaGlobal('/accesibilidad')] },
   label: 'Accesibilidad',
   admin: {

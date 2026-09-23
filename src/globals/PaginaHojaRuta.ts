@@ -1,8 +1,11 @@
 import type { GlobalConfig } from 'payload';
+import { isAdminOrEditor } from '@/lib/access';
 import { revalidaGlobal } from '@/hooks/revalidate';
 
 export const PaginaHojaRuta: GlobalConfig = {
   slug: 'pagina-hoja-ruta',
+  // Sin regla propia, Payload deja modificar a cualquier usuario con sesión (incluso "registrado").
+  access: { update: isAdminOrEditor },
   hooks: { afterChange: [revalidaGlobal('/hidrogeno-verde/hoja-de-ruta')] },
   label: 'Hoja de Ruta',
   admin: {

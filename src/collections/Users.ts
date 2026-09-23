@@ -18,7 +18,9 @@ export const Users: CollectionConfig = {
     read: isAdmin,
     update: isAdmin,
     delete: isAdmin,
-    // `create` se deja abierto para el registro público; el rol se sanitiza en beforeChange.
+    // Solo administradores crean cuentas. El primer usuario de una instalación nueva se crea
+    // por "Crear primer usuario", que Payload hace sin pasar por esta regla.
+    create: isAdmin,
   },
   admin: {
     useAsTitle: 'email',
