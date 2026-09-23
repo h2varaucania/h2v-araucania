@@ -13,14 +13,14 @@ export default function Login() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-h2v-blue">Iniciar sesión</h1>
-          <p className="text-gray-500 mt-2">Accede para descargar documentos y participar en el programa.</p>
+          <p className="text-gray-500 mt-2">Acceso para personas con una cuenta del programa.</p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
           <LoginForm />
           <div className="mt-6 text-center text-sm text-gray-500">
-            ¿No tienes cuenta?{' '}
-            <Link href="/registro" className="text-h2v-green font-medium hover:underline">
-              Regístrate aquí
+            Para descargar documentos no necesitas cuenta:{' '}
+            <Link href="/recursos/documentos" className="text-h2v-green font-medium hover:underline">
+              ir a Documentos
             </Link>
           </div>
         </div>
