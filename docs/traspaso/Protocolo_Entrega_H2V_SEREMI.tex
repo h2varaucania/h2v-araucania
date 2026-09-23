@@ -1,0 +1,349 @@
+% Protocolo de entrega del sitio web H2V Araucanía a la SEREMI de Energía.
+% Compilar con XeLaTeX:  latexmk -xelatex Protocolo_Entrega_H2V_SEREMI.tex
+\documentclass[11pt,letterpaper]{article}
+\usepackage{fontspec}
+\usepackage[default]{sourcesanspro}
+\usepackage{sourcecodepro}
+\usepackage{polyglossia}\setdefaultlanguage{spanish}
+\usepackage[top=2.3cm,bottom=2.3cm,left=2.4cm,right=2.4cm,headheight=14pt]{geometry}
+\usepackage{graphicx}\graphicspath{{../manual-usuario/figuras/}}
+\usepackage{xcolor}
+\definecolor{h2vazul}{HTML}{1B3A5C}
+\definecolor{h2vverde}{HTML}{0D7377}
+\definecolor{h2voro}{HTML}{F59E0B}
+\definecolor{h2vgris}{HTML}{555F6B}
+\definecolor{h2vlinea}{HTML}{C9D1D9}
+\definecolor{fondoverde}{HTML}{E3F3F0}
+\definecolor{fondoazul}{HTML}{E8F0FB}
+\definecolor{fondooro}{HTML}{FFF4E0}
+\definecolor{fondogris}{HTML}{F3F5F7}
+\usepackage{tikz}\usetikzlibrary{positioning,arrows.meta,calc}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx,booktabs,array,colortbl}
+\usepackage{enumitem}
+\usepackage{fancyhdr}\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=h2vazul,urlcolor=h2vverde,pdfusetitle]{hyperref}
+\hypersetup{pdftitle={Protocolo de entrega del sitio web H2V Araucanía},pdfauthor={Bien Público H2V Araucanía}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\renewcommand{\arraystretch}{1.35}
+
+% ── Encabezado y pie ──────────────────────────────────────────────
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}\renewcommand{\headrule}{\color{h2vlinea}\hrule height 0.3pt}
+\fancyhead[L]{\small\color{h2vgris}Protocolo de entrega · Sitio web H2V Araucanía}
+\fancyhead[R]{\small\color{h2vgris}SEREMI de Energía · La Araucanía}
+\fancyfoot[C]{\small\color{h2vgris}Página \thepage\ de \pageref{LastPage}}
+
+% ── Títulos ───────────────────────────────────────────────────────
+\titleformat{\section}{\normalfont\LARGE\bfseries\color{h2vazul}}{\color{h2vverde}\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{18pt}{8pt}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{h2vverde}}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{12pt}{4pt}
+
+% ── Elementos propios ─────────────────────────────────────────────
+% Quién hace el paso: etiqueta de color.
+\newcommand{\etiqueta}[3]{\tcbox[on line,colback=#2,colframe=#2,boxrule=0pt,arc=6pt,
+  left=5pt,right=5pt,top=1.5pt,bottom=1.5pt,fontupper=\scriptsize\bfseries\color{#3}]{\MakeUppercase{#1}}}
+\newcommand{\programa}{\etiqueta{Programa}{h2vverde}{white}}
+\newcommand{\seremi}{\etiqueta{SEREMI}{h2vazul}{white}}
+\newcommand{\ambos}{\etiqueta{Ambos}{h2voro}{h2vazul}}
+% Casilla para marcar durante la reunión.
+\newcommand{\casilla}{\tikz[baseline=-0.6ex]\draw[h2vgris,line width=0.7pt,rounded corners=1.5pt] (0,-0.17) rectangle (0.34,0.17);}
+% Número de paso en círculo.
+\newcommand{\circulo}[1]{\tikz[baseline=(n.base)]\node[circle,fill=h2vverde,text=white,inner sep=0pt,
+  minimum size=1.45em,font=\small\bfseries](n){#1};}
+\newlist{pasos}{enumerate}{1}
+\setlist[pasos]{label=\protect\circulo{\arabic*},leftmargin=2.4em,labelsep=0.7em,itemsep=9pt,topsep=4pt}
+% Título del paso: texto a la izquierda, quién y casilla a la derecha.
+\newcommand{\paso}[2]{{\bfseries\color{h2vazul}#1}\hfill#2\hspace{0.5em}\casilla\par\nopagebreak[4]\vspace{1pt}}
+\setlist[itemize]{leftmargin=1.4em,itemsep=2pt,topsep=2pt,label={\color{h2vverde}\textbullet}}
+\newlist{sub}{enumerate}{1}
+\setlist[sub]{label={\color{h2vverde}\bfseries\alph*)},leftmargin=1.8em,itemsep=2pt,topsep=3pt}
+
+\newtcolorbox{recuadro}[3][]{enhanced,colback=#2,colframe=#2,borderline west={3pt}{0pt}{#3},
+  boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=7pt,bottom=7pt,before skip=10pt,after skip=10pt,#1}
+\newcommand{\titulorecuadro}[2]{{\bfseries\color{#1}#2}\par\vspace{2pt}}
+
+% Línea para completar a mano.
+\newcommand{\linea}[1]{\rule{#1}{0.4pt}}
+\newcommand{\firma}[2]{\begin{minipage}[t]{0.44\textwidth}\centering
+  \vspace{1.6cm}\color{h2vgris}\rule{\linewidth}{0.5pt}\par\vspace{2pt}
+  {\small\bfseries\color{h2vazul}#1}\par{\small #2}\par\vspace{6pt}
+  {\small Nombre: \linea{4.4cm}}\par\vspace{8pt}{\small Cargo: \linea{4.6cm}}\end{minipage}}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\cab}[1]{\textbf{\color{h2vgris}#1}}
+\newcommand{\fila}[1]{\textbf{\color{h2vazul}#1}}
+
+\begin{document}
+
+% ════════════════════════════════════════════════════════════════
+% PORTADA
+% ════════════════════════════════════════════════════════════════
+\thispagestyle{empty}
+\begin{minipage}[c]{0.45\textwidth}\includegraphics[height=2.4cm]{logo-bien-publico.png}\end{minipage}\hfill
+\begin{minipage}[c]{0.5\textwidth}\raggedleft\includegraphics[height=1.8cm]{logo-corfo.png}\hspace{0.5cm}\includegraphics[height=1.8cm]{logo-dps.png}\end{minipage}
+
+\vspace{2.4cm}
+{\color{h2vverde}\bfseries\addfontfeatures{LetterSpace=12}PROTOCOLO DE ENTREGA}\par\vspace{8pt}
+{\color{h2vazul}\fontsize{29}{34}\selectfont\bfseries Traspaso del sitio web\\ H2V Araucanía a la SEREMI\\ de Energía\par}\vspace{12pt}
+{\color{h2vgris}\Large Qué se entrega, a quién, en qué orden y cómo se hace, en dos fases\par}\vspace{10pt}
+{\color{h2vverde}\rule{\textwidth}{1.2pt}}\vspace{0.7cm}
+
+\begin{tabular}{@{}p{3.4cm}p{12.4cm}@{}}
+\textbf{\color{h2vazul}Fecha} & 23 de septiembre de 2026 \\
+\textbf{\color{h2vazul}Destinatario} & Secretaría Regional Ministerial de Energía, Región de La Araucanía \\
+\textbf{\color{h2vazul}Elaborado por} & Bien Público ``Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde'' (código CORFO 24BP-269085). Beneficiario: CODESSER. Coejecutor: Universidad de Talca. \\
+\textbf{\color{h2vazul}Sitio web} & \url{https://h2v-araucania.vercel.app} \\
+\end{tabular}
+
+\vfill
+{\color{h2vazul}\bfseries La entrega en una mirada}\par\vspace{6pt}
+\begin{tikzpicture}[
+  fase/.style={rounded corners=5pt,minimum height=3.3cm,text width=6.6cm,align=left,inner sep=10pt},
+  flecha/.style={-{Stealth[length=8pt]},line width=1.6pt,h2voro}]
+\node[fase,fill=fondoverde,draw=h2vverde,line width=1pt] (f1) {%
+  {\scriptsize\bfseries\color{h2vverde}FASE 1 · AHORA}\\[3pt]
+  {\large\bfseries\color{h2vazul}El contenido}\\[4pt]
+  {\small\color{h2vgris}Cada persona designada por la SEREMI recibe su propio usuario del panel y publica noticias, eventos, documentos y proyectos.}};
+\node[fase,fill=fondoazul,draw=h2vazul,line width=1pt,right=1.9cm of f1] (f2) {%
+  {\scriptsize\bfseries\color{h2vazul}FASE 2 · META: ENERO DE 2027}\\[3pt]
+  {\large\bfseries\color{h2vazul}La infraestructura}\\[4pt]
+  {\small\color{h2vgris}Un responsable técnico de la SEREMI recibe las cuentas de fondo: correo central, alojamiento, base de datos y código.}};
+\draw[flecha] (f1.east) -- (f2.west) node[midway,above=3pt,text width=1.7cm,align=center,font=\scriptsize\color{h2vgris}]{unos 6 meses de uso y capacitación};
+\end{tikzpicture}
+
+\vspace{0.8cm}
+{\small\color{h2vgris}Proyecto apoyado por CORFO · Programa Desarrollo Productivo Sostenible}
+\newpage
+
+% ════════════════════════════════════════════════════════════════
+\section{Cómo está organizada la entrega}
+% ════════════════════════════════════════════════════════════════
+
+El sitio web tiene dos capas, y cada una se entrega por separado.
+
+\begin{tabularx}{\textwidth}{@{}P{3.1cm}YYP{2.7cm}@{}}
+\toprule
+\cab{Capa} & \cab{Qué es} & \cab{Quién la usa} & \cab{Cuándo se entrega}\\
+\midrule
+\fila{El contenido} & El panel del sitio (\texttt{/admin}): noticias, eventos, documentos, proyectos del mapa y textos de cada página. & Las personas designadas por la SEREMI, cada una con su propio usuario. & \textbf{Fase 1}, ahora.\\
+\midrule
+\fila{La infraestructura} & Las cuentas de fondo que mantienen el sitio en línea: el correo central, el alojamiento, la base de datos, el código y el envío de correos. & Un responsable técnico designado por la SEREMI. & \textbf{Fase 2}, meta enero de 2027.\\
+\bottomrule
+\end{tabularx}
+
+\textbf{Por qué en dos fases.} Así la SEREMI aprende a usar el sitio sin riesgo de dañarlo, y recibe las cuentas de fondo cuando ya cuenta con práctica y con un responsable técnico. Mientras tanto, el programa sigue a cargo del funcionamiento del sitio y de sus respaldos.
+
+\begin{recuadro}{fondooro}{h2voro}
+\titulorecuadro{h2vazul}{Regla de oro para ambas fases}
+Ninguna contraseña se dicta, se anota en un papel compartido ni se envía por correo o por mensajería. \textbf{Cada persona crea la suya}, en el momento, desde su propio computador o teléfono.
+\end{recuadro}
+
+\textbf{Cómo leer los pasos.} Cada paso indica quién lo realiza y trae una casilla \casilla{} para marcarlo durante la reunión.
+
+\begin{tabular}{@{}l@{\hspace{0.8em}}l@{}}
+\programa & Universidad de Talca, a cargo del sitio hasta la entrega\\
+\seremi & Personas designadas por la SEREMI\\
+\ambos & En conjunto\\
+\end{tabular}
+
+% ════════════════════════════════════════════════════════════════
+\section{Antes de la reunión}
+% ════════════════════════════════════════════════════════════════
+
+\begin{pasos}
+\item \paso{Designar dos personas}{\programa}
+Solicitar a la SEREMI el nombre, cargo y correo institucional de \textbf{dos personas}: una titular y una de respaldo. Así el sitio nunca depende de una sola persona.
+
+\item \paso{Revisar el contenido}{\programa}
+Comprobar que el contenido publicado está listo para ser visto por el público.
+
+\item \paso{Guardar los códigos de respaldo de la cuenta central}{\programa}
+En la cuenta de Google \texttt{h2varaucania@gmail.com}, entrar a \textbf{Seguridad} → \textbf{Verificación en dos pasos} → \textbf{Códigos de respaldo}. Imprimirlos y guardarlos en un sobre cerrado, en un lugar seguro. Cada código permite entrar una vez \textbf{sin teléfono ni huella}; sirven si el teléfono se pierde o cambia.
+
+\item \paso{Preparar el Manual de Usuario}{\programa}
+Tener a mano el Manual de Usuario del sitio, en PDF y en Word, para entregarlo.
+
+\item \paso{Acceso al correo institucional}{\seremi}
+Cada persona asiste con acceso a su correo institucional: lo necesitará para crear su contraseña.
+\end{pasos}
+
+% ════════════════════════════════════════════════════════════════
+\section{Fase 1: entrega del contenido}
+% ════════════════════════════════════════════════════════════════
+
+{\color{h2vgris}Reunión de unos 45 minutos. Participan el responsable del programa y las dos personas designadas.}
+
+\begin{pasos}
+\item \paso{Crear un usuario por persona}{\programa}
+En el panel: \textbf{Cuentas y acceso} → \textbf{Usuarios} → \textbf{Crear nuevo}. Completar el correo institucional y el nombre completo, y elegir el rol \textbf{Editor}. Como contraseña, poner una provisional cualquiera que nadie necesita conocer: la persona creará la suya en el paso siguiente.
+
+\item \paso{Cada persona crea su propia contraseña}{\seremi}
+En \url{https://h2v-araucania.vercel.app/admin}, hacer clic en \textbf{¿Olvidaste tu contraseña?}, escribir el correo y enviar. Llega un mensaje con un enlace para definir la contraseña. Si no llega en un par de minutos, revisar la carpeta de correo no deseado.
+
+\item \paso{Primera entrada al panel}{\seremi}
+Cada persona entra con su correo y su contraseña, y comprueba que ve el Panel de Control.
+
+\item \paso{Práctica guiada}{\ambos}
+Con el manual abierto, cada persona crea una noticia de prueba, la publica y la ve en el sitio. Después, el programa la elimina: un Editor no puede eliminar contenido, y eso es a propósito.
+
+\item \paso{Entregar el Manual de Usuario}{\programa}
+Entregar el manual en PDF y en Word. Incluye un capítulo de traspaso que resume este protocolo.
+
+\item \paso{Renovar la contraseña del administrador actual}{\programa}
+Cambiar la contraseña de la cuenta de administrador del programa por una nueva y robusta. La usada durante la carga de contenidos deja de ser válida.
+
+\item \paso{Hacer visible el sitio en los buscadores (opcional)}{\programa}
+Hoy el sitio está oculto a propósito para los buscadores, mientras se completa. Para mostrarlo, en Vercel se crea la variable \texttt{SITE\_INDEXABLE} con el valor \texttt{true} y se vuelve a publicar el sitio. Conviene hacerlo cuando exista la dirección definitiva.
+
+\item \paso{Firmar la constancia de la Fase 1}{\ambos}
+Completar y firmar la constancia de la página siguiente.
+\end{pasos}
+
+\begin{recuadro}{fondoverde}{h2vverde}
+\titulorecuadro{h2vverde}{Qué puede y qué no puede hacer un Editor}
+\textbf{Puede:} crear, editar y publicar noticias, eventos, documentos y proyectos; editar los textos de las páginas; subir imágenes, documentos y los archivos KMZ del mapa.\par
+\textbf{No puede:} eliminar contenido ni archivos; crear o administrar usuarios; cambiar los datos institucionales de contacto ni la configuración general del sitio.\par
+Estas limitaciones protegen el sitio mientras se aprende. En la Fase 2, el responsable técnico pasa a ser Administrador.
+\end{recuadro}
+
+\vspace{0.6cm}
+\subsection*{Constancia de entrega del contenido (Fase 1)}
+
+En \linea{4.5cm}, a \linea{1cm} de \linea{3cm} de 20\linea{0.8cm}, se entregó a la Secretaría Regional Ministerial de Energía de La Araucanía el acceso al panel de contenido del sitio web H2V Araucanía, con los usuarios que se indican, y se entregó el Manual de Usuario. Cada persona creó su propia contraseña durante la reunión.
+
+\vspace{4pt}
+\begin{tabularx}{\textwidth}{@{}p{4cm}p{3.1cm}Yp{1.6cm}p{2.9cm}@{}}
+\toprule
+\bfseries\color{h2vgris}Nombre & \bfseries\color{h2vgris}Cargo & \bfseries\color{h2vgris}Correo institucional & \bfseries\color{h2vgris}Rol & \bfseries\color{h2vgris}Firma\\
+\midrule
+ & & & Editor & \\[14pt]
+\midrule
+ & & & Editor & \\[14pt]
+\midrule
+ & & & & \\[14pt]
+\bottomrule
+\end{tabularx}
+
+\vspace{0.6cm}
+\noindent\firma{Por el programa}{Universidad de Talca}\hfill\firma{Por la SEREMI de Energía}{Región de La Araucanía}
+
+\newpage
+% ════════════════════════════════════════════════════════════════
+\section{Fase 2: traspaso de la infraestructura}
+% ════════════════════════════════════════════════════════════════
+
+{\color{h2vgris}Meta: enero de 2027. Reunión de unos 60 minutos, idealmente presencial, con el responsable técnico de la SEREMI.}
+
+\subsection*{Condiciones previas}
+\begin{itemize}
+\item La SEREMI usa el panel sin ayuda: publica, edita y restaura versiones anteriores.
+\item La SEREMI designó un responsable técnico permanente, o contrató un servicio de mantención.
+\item El respaldo diario de la base de datos está funcionando. Ya lo está: cada día se guarda una copia, que se conserva durante 90 días.
+\end{itemize}
+
+\subsection*{Pasos de la reunión}
+\begin{pasos}
+\item \paso{Cuenta central de Google: la llave maestra}{\ambos}
+En la cuenta \texttt{h2varaucania@gmail.com}, sección \textbf{Seguridad}, la persona de la SEREMI:
+\begin{sub}
+\item define una contraseña nueva, elegida por ella;
+\item registra su propio teléfono en la verificación en dos pasos;
+\item reemplaza el teléfono y el correo de recuperación por los suyos;
+\item genera nuevos códigos de respaldo y los guarda en un lugar seguro.
+\end{sub}
+Luego el programa elimina su teléfono y sus llaves de acceso de la cuenta, y se cierra la sesión en todos los dispositivos.
+
+\item \paso{Alojamiento y base de datos}{\seremi}
+Al alojamiento (Vercel) y a la base de datos (Neon) se entra con la cuenta central, así que pasan junto con ella. Comprobar que se puede entrar a ambos.
+
+\item \paso{Código del sitio (GitHub)}{\ambos}
+La cuenta \texttt{h2varaucania} de GitHub se entrega con el mismo procedimiento del paso 1: contraseña nueva y verificación propia. Se retira la cuenta de colaborador de la Universidad, salvo que se acuerde mantener soporte.
+
+\item \paso{Envío de correos (Resend)}{\ambos}
+Confirmar con qué cuenta se creó el servicio que envía los correos del sitio (recuperación de contraseña y formulario de contacto) y traspasarla del mismo modo.
+
+\item \paso{Renovar la llave secreta del sitio}{\seremi}
+En Vercel, reemplazar el valor de la variable \texttt{PAYLOAD\_SECRET} por un texto largo al azar (por ejemplo, generado con un gestor de contraseñas) y volver a publicar. Así nadie fuera de la SEREMI conserva una forma de entrar al panel. Efecto: todas las personas deben iniciar sesión de nuevo.
+
+\item \paso{Definir el alojamiento definitivo}{\seremi}
+El plan gratuito de Vercel está destinado, según sus propias condiciones, solo a uso personal y no comercial. Para un sitio institucional corresponde un plan pagado de Vercel o un servidor propio de la SEREMI; el sitio ya incluye la configuración necesaria para esto último.
+
+\item \paso{Dirección propia (si se contrata)}{\ambos}
+Apuntar el dominio al sitio desde Vercel, actualizar la variable \texttt{NEXT\_PUBLIC\_SITE\_URL} con la nueva dirección y volver a publicar.
+
+\item \paso{Ajustar los usuarios del panel}{\programa}
+Dar rol \textbf{Administrador} al responsable técnico de la SEREMI, y retirar o degradar las cuentas del programa.
+
+\item \paso{Firmar el acta final}{\ambos}
+Completar y firmar el acta de la página siguiente.
+\end{pasos}
+
+\newpage
+\subsection*{Acta final de traspaso de la infraestructura (Fase 2)}
+
+En \linea{4.5cm}, a \linea{1cm} de \linea{3cm} de 20\linea{0.8cm}, el Bien Público ``Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde'' (código CORFO 24BP-269085), a través de la Universidad de Talca, entrega a la Secretaría Regional Ministerial de Energía de La Araucanía la infraestructura del sitio web H2V Araucanía:
+
+\vspace{2pt}
+\begin{tabularx}{\textwidth}{@{}p{0.6cm}Y@{}}
+\casilla & Cuenta central de Google \texttt{h2varaucania@gmail.com}, con contraseña, verificación en dos pasos y datos de recuperación de la SEREMI.\\
+\casilla & Alojamiento del sitio en Vercel y archivos subidos.\\
+\casilla & Base de datos en Neon.\\
+\casilla & Código del sitio en GitHub, con el respaldo diario de la base de datos en funcionamiento.\\
+\casilla & Servicio de envío de correos (Resend).\\
+\casilla & Panel del sitio, con cuenta de Administrador del responsable técnico de la SEREMI.\\
+\casilla & Llave secreta del sitio renovada por la SEREMI.\\
+\end{tabularx}
+
+Se deja constancia de que todas las contraseñas fueron creadas por la SEREMI durante esta reunión, sin ser comunicadas a terceros. \textbf{A contar de esta fecha, la operación del sitio web y de sus cuentas, así como sus consecuencias, quedan a cargo de la SEREMI de Energía.}
+
+\vspace{0.4cm}
+\noindent\firma{Por la Universidad de Talca}{Coejecutor del Bien Público}\hfill\firma{Por la SEREMI de Energía}{Región de La Araucanía}
+
+\vspace{0.5cm}
+{\small\color{h2vgris}Responsable técnico designado por la SEREMI: \linea{8.6cm}\par\vspace{8pt}Correo institucional: \linea{8.6cm}}
+
+% ════════════════════════════════════════════════════════════════
+\section*{Anexo A. Cuentas y servicios del sitio}
+% ════════════════════════════════════════════════════════════════
+\addcontentsline{toc}{section}{Anexo A}
+
+\begin{tabularx}{\textwidth}{@{}P{3.3cm}YYP{2.3cm}@{}}
+\toprule
+\cab{Servicio} & \cab{Para qué sirve} & \cab{Cómo se entra hoy} & \cab{Se entrega en}\\
+\midrule
+\fila{Panel del sitio} & Editar todo el contenido. & Usuario y contraseña de cada persona. & Fase 1\\
+\fila{Cuenta central de Google} & Llave de entrada al alojamiento y a la base de datos. & {\small\texttt{h2varaucania@gmail.com}}, con contraseña y verificación en dos pasos. & Fase 2\\
+\fila{Vercel} & Aloja y publica el sitio; guarda las imágenes y archivos subidos. & Con la cuenta central de Google (equipo \texttt{h2varaucania-1077}). & Fase 2\\
+\fila{Neon} & Base de datos con todo el contenido. & Con la cuenta central de Google. & Fase 2\\
+\fila{GitHub} & Guarda el código y ejecuta el respaldo diario de la base de datos. & Cuenta \texttt{h2varaucania}, con contraseña y verificación en dos pasos. & Fase 2\\
+\fila{Resend} & Envía los correos del sitio. & Por confirmar con qué cuenta se creó. & Fase 2\\
+\fila{Dirección propia} & Dirección definitiva del sitio. & Aún no contratada. & Cuando se contrate\\
+\bottomrule
+\end{tabularx}
+
+% ════════════════════════════════════════════════════════════════
+\section*{Anexo B. Si algo pasa}
+% ════════════════════════════════════════════════════════════════
+\addcontentsline{toc}{section}{Anexo B}
+
+\begin{recuadro}{fondogris}{h2vazul}
+\titulorecuadro{h2vazul}{Una persona olvidó su contraseña o quedó bloqueada}
+Usar \textbf{¿Olvidaste tu contraseña?} en la pantalla de entrada. Después de 5 intentos fallidos la cuenta se bloquea 10 minutos: basta esperar, o un Administrador puede usar \textbf{Forzar Desbloqueo} en la ficha del usuario.
+\end{recuadro}
+\begin{recuadro}{fondogris}{h2vazul}
+\titulorecuadro{h2vazul}{Se perdió el teléfono de la cuenta central}
+Entrar con uno de los códigos de respaldo guardados en el sobre cerrado, registrar el teléfono nuevo en la verificación en dos pasos y generar códigos nuevos.
+\end{recuadro}
+\begin{recuadro}{fondogris}{h2vazul}
+\titulorecuadro{h2vazul}{Se borró o se dañó contenido}
+Las noticias y los eventos guardan sus versiones anteriores: pestaña \textbf{Versiones} → elegir la versión → \textbf{Restaurar}. Además, la base de datos completa tiene un respaldo diario de los últimos 90 días, que puede restaurar el responsable técnico.
+\end{recuadro}
+
+\end{document}
