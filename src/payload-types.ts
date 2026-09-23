@@ -256,7 +256,7 @@ export interface Media {
   };
 }
 /**
- * Publica noticias sobre seminarios, talleres, reuniones de gobernanza, acuerdos y avances del programa. Las noticias aparecen en la sección "Noticias" y en la página de inicio. Usa "Publicar" para que la noticia sea visible; "Guardar borrador" la deja solo aquí en el admin.
+ * Publica noticias sobre seminarios, talleres, reuniones de gobernanza, acuerdos y avances del programa. Las noticias aparecen en la sección "Noticias" y en la página de inicio. Mientras escribes, el borrador se guarda solo y no se ve en el sitio; pulsa "Publicar cambios" para que la noticia sea visible.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "noticias".
@@ -579,7 +579,7 @@ export interface VideoView {
   createdAt: string;
 }
 /**
- * Publica eventos del programa: seminarios, talleres, ferias, reuniones y capacitaciones. Aparecen en la sección "Eventos" del sitio. Usa "Publicar" para que el evento sea visible.
+ * Publica eventos del programa: seminarios, talleres, ferias, reuniones y capacitaciones. Aparecen en la sección "Eventos" del sitio. Mientras escribes, el borrador se guarda solo y no se ve en el sitio; pulsa "Publicar cambios" para que el evento sea visible.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "eventos".
@@ -2214,9 +2214,9 @@ export interface GuiaAdmin {
    *    • Imagen de portada: Haz clic y sube una imagen JPG o PNG
    *    • Fecha: Selecciona la fecha de la noticia
    *    • Categoría: Elige una (Seminario, Taller, Gobernanza, etc.)
-   * 4. ✅ IMPORTANTE — para que la noticia SE VEA en el sitio, presiona el botón azul
-   *    "Publicar cambios". Si presionas "Guardar borrador", la noticia queda guardada
-   *    SOLO aquí en el admin (útil para terminarla otro día), pero NO aparece en el sitio.
+   * 4. ✅ IMPORTANTE — para que la noticia SE VEA en el sitio, presiona el botón
+   *    "Publicar cambios". Mientras escribes, el borrador se guarda solo y queda SOLO
+   *    aquí en el admin (puedes terminarla otro día), pero NO aparece en el sitio.
    * 5. ¿Te equivocaste? Abre la noticia → pestaña "Versiones" → elige una versión anterior
    *    → "Restaurar". Cada guardado deja una copia.
    *
@@ -2320,7 +2320,7 @@ export interface GuiaAdmin {
    *    • Tipo: Seminario, Taller, Feria, etc.
    *    • Enlace de inscripción (opcional): URL a formulario de registro
    * 4. ✅ Presiona "Publicar cambios" para que el evento sea visible
-   *    ("Guardar borrador" lo deja solo en el admin).
+   *    (mientras no lo publiques, queda como borrador solo en el admin).
    *
    * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    * 🔵 PASO 6: SUBIR FOTOS DE ACTIVIDADES (página Gobernanza)
@@ -2385,7 +2385,7 @@ export interface GuiaAdmin {
    *   "¿Olvidaste tu contraseña?" en la pantalla de entrada.
    * • "Subí una imagen y no se ve" → verifica que sea JPG, PNG o WebP (no .txt ni .zip).
    * • Los cambios publicados se ven en el sitio en segundos: recarga la página del sitio.
-   *   Si no aparecen, revisa que hayas presionado "Publicar cambios" y no "Guardar borrador".
+   *   Si no aparecen, revisa que hayas presionado "Publicar cambios" (lo no publicado queda como borrador).
    *
    * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    * 📎 SOBRE LOS ARCHIVOS (fotos y PDFs)
