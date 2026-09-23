@@ -66,8 +66,8 @@ def add_field(par, instr, placeholder='', size=None, color=None):
         if color: rr.font.color.rgb = color
     return r4
 
-def nueva_lista_numerada(doc):
-    """Crea una instancia de numeración nueva (reinicia en 1) basada en el estilo List Number."""
+def nueva_lista_numerada(doc, inicio=1):
+    """Crea una instancia de numeración nueva (arranca en `inicio`) basada en el estilo List Number."""
     numbering = doc.part.numbering_part.numbering_definitions._numbering
     style = doc.styles['List Number']
     num_id_style = style.element.pPr.numPr.numId.val
@@ -76,7 +76,7 @@ def nueva_lista_numerada(doc):
         if int(num.get(qn('w:numId'))) == int(num_id_style):
             abstract_id = int(num.find(qn('w:abstractNumId')).get(qn('w:val'))); break
     num = numbering.add_num(abstract_id)
-    num.add_lvlOverride(ilvl=0).add_startOverride(1)
+    num.add_lvlOverride(ilvl=0).add_startOverride(inicio)
     return num.numId
 
 def set_numbering(par, num_id, ilvl=0):
@@ -117,7 +117,7 @@ def portada(doc, meta):
     p = doc.add_paragraph(); pPr = p._p.get_or_add_pPr(); pb = OxmlElement('w:pBdr'); bt = OxmlElement('w:bottom')
     bt.set(qn('w:val'), 'single'); bt.set(qn('w:sz'), '12'); bt.set(qn('w:color'), '0D7377'); bt.set(qn('w:space'), '1'); pb.append(bt); pPr.append(pb)
     for _ in range(2): doc.add_paragraph()
-    datos = [('Versión', meta.get('version', '')), ('Fecha', meta.get('fecha', '')), ('Destinatario', meta.get('destinatario', '')),
+    datos = ([('Versión', meta['version'])] if meta.get('version') else []) + [('Fecha', meta.get('fecha', '')), ('Destinatario', meta.get('destinatario', '')),
              ('Elaborado por', meta.get('elaborado', '')), ('Sitio web', meta.get('sitio', ''))]
     tb = doc.add_table(rows=len(datos), cols=2); tb.alignment = WD_TABLE_ALIGNMENT.LEFT
     for i, (k, v) in enumerate(datos):
@@ -146,7 +146,8 @@ def encabezado_pie(doc, meta):
     hp = sec.header.paragraphs[0]; hp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     r = hp.add_run(meta.get('titulo', '')); r.font.size = Pt(8.5); r.font.color.rgb = GRIS
     fp = sec.footer.paragraphs[0]; fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = fp.add_run(f"Versión {meta.get('version','')} · {meta.get('fecha','')} · Página "); r.font.size = Pt(8.5); r.font.color.rgb = GRIS
+    pie = (f"Versión {meta['version']} · " if meta.get('version') else '') + f"{meta.get('fecha','')} · Página "
+    r = fp.add_run(pie); r.font.size = Pt(8.5); r.font.color.rgb = GRIS
     add_field(fp, ' PAGE ', '1', size=8.5, color=GRIS)
     r = fp.add_run(' de '); r.font.size = Pt(8.5); r.font.color.rgb = GRIS
     add_field(fp, ' NUMPAGES ', '1', size=8.5, color=GRIS)
@@ -229,7 +230,7 @@ def main():
             add_runs(doc.add_paragraph(), b['text'])
         elif t == 'list':
             if b['ordered']:
-                num_id = nueva_lista_numerada(doc)
+                num_id = nueva_lista_numerada(doc, b.get('start', 1))
                 for it in b['items']:
                     p = doc.add_paragraph(style='List Number'); set_numbering(p, num_id); add_runs(p, it)
             else:

@@ -54,8 +54,7 @@
 {\color{h2vverde}\rule{\textwidth}{1.2pt}}\vspace{1.6cm}
 
 \begin{tabular}{@{}p{3.6cm}p{11.5cm}@{}}
-\textbf{\color{h2vazul}Versión} & 1.1 \\[3pt]
-\textbf{\color{h2vazul}Fecha} & 28 de agosto de 2026 \\[3pt]
+\textbf{\color{h2vazul}Fecha} & 23 de septiembre de 2026 \\[3pt]
 \textbf{\color{h2vazul}Destinatario} & Secretaría Regional Ministerial de Energía, Región de La Araucanía \\[3pt]
 \textbf{\color{h2vazul}Elaborado por} & Bien Público ''Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde'' (código CORFO 24BP-269085). Beneficiario: CODESSER. Coejecutor: Universidad de Talca. \\[3pt]
 \textbf{\color{h2vazul}Sitio web} & \url{https://h2v-araucania.vercel.app} \\
@@ -72,7 +71,7 @@ Este manual está escrito para las personas de la Secretaría Regional Ministeri
 
 No se necesita ningún conocimiento técnico. Si usted sabe usar el correo electrónico y un procesador de texto, puede administrar este sitio. Todo se hace desde el navegador (Chrome, Edge, Firefox o Safari), en una dirección web que llamaremos ''el panel''.
 
-El manual está organizado por tareas: primero cómo entrar, después cómo está organizado el panel, luego las tareas frecuentes paso a paso (con una captura de pantalla en cada paso importante), después cómo editar los textos de cada página del sitio, y al final la gestión de usuarios, la lista de problemas frecuentes y los anexos de referencia.
+El manual está organizado por tareas: primero cómo entrar, después cómo está organizado el panel, luego las tareas frecuentes paso a paso (con una captura de pantalla en cada paso importante), después cómo editar los textos de cada página del sitio, y al final la gestión de usuarios, el traspaso del sitio a la SEREMI, la lista de problemas frecuentes y los anexos de referencia.
 
 A lo largo del texto encontrará cuatro tipos de recuadros:
 
@@ -343,7 +342,7 @@ Las noticias aparecen en la sección \textbf{Noticias} del sitio y las más reci
 \rowcolor{filaalt}\textbf{Fecha de publicación} (barra lateral) & La fecha que se mostrará en la noticia. Elíjala en el calendario. & Sí \\ \midrule
 \textbf{Categoría} (barra lateral) & Seminario, Taller, Gobernanza, Acuerdo, Proyecto o General. Sirve para filtrar. & No \\ \bottomrule
 \end{longtable}
-\begin{enumerate}
+\begin{enumerate}[start=4]
   \item Pulse \textbf{Publicar cambios}.
 \end{enumerate}
 \begin{recuadro}{cResultado}{bResultado}\textbf{\color{bResultado}Resultado:} la barra de estado cambia a ''Publicado''. Abra el sitio público, entre a Noticias y recargue: la noticia aparece primera. En la portada aparece entre las últimas noticias.\end{recuadro}
@@ -384,7 +383,7 @@ Los eventos aparecen en \textbf{Recursos $\rightarrow$ Eventos} del sitio. Funci
 \textbf{Imagen o afiche} & Imagen promocional. & No \\ \midrule
 \rowcolor{filaalt}\textbf{Enlace de inscripción} & Dirección web del formulario de inscripción (Google Forms, Eventbrite...). & No \\ \bottomrule
 \end{longtable}
-\begin{enumerate}
+\begin{enumerate}[start=3]
   \item Pulse \textbf{Publicar cambios}.
 \end{enumerate}
 \begin{figure}[H]\centering
@@ -415,7 +414,7 @@ Los documentos aparecen en \textbf{Recursos $\rightarrow$ Documentos} del sitio,
 \rowcolor{filaalt}\textbf{Año} (barra lateral) & Año del documento. & Sí \\ \midrule
 \textbf{Descargas} (barra lateral) & Contador automático. \textbf{No lo modifique.} & Automático \\ \bottomrule
 \end{longtable}
-\begin{enumerate}
+\begin{enumerate}[start=3]
   \item Pulse \textbf{Guardar}. El documento queda visible de inmediato.
 \end{enumerate}
 \begin{figure}[H]\centering
@@ -452,7 +451,7 @@ El \textbf{Mapa de Proyectos} del sitio muestra un punto por cada proyecto de hi
 \rowcolor{filaalt}\textbf{Imagen del proyecto} & Foto o render; aparece en el globo del mapa. & No \\ \midrule
 \textbf{Enlace externo} & Dirección web del proyecto o empresa (con \url{https://}); aparece como ''Ver sitio del proyecto''. & No \\ \bottomrule
 \end{longtable}
-\begin{enumerate}
+\begin{enumerate}[start=3]
   \item Pulse \textbf{Guardar}.
 \end{enumerate}
 \begin{figure}[H]\centering
@@ -472,62 +471,111 @@ El \textbf{Mapa de Proyectos} del sitio muestra un punto por cada proyecto de hi
 \includegraphics[width=\linewidth,keepaspectratio]{46-web-proyectos.png}
 \caption{Así se ve el Mapa de Proyectos del sitio público.}
 \end{figure}
-\section{Dibujar la forma de un proyecto en el mapa (con un archivo KMZ)}
-Además del punto, un proyecto puede mostrar en el mapa su \textbf{forma real}: el polígono del predio, el trazado de una línea, etc. La forma se dibuja subiendo un archivo \textbf{KMZ o KML} hecho en Google Earth (el mismo tipo de archivo que usa, por ejemplo, el mapa de proyectos del Servicio de Evaluación Ambiental). Es \textbf{totalmente opcional}: si no sube nada, el proyecto se ve igual que siempre, con su marcador de punto.
+\section{Dibujar la forma de un proyecto en el mapa (archivos KMZ)}
+Cada proyecto aparece en el mapa como un \textbf{círculo de color}, en el lugar de sus coordenadas. Además, puede mostrar la \textbf{forma real de su terreno} (el contorno del predio) o de una obra (el trazado de un ducto o de un camino). Esa forma se dibuja en \textbf{Google Earth} y se sube al sitio como un archivo \textbf{KMZ} o \textbf{KML}.
 
-\begin{recuadro}{cNota}{bNota}\textbf{\color{bNota}Nota:} estas funciones vienen \textbf{apagadas de fábrica} y el sitio funciona igual que siempre sin ellas. Para encenderlas (o volver a apagarlas) hay que pedirle al equipo informático que active un interruptor en el servidor y vuelva a publicar el sitio; toma unos minutos y no requiere tocar el panel (vea el Anexo D). Con el interruptor apagado, las capas no se dibujan y los botones de descarga no aparecen, aunque ya haya capas subidas: no se pierde nada.\end{recuadro}
-\textbf{Paso 1. Dibujar la forma en Google Earth} (gratis, en \texttt{earth.google.com}, o con el programa Google Earth Pro):
+\begin{recuadro}{cNota}{bNota}\textbf{\color{bNota}Nota:} un archivo KMZ o KML es el archivo en que Google Earth guarda un dibujo hecho sobre el mapa: puntos, líneas o formas, con sus coordenadas. Son lo mismo: el KMZ es la versión comprimida del KML. El sitio acepta los dos.\end{recuadro}
+\textbf{Qué se ve en el mapa:}
 
-\begin{enumerate}
-  \item Ubique el lugar del proyecto.
-  \item Use la herramienta de \textbf{polígono} (o de ruta, si es un trazado) y dibuje el contorno.
-  \item Clic derecho sobre lo dibujado $\rightarrow$ \textbf{Guardar lugar como...} $\rightarrow$ elija el formato \textbf{KMZ} (o KML).
-\end{enumerate}
-\textbf{Paso 2. Subir la capa al sitio:}
-
-\begin{enumerate}
-  \item Menú lateral $\rightarrow$ \textbf{Contenido} $\rightarrow$ \textbf{Capas geográficas (KMZ)} $\rightarrow$ \textbf{Crear nuevo}.
-  \item Complete:
-\end{enumerate}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.163\textwidth}>{\raggedright\arraybackslash}p{0.613\textwidth}>{\raggedright\arraybackslash}p{0.155\textwidth}}
-\rowcolor{h2vazul}\textbf{\color{white}Campo} & \textbf{\color{white}Qué escribir} & \textbf{\color{white}Obligatorio} \\
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.149\textwidth}>{\raggedright\arraybackslash}p{0.352\textwidth}>{\raggedright\arraybackslash}p{0.428\textwidth}}
+\rowcolor{h2vazul}\textbf{\color{white}Lo que ve} & \textbf{\color{white}Qué significa} & \textbf{\color{white}De dónde sale} \\
 \endfirsthead
-\rowcolor{h2vazul}\textbf{\color{white}Campo} & \textbf{\color{white}Qué escribir} & \textbf{\color{white}Obligatorio} \\
+\rowcolor{h2vazul}\textbf{\color{white}Lo que ve} & \textbf{\color{white}Qué significa} & \textbf{\color{white}De dónde sale} \\
+\endhead
+\textbf{Un círculo} & Dónde está el proyecto. Al hacerle clic se abre su ficha. & De la Latitud y Longitud escritas en el formulario del proyecto. Todo proyecto lo tiene, con o sin archivo KMZ. \\ \midrule
+\rowcolor{filaalt}\textbf{Una forma} (polígono o línea) & Qué superficie ocupa el proyecto, o por dónde pasa una obra. & Del archivo KMZ unido al proyecto. \\ \bottomrule
+\end{longtable}
+Los dos se pintan con el \textbf{color de la etapa} del proyecto: anaranjado para Planificación, azul para Pilotaje, morado para Desarrollo y verde para Operación.
+
+El trabajo tiene cuatro partes: \textbf{dibujar} la forma en Google Earth, \textbf{subir} el archivo al panel, \textbf{unirlo} al proyecto y \textbf{comprobar} el resultado en el sitio.
+
+\subsection{Parte 1. Dibujar la forma en Google Earth}
+Se usa Google Earth en el navegador: es gratis, no hay que instalar nada y el archivo queda guardado en su computador.
+
+\begin{enumerate}
+  \item Abra \textbf{earth.google.com} en Chrome. Si se lo pide, entre con cualquier cuenta de Google.
+  \item Arriba a la izquierda, abra el menú \textbf{Archivo} y elija \textbf{Nuevo archivo KML local}. Otra forma de llegar: en la pantalla de inicio, botón \textbf{Editor de KML local} $\rightarrow$ \textbf{Crear un nuevo archivo KML}.
+  \item Escriba el lugar del proyecto en el buscador de arriba (\textbf{Buscar en Google Earth}) y acérquese hasta ver bien el terreno.
+  \item Abra el menú \textbf{Agregar} $\rightarrow$ \textbf{Línea o forma} $\rightarrow$ \textbf{Ruta o polígono}.
+  \item Haga clic en cada esquina del terreno, una tras otra. Para cerrar la forma, haga clic otra vez sobre \textbf{el primer punto}. Si lo que dibuja es una línea (por ejemplo, un ducto), termínela con doble clic.
+  \item Haga clic en \textbf{Listo} y luego en \textbf{Guardar en el proyecto}. Si le pide un nombre, escriba uno claro, por ejemplo ''Predio planta Temuco''.
+  \item Abra el menú \textbf{Archivo} y elija \textbf{Exportar como archivo KML}. El archivo queda en la carpeta \textbf{Descargas} de su computador.
+\end{enumerate}
+\begin{recuadro}{cConsejo}{bConsejo}\textbf{\color{bConsejo}Consejo:} si la empresa o alguien del equipo ya le envió el archivo KMZ o KML del proyecto, no necesita dibujar nada: pase directo a la Parte 2. Si usa el programa \textbf{Google Earth Pro} (el que se instala), el archivo se obtiene con clic derecho sobre lo dibujado $\rightarrow$ \textbf{Guardar lugar como...} $\rightarrow$ formato KMZ.\end{recuadro}
+\begin{recuadro}{cAtencion}{bAtencion}\textbf{\color{bAtencion}Atención:} Google Earth cambia sus pantallas de vez en cuando. Si un botón aparece con un nombre algo distinto (por ejemplo ''Terminar'' en vez de ''Listo''), use el equivalente.\end{recuadro}
+\subsection{Parte 2. Subir el archivo al panel}
+\begin{enumerate}
+  \item Entre al panel. En el menú de la izquierda, grupo \textbf{Contenido}, haga clic en \textbf{Capas geográficas (KMZ)}.
+  \item Arriba, haga clic en \textbf{Crear nuevo}.
+  \item Complete el formulario:
+\end{enumerate}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.155\textwidth}>{\raggedright\arraybackslash}p{0.629\textwidth}>{\raggedright\arraybackslash}p{0.155\textwidth}}
+\rowcolor{h2vazul}\textbf{\color{white}Campo} & \textbf{\color{white}Qué poner} & \textbf{\color{white}Obligatorio} \\
+\endfirsthead
+\rowcolor{h2vazul}\textbf{\color{white}Campo} & \textbf{\color{white}Qué poner} & \textbf{\color{white}Obligatorio} \\
 \endhead
 \textbf{Título de la capa} & Un nombre claro. Ejemplo: ''Predio planta Temuco''. & Sí \\ \midrule
-\rowcolor{filaalt}\textbf{Tipo de capa} & ''Geometría de un proyecto'' (el caso normal; para el otro tipo, vea el consejo más abajo). & Sí \\ \midrule
-\textbf{Color} (barra lateral) & Solo si quiere un color distinto; si lo deja vacío, la forma usa el color de la etapa del proyecto. & No \\ \midrule
-\rowcolor{filaalt}\textbf{Archivo} & El .kmz o .kml que guardó desde Google Earth. & Sí \\ \bottomrule
+\rowcolor{filaalt}\textbf{Tipo de capa} & \textbf{Geometría de un proyecto}, que es el caso normal. El otro tipo se explica al final de esta sección. & Sí \\ \midrule
+\textbf{El archivo} & Arrastre el archivo .kmz o .kml a la zona gris, o haga clic ahí y búsquelo en su carpeta Descargas. & Sí \\ \midrule
+\rowcolor{filaalt}\textbf{Descripción} & Una frase sobre qué muestra la capa. & No \\ \midrule
+\textbf{Color} (columna derecha) & Déjelo vacío para usar el color de la etapa del proyecto. Solo si quiere otro color, escriba su código, por ejemplo \texttt{\#0D7377}. & No \\ \bottomrule
 \end{longtable}
-\begin{enumerate}
-  \item Pulse \textbf{Guardar}.
+\begin{enumerate}[start=4]
+  \item Haga clic en \textbf{Guardar}.
+  \item Revise el resultado. En unos segundos el formulario muestra lo que el sistema encontró en el archivo: \textbf{Resultado del procesamiento} debe decir \textbf{''Sin observaciones.''} y \textbf{N.º de geometrías} indica cuántas formas encontró.
 \end{enumerate}
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth,keepaspectratio]{13b-capa-kmz.png}
-\caption{La capa ya guardada: título (1), tipo (2), el archivo KMZ subido (3), el resultado del procesamiento que completa el sistema (4) y Guardar (5).}
+\caption{La capa ya guardada: título (1), tipo (2), el archivo subido (3), el resultado del procesamiento, que completa el sistema (4), y Guardar (5).}
 \end{figure}
-\begin{recuadro}{cResultado}{bResultado}\textbf{\color{bResultado}Resultado:} al guardar, el sistema valida y simplifica el archivo automáticamente. El campo \textbf{''Resultado del procesamiento''} dice ''Sin observaciones.'' (o le avisa qué encontró), y se completan solos el número de geometrías, los vértices y el \textbf{centroide} (útil para copiarlo como coordenadas del proyecto si aún no las tiene).\end{recuadro}
-\begin{recuadro}{cAtencion}{bAtencion}\textbf{\color{bAtencion}Atención:} el archivo puede pesar \textbf{hasta 4 MB} (el KMZ de un predio pesa unos pocos KB) y el sitio acepta \textbf{hasta 50 capas} en total. Si el archivo viene con algún problema (sin geometrías, mal formado, demasiado grande), el panel se lo explica con un mensaje en español; corrija en Google Earth y vuelva a subirlo.\end{recuadro}
-\textbf{Paso 3. Asociar la capa al proyecto:}
+\begin{recuadro}{cResultado}{bResultado}\textbf{\color{bResultado}Resultado:} la capa queda guardada. Todavía no se ve en el sitio: falta unirla a un proyecto (Parte 3).\end{recuadro}
+Si el archivo tiene un problema, el panel muestra un mensaje rojo y \textbf{no lo guarda}. Estos son los mensajes más comunes:
 
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.311\textwidth}>{\raggedright\arraybackslash}p{0.619\textwidth}}
+\rowcolor{h2vazul}\textbf{\color{white}El mensaje dice...} & \textbf{\color{white}Qué hacer} \\
+\endfirsthead
+\rowcolor{h2vazul}\textbf{\color{white}El mensaje dice...} & \textbf{\color{white}Qué hacer} \\
+\endhead
+''El archivo supera los 4 MB permitidos'' & El archivo trae imágenes u otras capas. Exporte solo la forma del proyecto; un predio pesa unos pocos KB. \\ \midrule
+\rowcolor{filaalt}''El archivo no contiene ninguna geometría'' & Se exportó sin dibujo. Vuelva a la Parte 1 y dibuje la forma antes de exportar. \\ \midrule
+''Este archivo es un enlace a un mapa en línea'' & Viene de Google My Maps. Ahí use ''Exportar a KML/KMZ'' y desmarque ''Mantener los datos actualizados''. \\ \midrule
+\rowcolor{filaalt}''El archivo tiene coordenadas fuera de rango'' & Probablemente la latitud y la longitud están invertidas. Vuelva a exportarlo desde Google Earth. \\ \midrule
+''Se alcanzó el máximo de 50 capas'' & Elimine alguna capa que ya no se use (vea más abajo). \\ \midrule
+\rowcolor{filaalt}Cualquier otro mensaje & Vuelva a exportar el archivo desde Google Earth y súbalo de nuevo. \\ \bottomrule
+\end{longtable}
+\subsection{Parte 3. Unir el archivo al proyecto}
 \begin{enumerate}
-  \item Menú lateral $\rightarrow$ \textbf{Contenido} $\rightarrow$ \textbf{Proyectos} $\rightarrow$ abra el proyecto (o créelo como se explicó antes).
-  \item Al final del formulario, en \textbf{''Capa geográfica (KMZ, opcional)''}, elija la capa que subió.
-  \item Pulse \textbf{Guardar}. La forma queda dibujada en el mapa público, con el color de la etapa del proyecto.
+  \item En el menú de la izquierda, grupo \textbf{Contenido}, haga clic en \textbf{Proyectos} y abra el proyecto. Si todavía no existe, créelo como se explica en ''Agregar un proyecto al mapa''.
+  \item Baje hasta el final del formulario, al campo \textbf{Capa geográfica (KMZ, opcional)}.
+  \item Haga clic en \textbf{Elegir de los existentes} y, en la lista que aparece, haga clic en la capa que subió.
+  \item Haga clic en \textbf{Guardar}.
 \end{enumerate}
-En la barra lateral del proyecto, la casilla \textbf{''Mostrar también el marcador de punto''} (marcada de fábrica) controla si el punto se muestra encima de la forma; desmárquela solo si prefiere que se vea únicamente el polígono.
-
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth,keepaspectratio]{13c-proyecto-capa.png}
-\caption{El campo ''Capa geográfica (KMZ, opcional)'' al final del formulario del proyecto (1).}
+\caption{El campo ''Capa geográfica (KMZ, opcional)'' al final del formulario del proyecto (1), ya con la capa elegida.}
 \end{figure}
-\textbf{Qué ve el visitante cuando las funciones están encendidas:} la forma dibujada sobre el mapa y, arriba, los botones \textbf{''Descargar todos (KMZ)''} y \textbf{''Abrir en Google Earth''} (1), que le permiten llevarse los proyectos y explorarlos en 3D. En el control de capas (2) puede cambiar el mapa base (calles o satélite) y prender las capas de referencia. Todo eso es automático: usted no tiene que hacer nada más.
+\begin{recuadro}{cConsejo}{bConsejo}\textbf{\color{bConsejo}Consejo:} escriba las coordenadas del proyecto (Latitud y Longitud) de un punto \textbf{dentro} del terreno dibujado; así el círculo queda sobre la forma. En la columna derecha, la casilla \textbf{Mostrar también el marcador de punto} (marcada de fábrica) decide si se ve el círculo; desmárquela si prefiere ver solo la forma.\end{recuadro}
+\subsection{Parte 4. Comprobar en el sitio}
+\begin{enumerate}
+  \item Abra el sitio y entre a \textbf{Proyectos}. Si ya tenía la página abierta, recárguela.
+  \item Busque la forma en el lugar del proyecto. Para acercarse, use el filtro \textbf{Araucanía} que está bajo el mapa, o los botones \textbf{+} y \textbf{−} del mapa.
+  \item Haga clic sobre la forma o sobre el círculo: se abre la ficha del proyecto.
+\end{enumerate}
+Sobre el mapa también aparecen los botones \textbf{Descargar todos (KMZ)} y \textbf{Abrir en Google Earth} (1): con ellos cualquier visitante se lleva los proyectos a Google Earth, sin que usted tenga que hacer nada. El ícono de capas (2), arriba a la derecha del mapa, cambia a la vista satelital.
 
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth,keepaspectratio]{46b-web-proyectos-kmz.png}
-\caption{El mapa público con la forma del proyecto dibujada, los botones de descarga (1) y el control de capas (2).}
+\caption{El mapa público con la forma del proyecto dibujada, los botones de descarga (1) y el ícono de capas (2).}
 \end{figure}
-\begin{recuadro}{cConsejo}{bConsejo}\textbf{\color{bConsejo}Consejo:} si en vez de la forma de UN proyecto quiere una capa de contexto para toda la región (por ejemplo, todos los proyectos del SEIA en La Araucanía exportados como KMZ), súbala con \textbf{Tipo de capa = ''Capa de referencia (contexto)''} y no la asocie a ningún proyecto. Aparecerá \textbf{apagada} en el control de capas del mapa, y cada visitante decide si la prende.\end{recuadro}
+\begin{recuadro}{cNota}{bNota}\textbf{\color{bNota}Nota:} si no ve los botones de descarga ni la forma, las funciones de mapa están apagadas. No es un error suyo ni del panel: las enciende el equipo informático (Anexo D). Hoy están encendidas.\end{recuadro}
+\subsection{Cambiar o quitar la forma de un proyecto}
+\begin{itemize}
+  \item \textbf{Cambiarla por otra:} suba el archivo nuevo como una capa nueva (Parte 2) y, en el proyecto, elija esa capa nueva (Parte 3). Después puede eliminar la capa antigua.
+  \item \textbf{Quitarla del mapa:} abra el proyecto, en el campo \textbf{Capa geográfica (KMZ, opcional)} haga clic en la \textbf{X} que está junto a la capa, y guarde. El proyecto vuelve a verse solo con su círculo.
+  \item \textbf{Eliminar una capa del panel} (solo Administrador): primero quítela de los proyectos que la usan; luego ábrala en \textbf{Capas geográficas (KMZ)}, haga clic en los tres puntos junto a \textbf{Guardar} y elija \textbf{Eliminar}.
+\end{itemize}
+\begin{recuadro}{cConsejo}{bConsejo}\textbf{\color{bConsejo}Consejo:} una capa también puede servir de \textbf{contexto} para toda la región; por ejemplo, todos los proyectos del SEIA en La Araucanía exportados como KMZ. Súbala con \textbf{Tipo de capa = ''Capa de referencia (contexto)''} y no la una a ningún proyecto. Aparece \textbf{apagada} en el ícono de capas del mapa, y cada visitante decide si la enciende.\end{recuadro}
+\begin{recuadro}{cAtencion}{bAtencion}\textbf{\color{bAtencion}Atención:} cada archivo puede pesar \textbf{hasta 4 MB} y el sitio acepta \textbf{hasta 50 capas} en total. El sitio es de difusión: suba formas acotadas al proyecto, no mapas completos.\end{recuadro}
 \section{Actualizar la gobernanza (personas)}
 Las personas de la gobernanza se administran en \textbf{Miembros de Gobernanza} y aparecen automáticamente en las páginas \textbf{Quiénes Somos} y \textbf{Gobernanza} del sitio, agrupadas en tres instancias:
 
@@ -556,7 +604,7 @@ Para agregar una persona:
 \textbf{Nombre del suplente} & Si tiene suplente. & No \\ \midrule
 \rowcolor{filaalt}\textbf{Orden de aparición} (barra lateral) & Número para ordenar: 1 aparece primero, 2 después, etc. & No \\ \bottomrule
 \end{longtable}
-\begin{enumerate}
+\begin{enumerate}[start=3]
   \item Pulse \textbf{Guardar}.
 \end{enumerate}
 \begin{figure}[H]\centering
@@ -748,14 +796,14 @@ En \textbf{Ayuda $\rightarrow$ Guía de uso} hay un resumen de este manual, siem
 \end{figure}
 \chapter{Usuarios, roles y seguridad}
 \section{Los tres roles}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.178\textwidth}>{\raggedright\arraybackslash}p{0.422\textwidth}>{\raggedright\arraybackslash}p{0.330\textwidth}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.178\textwidth}>{\raggedright\arraybackslash}p{0.417\textwidth}>{\raggedright\arraybackslash}p{0.335\textwidth}}
 \rowcolor{h2vazul}\textbf{\color{white}Rol} & \textbf{\color{white}Qué puede hacer} & \textbf{\color{white}Para quién} \\
 \endfirsthead
 \rowcolor{h2vazul}\textbf{\color{white}Rol} & \textbf{\color{white}Qué puede hacer} & \textbf{\color{white}Para quién} \\
 \endhead
 \textbf{Administrador (acceso total)} & Todo: crear y editar contenido, editar las Páginas, la Configuración, crear y eliminar usuarios, eliminar contenido y archivos. & La persona responsable del sitio en la SEREMI (y su respaldo). \\ \midrule
-\rowcolor{filaalt}\textbf{Editor (puede publicar contenido)} & Crear y editar noticias, documentos, eventos, proyectos, miembros y las Páginas. \textbf{No} puede eliminar, \textbf{no} ve Usuarios ni Configuración. & Quien publica contenido con frecuencia (comunicaciones). Es el rol recomendado para delegar. \\ \midrule
-\textbf{Registrado (puede descargar documentos)} & Solo descargar documentos desde el sitio público. \textbf{No entra al panel.} & Visitantes que se registran en el sitio para descargar. \\ \bottomrule
+\rowcolor{filaalt}\textbf{Editor (puede publicar contenido)} & Crear y editar noticias, documentos, eventos, proyectos, miembros, capas KMZ y los textos de las Páginas. \textbf{No} puede eliminar, \textbf{no} ve Usuarios y \textbf{no} puede cambiar la Configuración. & Quien publica contenido con frecuencia. \\ \midrule
+\textbf{Registrado} & Solo usa el sitio público. \textbf{No entra al panel.} & Hoy no se usa: los documentos se descargan sin cuenta y el sitio no permite que los visitantes se registren solos. \\ \bottomrule
 \end{longtable}
 \begin{recuadro}{cSeguridad}{bSeguridad}\textbf{\color{bSeguridad}Seguridad:} mantenga \textbf{al menos dos} cuentas de Administrador (titular y respaldo) y no más de las necesarias. Dé rol Editor a quien solo publica contenido.\end{recuadro}
 \section{Crear un usuario}
@@ -763,9 +811,9 @@ Solo un Administrador puede crear usuarios.
 
 \begin{enumerate}
   \item Menú lateral $\rightarrow$ \textbf{Usuarios} (grupo Cuentas y acceso) $\rightarrow$ \textbf{Crear nuevo}.
-  \item Complete \textbf{Correo electrónico} (1), \textbf{Nueva Contraseña} (2) y \textbf{Confirmar Contraseña} (3), \textbf{Nombre completo} (4) y, en la barra lateral, el \textbf{Rol} (5). \textbf{Institución} es opcional.
+  \item Complete \textbf{Correo electrónico} (1); en \textbf{Nueva Contraseña} (2) y \textbf{Confirmar Contraseña} (3) ponga una contraseña provisional cualquiera, que nadie necesita conocer; luego \textbf{Nombre completo} (4) y, en la barra lateral, el \textbf{Rol} (5). \textbf{Institución} es opcional.
   \item Pulse \textbf{Guardar} (6).
-  \item Comunique a la persona su correo y contraseña por un canal seguro (nunca en el mismo mensaje por correo electrónico sin cifrar) y pídale que la cambie al entrar por primera vez (Mi cuenta $\rightarrow$ Cambiar contraseña).
+  \item \textbf{No le comunique la contraseña.} Pídale que, en la pantalla de entrada, use \textbf{¿Olvidaste tu contraseña?} con su correo: recibirá un enlace para crear la suya. Así solo ella la conoce.
 \end{enumerate}
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth,keepaspectratio]{30-usuarios-lista.png}
@@ -783,17 +831,54 @@ Solo un Administrador puede crear usuarios.
   \item Tras \textbf{5 intentos fallidos} la cuenta se bloquea \textbf{10 minutos} (o hasta que un Administrador la desbloquee).
   \item Si una persona deja la institución, \textbf{elimine o cambie el rol de su cuenta el mismo día}.
 \end{itemize}
-\section{Lista de verificación para el traspaso a la SEREMI}
-Esta lista resume lo que debe hacerse el día en que la SEREMI toma el control del sitio:
+\chapter{Traspaso del sitio a la SEREMI}
+El sitio se entrega a la SEREMI de Energía \textbf{en dos fases}. Así la SEREMI aprende a usar el sitio sin riesgo de dañarlo, y recibe las cuentas de fondo cuando ya tiene práctica y un responsable técnico.
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.202\textwidth}>{\raggedright\arraybackslash}p{0.411\textwidth}>{\raggedright\arraybackslash}p{0.221\textwidth}>{\raggedright\arraybackslash}p{0.096\textwidth}}
+\rowcolor{h2vazul}\textbf{\color{white}Fase} & \textbf{\color{white}Qué se entrega} & \textbf{\color{white}A quién} & \textbf{\color{white}Cuándo} \\
+\endfirsthead
+\rowcolor{h2vazul}\textbf{\color{white}Fase} & \textbf{\color{white}Qué se entrega} & \textbf{\color{white}A quién} & \textbf{\color{white}Cuándo} \\
+\endhead
+\textbf{Fase 1: el contenido} & Usuarios propios del panel para publicar noticias, eventos, documentos y proyectos. & Dos personas designadas por la SEREMI (titular y respaldo). & Ahora. \\ \midrule
+\rowcolor{filaalt}\textbf{Fase 2: la infraestructura} & Las cuentas de fondo: el correo central, el alojamiento (Vercel), la base de datos (Neon), el código (GitHub) y el envío de correos (Resend). & Un responsable técnico designado por la SEREMI. & Meta: enero de 2027. \\ \bottomrule
+\end{longtable}
+\begin{recuadro}{cSeguridad}{bSeguridad}\textbf{\color{bSeguridad}Seguridad:} regla de oro para las dos fases. Ninguna contraseña se dicta, se anota en un papel compartido ni se envía por correo o por mensajería. \textbf{Cada persona crea la suya}, en el momento, desde su propio computador o teléfono.\end{recuadro}
+El detalle completo, con casillas para marcar cada paso y las hojas para firmar (la constancia de la Fase 1 y el acta final de la Fase 2), está en el documento \textbf{Protocolo de entrega del sitio web H2V Araucanía}, que se entrega junto con este manual.
+
+\section{Fase 1: entrega del contenido}
+\textbf{Antes de la reunión} (lo prepara el responsable del programa):
 
 \begin{enumerate}
-  \item Un Administrador actual crea las cuentas \textbf{Administrador} del titular y del respaldo de la SEREMI (correos institucionales) y un \textbf{Editor} para comunicaciones, si corresponde.
-  \item Cada nueva persona entra, comprueba que ve el Panel de Control completo y \textbf{cambia su contraseña}.
-  \item La SEREMI revisa \textbf{Configuración $\rightarrow$ Contacto $\rightarrow$ Datos institucionales} (correo, ubicación, teléfono) y pide al soporte técnico actualizar la variable \texttt{CONTACT\_\allowbreak{}EMAIL} si el correo cambia.
-  \item La SEREMI revisa \textbf{Configuración $\rightarrow$ Configuración General} (nombre del sitio, textos del pie de página, logos).
-  \item Se eliminan o degradan las cuentas de las personas que dejan de administrar el sitio.
-  \item Se guarda este manual, junto con la ficha técnica (Anexo D), en la carpeta institucional de la SEREMI.
-  \item Se anota la fecha del traspaso en el control de cambios de este manual (Anexo E).
+  \item Pedir a la SEREMI el nombre, cargo y correo institucional de \textbf{dos personas}: una titular y una de respaldo.
+  \item Revisar que el contenido publicado esté listo para ser visto por el público.
+  \item Guardar los \textbf{códigos de respaldo} de la cuenta central de Google (\texttt{h2varaucania@gmail.com}): \textbf{Seguridad} $\rightarrow$ \textbf{Verificación en dos pasos} $\rightarrow$ \textbf{Códigos de respaldo}. Imprimirlos y guardarlos en un sobre cerrado. Cada código permite entrar una vez sin teléfono ni huella.
+\end{enumerate}
+\textbf{En la reunión} (unos 45 minutos):
+
+\begin{enumerate}
+  \item El Administrador crea un usuario para cada persona, con rol \textbf{Editor} (vea ''Crear un usuario''). Como contraseña pone una provisional que nadie necesita conocer.
+  \item Cada persona crea su propia contraseña: en la pantalla de entrada del panel, \textbf{¿Olvidaste tu contraseña?} $\rightarrow$ escribe su correo $\rightarrow$ abre el mensaje que recibe $\rightarrow$ define su contraseña.
+  \item Cada persona entra al panel y comprueba que ve el Panel de Control.
+  \item Práctica guiada con este manual: cada persona crea una noticia de prueba, la publica y la ve en el sitio. Después un Administrador la elimina (un Editor no puede eliminar contenido, y eso es a propósito).
+  \item Se entrega este manual (PDF y Word) y el protocolo de entrega.
+  \item El Administrador del programa cambia su propia contraseña por una nueva y robusta.
+  \item Se firma la \textbf{constancia de la Fase 1} (está en el protocolo).
+\end{enumerate}
+\begin{recuadro}{cResultado}{bResultado}\textbf{\color{bResultado}Resultado:} la SEREMI publica el contenido del sitio con sus propios usuarios. El programa sigue a cargo del funcionamiento del sitio y de sus respaldos.\end{recuadro}
+\section{Fase 2: traspaso de la infraestructura}
+\textbf{Condiciones previas:} la SEREMI usa el panel sin ayuda y designó un responsable técnico (propio o un servicio de mantención). El respaldo diario de la base de datos ya funciona.
+
+\textbf{En la reunión} (unos 60 minutos, idealmente presencial, con el responsable técnico):
+
+\begin{enumerate}
+  \item \textbf{Cuenta central de Google} (\texttt{h2varaucania@gmail.com}), que es la llave maestra: la persona de la SEREMI pone una contraseña nueva elegida por ella, registra su propio teléfono en la verificación en dos pasos, cambia el teléfono y el correo de recuperación por los suyos y genera sus propios códigos de respaldo. Después el programa elimina su teléfono y sus llaves de acceso, y se cierra la sesión en todos los dispositivos.
+  \item \textbf{Alojamiento (Vercel) y base de datos (Neon):} se entra a ellos con la cuenta central, así que pasan junto con ella. Se comprueba que el responsable técnico puede entrar.
+  \item \textbf{Código (GitHub):} la cuenta \texttt{h2varaucania} se entrega del mismo modo que la cuenta central. Se retira la cuenta de colaborador de la Universidad, salvo que se acuerde mantener soporte.
+  \item \textbf{Envío de correos (Resend):} se confirma con qué cuenta se creó y se entrega del mismo modo.
+  \item \textbf{Llave secreta del sitio:} el responsable técnico cambia en Vercel el valor de la variable \texttt{PAYLOAD\_\allowbreak{}SECRET} por un texto largo al azar y vuelve a publicar el sitio. Efecto: todas las personas deben iniciar sesión de nuevo.
+  \item \textbf{Alojamiento definitivo:} el plan gratuito de Vercel está destinado a uso personal y no comercial. Para un sitio institucional corresponde un plan pagado o un servidor propio de la SEREMI.
+  \item \textbf{Usuarios del panel:} el responsable técnico pasa a ser \textbf{Administrador}; las cuentas del programa se eliminan o pasan a Editor.
+  \item Se firma el \textbf{acta final} (está en el protocolo). Desde esa fecha, la operación del sitio queda a cargo de la SEREMI.
 \end{enumerate}
 \chapter{Problemas frecuentes}
 \begin{longtable}{>{\raggedright\arraybackslash}p{0.256\textwidth}>{\raggedright\arraybackslash}p{0.228\textwidth}>{\raggedright\arraybackslash}p{0.446\textwidth}}
@@ -818,7 +903,7 @@ La página del panel se ve en blanco o con un error & Falla temporal o cambio t�
 \end{longtable}
 \chapter{Anexos}
 \section{Anexo A. Quiero cambiar... ¿a dónde voy?}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.351\textwidth}>{\raggedright\arraybackslash}p{0.579\textwidth}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.340\textwidth}>{\raggedright\arraybackslash}p{0.590\textwidth}}
 \rowcolor{h2vazul}\textbf{\color{white}Quiero...} & \textbf{\color{white}Voy a...} \\
 \endfirsthead
 \rowcolor{h2vazul}\textbf{\color{white}Quiero...} & \textbf{\color{white}Voy a...} \\
@@ -829,25 +914,27 @@ Que una noticia deje de verse & Contenido $\rightarrow$ Noticias $\rightarrow$ (
 \rowcolor{filaalt}Crear un evento & Contenido $\rightarrow$ Eventos $\rightarrow$ Crear nuevo $\rightarrow$ Publicar cambios \\ \midrule
 Subir un documento para descarga & Contenido $\rightarrow$ Documentos $\rightarrow$ Crear nuevo $\rightarrow$ Guardar \\ \midrule
 \rowcolor{filaalt}Agregar un proyecto al mapa & Contenido $\rightarrow$ Proyectos $\rightarrow$ Crear nuevo $\rightarrow$ Guardar \\ \midrule
-Dibujar la forma (polígono) de un proyecto en el mapa & Contenido $\rightarrow$ Capas geográficas (KMZ) $\rightarrow$ Crear nuevo; luego Contenido $\rightarrow$ Proyectos $\rightarrow$ (el proyecto) $\rightarrow$ Capa geográfica \\ \midrule
-\rowcolor{filaalt}Encender o apagar las funciones KMZ del mapa & No se hace desde el panel: lo activa el equipo informático (Anexo D) \\ \midrule
-Cambiar una persona del Comité Estratégico & Contenido $\rightarrow$ Miembros de Gobernanza $\rightarrow$ (la fila del cargo) $\rightarrow$ cambiar nombre $\rightarrow$ Guardar \\ \midrule
-\rowcolor{filaalt}Poner nombre a un cargo ''Por definir'' de la Unidad de Coordinación & Contenido $\rightarrow$ Miembros de Gobernanza $\rightarrow$ (la fila) $\rightarrow$ cambiar nombre e institución $\rightarrow$ Guardar \\ \midrule
-Subir fotos de una sesión o taller & Páginas $\rightarrow$ Gobernanza $\rightarrow$ Evidencia de Actividades $\rightarrow$ Añadir fila \\ \midrule
-\rowcolor{filaalt}Cambiar el título o subtítulo de la portada & Páginas $\rightarrow$ Página de Inicio $\rightarrow$ Sección Hero \\ \midrule
-Cambiar una cifra de la portada (KPI) & Páginas $\rightarrow$ Página de Inicio $\rightarrow$ Banda de indicadores \\ \midrule
-\rowcolor{filaalt}Cambiar el texto ''El Bien Público'' & Páginas $\rightarrow$ Quiénes Somos $\rightarrow$ El Bien Público \\ \midrule
-Agregar una institución participante (con logo) & Configuración $\rightarrow$ Configuración General $\rightarrow$ Logos institucionales (portada y pie de página) y Páginas $\rightarrow$ Quiénes Somos $\rightarrow$ Instituciones participantes (página Quiénes Somos) \\ \midrule
-\rowcolor{filaalt}Cambiar el correo o la ubicación de contacto & Configuración $\rightarrow$ Contacto $\rightarrow$ Datos institucionales \\ \midrule
-Cambiar las opciones de asunto del formulario & Configuración $\rightarrow$ Contacto $\rightarrow$ Formulario $\rightarrow$ Opciones de asunto \\ \midrule
-\rowcolor{filaalt}Cambiar textos del pie de página & Configuración $\rightarrow$ Configuración General \\ \midrule
-Cambiar el nombre del sitio (pestaña del navegador) & Configuración $\rightarrow$ Configuración General $\rightarrow$ Nombre del sitio \\ \midrule
-\rowcolor{filaalt}Editar la Hoja de Ruta & Páginas $\rightarrow$ Hoja de Ruta $\rightarrow$ Hitos del timeline \\ \midrule
-Editar el contenido educativo de H2V & Páginas $\rightarrow$ Hidrógeno Verde \\ \midrule
-\rowcolor{filaalt}Crear una cuenta para un colega & Cuentas y acceso $\rightarrow$ Usuarios $\rightarrow$ Crear nuevo \\ \midrule
-Cambiar mi contraseña & Mi cuenta (círculo superior derecho) $\rightarrow$ Cambiar contraseña \\ \midrule
-\rowcolor{filaalt}Ver cuántas veces se descargó un documento & Contenido $\rightarrow$ Documentos $\rightarrow$ (el documento) $\rightarrow$ campo Descargas; o Sistema $\rightarrow$ Registro de Descargas \\ \midrule
-Leer la guía rápida dentro del panel & Ayuda $\rightarrow$ Guía de uso \\ \bottomrule
+Dibujar la forma (polígono) de un proyecto en el mapa & Google Earth $\rightarrow$ Archivo $\rightarrow$ Exportar como archivo KML; luego Contenido $\rightarrow$ Capas geográficas (KMZ) $\rightarrow$ Crear nuevo; luego Contenido $\rightarrow$ Proyectos $\rightarrow$ (el proyecto) $\rightarrow$ Capa geográfica \\ \midrule
+\rowcolor{filaalt}Quitar la forma de un proyecto del mapa & Contenido $\rightarrow$ Proyectos $\rightarrow$ (el proyecto) $\rightarrow$ Capa geográfica $\rightarrow$ X $\rightarrow$ Guardar \\ \midrule
+Encender o apagar las funciones KMZ del mapa & No se hace desde el panel: lo activa el equipo informático (Anexo D) \\ \midrule
+\rowcolor{filaalt}Cambiar una persona del Comité Estratégico & Contenido $\rightarrow$ Miembros de Gobernanza $\rightarrow$ (la fila del cargo) $\rightarrow$ cambiar nombre $\rightarrow$ Guardar \\ \midrule
+Poner nombre a un cargo ''Por definir'' de la Unidad de Coordinación & Contenido $\rightarrow$ Miembros de Gobernanza $\rightarrow$ (la fila) $\rightarrow$ cambiar nombre e institución $\rightarrow$ Guardar \\ \midrule
+\rowcolor{filaalt}Subir fotos de una sesión o taller & Páginas $\rightarrow$ Gobernanza $\rightarrow$ Evidencia de Actividades $\rightarrow$ Añadir fila \\ \midrule
+Cambiar el título o subtítulo de la portada & Páginas $\rightarrow$ Página de Inicio $\rightarrow$ Sección Hero \\ \midrule
+\rowcolor{filaalt}Cambiar una cifra de la portada (KPI) & Páginas $\rightarrow$ Página de Inicio $\rightarrow$ Banda de indicadores \\ \midrule
+Cambiar el texto ''El Bien Público'' & Páginas $\rightarrow$ Quiénes Somos $\rightarrow$ El Bien Público \\ \midrule
+\rowcolor{filaalt}Agregar una institución participante (con logo) & Configuración $\rightarrow$ Configuración General $\rightarrow$ Logos institucionales (portada y pie de página) y Páginas $\rightarrow$ Quiénes Somos $\rightarrow$ Instituciones participantes (página Quiénes Somos) \\ \midrule
+Cambiar el correo o la ubicación de contacto & Configuración $\rightarrow$ Contacto $\rightarrow$ Datos institucionales \\ \midrule
+\rowcolor{filaalt}Cambiar las opciones de asunto del formulario & Configuración $\rightarrow$ Contacto $\rightarrow$ Formulario $\rightarrow$ Opciones de asunto \\ \midrule
+Cambiar textos del pie de página & Configuración $\rightarrow$ Configuración General \\ \midrule
+\rowcolor{filaalt}Cambiar el nombre del sitio (pestaña del navegador) & Configuración $\rightarrow$ Configuración General $\rightarrow$ Nombre del sitio \\ \midrule
+Editar la Hoja de Ruta & Páginas $\rightarrow$ Hoja de Ruta $\rightarrow$ Hitos del timeline \\ \midrule
+\rowcolor{filaalt}Editar el contenido educativo de H2V & Páginas $\rightarrow$ Hidrógeno Verde \\ \midrule
+Crear una cuenta para un colega & Cuentas y acceso $\rightarrow$ Usuarios $\rightarrow$ Crear nuevo \\ \midrule
+\rowcolor{filaalt}Cambiar mi contraseña & Mi cuenta (círculo superior derecho) $\rightarrow$ Cambiar contraseña \\ \midrule
+Ver cuántas veces se descargó un documento & Contenido $\rightarrow$ Documentos $\rightarrow$ (el documento) $\rightarrow$ campo Descargas; o Sistema $\rightarrow$ Registro de Descargas \\ \midrule
+\rowcolor{filaalt}Leer la guía rápida dentro del panel & Ayuda $\rightarrow$ Guía de uso \\ \midrule
+Entregar el sitio a la SEREMI & Capítulo ''Traspaso del sitio a la SEREMI'' y el protocolo de entrega \\ \bottomrule
 \end{longtable}
 \section{Anexo B. Formatos y tamaños recomendados}
 \begin{longtable}{>{\raggedright\arraybackslash}p{0.309\textwidth}>{\raggedright\arraybackslash}p{0.206\textwidth}>{\raggedright\arraybackslash}p{0.415\textwidth}}
@@ -868,7 +955,7 @@ Imagen dentro del texto de una noticia & JPG o PNG & 1200 píxeles de ancho máx
 Límites de texto más importantes: título de noticia 120 caracteres; resumen 300; descripción de documento 400; descripción de proyecto 400; URL amigable solo minúsculas, números y guiones.
 
 \section{Anexo C. Glosario}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.216\textwidth}>{\raggedright\arraybackslash}p{0.714\textwidth}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.198\textwidth}>{\raggedright\arraybackslash}p{0.732\textwidth}}
 \rowcolor{h2vazul}\textbf{\color{white}Término} & \textbf{\color{white}Significado} \\
 \endfirsthead
 \rowcolor{h2vazul}\textbf{\color{white}Término} & \textbf{\color{white}Significado} \\
@@ -887,12 +974,14 @@ Límites de texto más importantes: título de noticia 120 caracteres; resumen 3
 \rowcolor{filaalt}\textbf{Descripción del archivo} (alt) & Texto corto que describe un archivo subido; obligatorio. \\ \midrule
 \textbf{Rol} & Nivel de permisos de una cuenta: Administrador, Editor o Registrado. \\ \midrule
 \rowcolor{filaalt}\textbf{KPI} & Cifra destacada de la portada (indicador). \\ \midrule
-\textbf{Kicker / eyebrow} & Palabra o línea pequeña que va encima de un título. \\ \bottomrule
+\textbf{Kicker / eyebrow} & Palabra o línea pequeña que va encima de un título. \\ \midrule
+\rowcolor{filaalt}\textbf{KMZ / KML} & Archivo en que Google Earth guarda un dibujo sobre el mapa (puntos, líneas o formas). El KMZ es la versión comprimida del KML. \\ \midrule
+\textbf{Capa geográfica} & Un archivo KMZ o KML subido al panel. Se une a un proyecto para dibujar su forma en el mapa. \\ \bottomrule
 \end{longtable}
 \section{Anexo D. Ficha técnica de la plataforma (para el equipo informático)}
 Esta ficha resume la información que el equipo informático de la SEREMI necesita conocer. El detalle completo está en el repositorio del proyecto, en el documento \texttt{docs/INTERFAZ\_\allowbreak{}ADMIN\_\allowbreak{}TECNICA.md}, y en el estándar \texttt{docs/EDITABILIDAD\_\allowbreak{}TOTAL.md}.
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.202\textwidth}>{\raggedright\arraybackslash}p{0.371\textwidth}>{\raggedright\arraybackslash}p{0.357\textwidth}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.202\textwidth}>{\raggedright\arraybackslash}p{0.376\textwidth}>{\raggedright\arraybackslash}p{0.352\textwidth}}
 \rowcolor{h2vazul}\textbf{\color{white}Componente} & \textbf{\color{white}Qué es} & \textbf{\color{white}Dónde está} \\
 \endfirsthead
 \rowcolor{h2vazul}\textbf{\color{white}Componente} & \textbf{\color{white}Qué es} & \textbf{\color{white}Dónde está} \\
@@ -906,18 +995,20 @@ Correo saliente & Resend: envía la recuperación de contraseña y los mensajes 
 Actualizaciones del esquema & Migraciones disciplinadas que corren en cada despliegue (\texttt{payload migrate} en el comando de build de Vercel). No se hacen cambios manuales en la base de datos. & \texttt{src/migrations/} en el repositorio. \\ \midrule
 \rowcolor{filaalt}Pruebas automáticas & Suite e2e (Playwright) que verifica que el panel abre, que los contenidos reales se editan y que los cambios se reflejan en el sitio. & \texttt{tests/e2e/} en el repositorio. \\ \midrule
 Respaldo & La base de datos Neon mantiene respaldos y historial; además, un respaldo diario automatizado (\texttt{pg\_\allowbreak{}dump}) se guarda fuera de Neon como artefacto de GitHub Actions, con 90 días de retención (cómo restaurar: \texttt{scripts/restore-db.md} del repositorio). El contenido también queda versionado en el panel (noticias y eventos). & Consola de Neon y pestaña Actions del repositorio en GitHub. \\ \midrule
-\rowcolor{filaalt}Funciones KMZ del mapa (opcional) & El dibujo de capas KMZ y las descargas para Google Earth vienen \textbf{apagados}. Se encienden creando la variable \texttt{NEXT\_\allowbreak{}PUBLIC\_\allowbreak{}FEAT\_\allowbreak{}MAPA\_\allowbreak{}PLUS} con valor \texttt{true} (entorno Production) y \textbf{volviendo a publicar}: Deployments $\rightarrow$ el despliegue más reciente $\rightarrow$ Redeploy, unos 2–3 minutos. Vercel solo aplica los cambios de variables a las publicaciones nuevas; si no se vuelve a publicar, el cambio no se ve. Se apagan borrándola y volviendo a publicar. Apagadas, el mapa muestra solo los marcadores, como siempre. & Vercel $\rightarrow$ Settings $\rightarrow$ Environment Variables. \\ \midrule
-Accesos a las cuentas de servicio & Vercel, Neon, Resend, GitHub y el registrador del dominio. & Deben traspasarse formalmente a la SEREMI (o a quien esta designe) en el acta de traspaso, con cambio de contraseñas. \\ \bottomrule
+\rowcolor{filaalt}Funciones KMZ del mapa & El dibujo de capas KMZ y las descargas para Google Earth están \textbf{encendidos} desde el 23 de septiembre de 2026, con la variable \texttt{NEXT\_\allowbreak{}PUBLIC\_\allowbreak{}FEAT\_\allowbreak{}MAPA\_\allowbreak{}PLUS} = \texttt{true} (entorno Production). Para apagarlos: borrar la variable y volver a publicar (Deployments $\rightarrow$ tres puntos de la publicación más reciente $\rightarrow$ \textbf{Redeploy}). Vercel solo aplica los cambios de variables a las publicaciones nuevas. & Vercel $\rightarrow$ Settings $\rightarrow$ Environment Variables. \\ \midrule
+Visibilidad en buscadores & Mientras se completa, el sitio está oculto para Google. Se hace visible creando la variable \texttt{SITE\_\allowbreak{}INDEXABLE} = \texttt{true} y volviendo a publicar. & Vercel $\rightarrow$ Settings $\rightarrow$ Environment Variables. \\ \midrule
+\rowcolor{filaalt}Accesos a las cuentas de servicio & Vercel, Neon, Resend, GitHub y la cuenta central de Google. & Se traspasan a la SEREMI en la Fase 2, según el capítulo ''Traspaso del sitio a la SEREMI'' y el protocolo de entrega. \\ \bottomrule
 \end{longtable}
 Qué no es editable desde el panel (requiere a un desarrollador): el diseño y la estructura de las páginas, el menú de navegación, el crédito obligatorio a CORFO, las variables de entorno (correo de destino, claves de servicios) y el dominio.
 
 \section{Anexo E. Control de cambios de este manual}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.108\textwidth}>{\raggedright\arraybackslash}p{0.097\textwidth}>{\raggedright\arraybackslash}p{0.454\textwidth}>{\raggedright\arraybackslash}p{0.271\textwidth}}
-\rowcolor{h2vazul}\textbf{\color{white}Versión} & \textbf{\color{white}Fecha} & \textbf{\color{white}Cambios} & \textbf{\color{white}Autor} \\
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.143\textwidth}>{\raggedright\arraybackslash}p{0.474\textwidth}>{\raggedright\arraybackslash}p{0.313\textwidth}}
+\rowcolor{h2vazul}\textbf{\color{white}Fecha} & \textbf{\color{white}Cambios} & \textbf{\color{white}Autor} \\
 \endfirsthead
-\rowcolor{h2vazul}\textbf{\color{white}Versión} & \textbf{\color{white}Fecha} & \textbf{\color{white}Cambios} & \textbf{\color{white}Autor} \\
+\rowcolor{h2vazul}\textbf{\color{white}Fecha} & \textbf{\color{white}Cambios} & \textbf{\color{white}Autor} \\
 \endhead
-1.0 & 21 de agosto de 2026 & Primera versión completa, con capturas del panel en producción (versión del sitio de agosto de 2026). & Equipo del Bien Público H2V Araucanía (Universidad de Talca) \\ \midrule
-\rowcolor{filaalt}1.1 & 28 de agosto de 2026 & Nueva sección ''Dibujar la forma de un proyecto en el mapa (con un archivo KMZ)''; anexos A, B y D actualizados (capas KMZ, interruptor de las funciones y respaldo diario automatizado). & Equipo del Bien Público H2V Araucanía (Universidad de Talca) \\ \bottomrule
+21 de agosto de 2026 & Primera versión completa, con capturas del panel en producción (versión del sitio de agosto de 2026). & Equipo del Bien Público H2V Araucanía (Universidad de Talca) \\ \midrule
+\rowcolor{filaalt}28 de agosto de 2026 & Nueva sección sobre archivos KMZ del mapa; anexos A, B y D actualizados (capas KMZ, interruptor de las funciones y respaldo diario automatizado). & Equipo del Bien Público H2V Araucanía (Universidad de Talca) \\ \midrule
+23 de septiembre de 2026 & Sección de archivos KMZ reescrita paso a paso (Google Earth en el navegador, mensajes de error, cambiar o quitar una forma). Nuevo capítulo ''Traspaso del sitio a la SEREMI''. Usuarios: cada persona crea su propia contraseña. Figuras de noticia y evento actualizadas. & Equipo del Bien Público H2V Araucanía (Universidad de Talca) \\ \bottomrule
 \end{longtable}
 \end{document}

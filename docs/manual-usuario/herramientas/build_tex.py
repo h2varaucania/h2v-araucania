@@ -91,8 +91,7 @@ def portada(meta):
 {\color{h2vverde}\rule{\textwidth}{1.2pt}}\vspace{1.6cm}
 
 \begin{tabular}{@{}p{3.6cm}p{11.5cm}@{}}
-\textbf{\color{h2vazul}Versión} & """ + esc(meta.get('version', '')) + r""" \\[3pt]
-\textbf{\color{h2vazul}Fecha} & """ + esc(meta.get('fecha', '')) + r""" \\[3pt]
+""" + ((r"\textbf{\color{h2vazul}Versión} & " + esc(meta['version']) + r" \\[3pt]" + "\n") if meta.get('version') else '') + r"""\textbf{\color{h2vazul}Fecha} & """ + esc(meta.get('fecha', '')) + r""" \\[3pt]
 \textbf{\color{h2vazul}Destinatario} & """ + esc(meta.get('destinatario', '')) + r""" \\[3pt]
 \textbf{\color{h2vazul}Elaborado por} & """ + esc(meta.get('elaborado', '')) + r""" \\[3pt]
 \textbf{\color{h2vazul}Sitio web} & \url{""" + meta.get('sitio', '') + r"""} \\
@@ -166,7 +165,8 @@ def main():
             out.append(inline(b['text']) + '\n')
         elif t == 'list':
             env = 'enumerate' if b['ordered'] else 'itemize'
-            out.append('\\begin{' + env + '}'); out += ['  \\item ' + inline(it) for it in b['items']]; out.append('\\end{' + env + '}')
+            ini = b.get('start', 1)
+            out.append('\\begin{' + env + '}' + (f'[start={ini}]' if b['ordered'] and ini != 1 else '')); out += ['  \\item ' + inline(it) for it in b['items']]; out.append('\\end{' + env + '}')
         elif t == 'table':
             out.append(tabla(b))
         elif t == 'figure':

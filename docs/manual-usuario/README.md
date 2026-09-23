@@ -27,6 +27,8 @@ y `pypdfium2`, y TeX Live (XeLaTeX, latexmk).
    (`node .next/standalone/server.js`, base local con el admin e2e) ejecutar desde la raíz del repo:
    `node docs/manual-usuario/herramientas/capturar.mjs`, luego `capturar_extra.mjs` y `capturar_extra2.mjs`
    (esta última crea contenido de muestra en la base LOCAL y toma las páginas públicas desde producción).
+   Figuras de la sección KMZ (13b, 13c, 46b): `capturar_kmz.mjs` (requiere el servidor local con
+   `NEXT_PUBLIC_FEAT_MAPA_PLUS=true`). Figuras de noticia y evento (06, 15): `capturar_ayuda_borradores.mjs`.
 2. **Anotar**: `python3 docs/manual-usuario/herramientas/anotar.py` → `figuras/`.
 3. **Texto**: editar `fuente/manual.md`.
 4. **Generar**: `python3 docs/manual-usuario/herramientas/build_docx.py` y
@@ -49,3 +51,9 @@ inline `**negrita**`, `*cursiva*`, `` `código` ``.
 - `docs/INTERFAZ_ADMIN_TECNICA.md`: descripción técnica de la interfaz (para informáticos).
 - `docs/EDITABILIDAD_TOTAL.md`: estándar de editabilidad que cumple el sitio.
 - `docs/Guia_Administracion_H2V_Araucania.pdf`: guía breve anterior (julio 2026); este manual la reemplaza y amplía.
+
+## Documento hermano: protocolo de entrega
+El protocolo de traspaso a la SEREMI (dos fases, con constancia y acta para firmar) está en
+`docs/traspaso/Protocolo_Entrega_H2V_SEREMI.tex` (+ `.pdf`). Usa los logos de `figuras/` y se compila
+desde `docs/traspaso/` con `latexmk -xelatex -output-directory=salida Protocolo_Entrega_H2V_SEREMI.tex`.
+El capítulo 7 del manual lo resume: si cambia uno, revisar el otro.

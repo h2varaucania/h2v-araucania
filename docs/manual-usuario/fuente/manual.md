@@ -1,8 +1,7 @@
 ---
 titulo: Manual de Usuario del Sitio Web H2V Araucanía
 subtitulo: Cómo administrar y editar completamente el sitio desde el panel de administración
-version: 1.1
-fecha: 28 de agosto de 2026
+fecha: 23 de septiembre de 2026
 destinatario: Secretaría Regional Ministerial de Energía, Región de La Araucanía
 elaborado: Bien Público "Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde" (código CORFO 24BP-269085). Beneficiario: CODESSER. Coejecutor: Universidad de Talca.
 sitio: https://h2v-araucania.vercel.app
@@ -16,7 +15,7 @@ Este manual está escrito para las personas de la Secretaría Regional Ministeri
 
 No se necesita ningún conocimiento técnico. Si usted sabe usar el correo electrónico y un procesador de texto, puede administrar este sitio. Todo se hace desde el navegador (Chrome, Edge, Firefox o Safari), en una dirección web que llamaremos "el panel".
 
-El manual está organizado por tareas: primero cómo entrar, después cómo está organizado el panel, luego las tareas frecuentes paso a paso (con una captura de pantalla en cada paso importante), después cómo editar los textos de cada página del sitio, y al final la gestión de usuarios, la lista de problemas frecuentes y los anexos de referencia.
+El manual está organizado por tareas: primero cómo entrar, después cómo está organizado el panel, luego las tareas frecuentes paso a paso (con una captura de pantalla en cada paso importante), después cómo editar los textos de cada página del sitio, y al final la gestión de usuarios, el traspaso del sitio a la SEREMI, la lista de problemas frecuentes y los anexos de referencia.
 
 A lo largo del texto encontrará cuatro tipos de recuadros:
 
@@ -365,53 +364,103 @@ El **Mapa de Proyectos** del sitio muestra un punto por cada proyecto de hidróg
 
 ![Así se ve el Mapa de Proyectos del sitio público.](46-web-proyectos.png)
 
-## Dibujar la forma de un proyecto en el mapa (con un archivo KMZ)
+## Dibujar la forma de un proyecto en el mapa (archivos KMZ)
 
-Además del punto, un proyecto puede mostrar en el mapa su **forma real**: el polígono del predio, el trazado de una línea, etc. La forma se dibuja subiendo un archivo **KMZ o KML** hecho en Google Earth (el mismo tipo de archivo que usa, por ejemplo, el mapa de proyectos del Servicio de Evaluación Ambiental). Es **totalmente opcional**: si no sube nada, el proyecto se ve igual que siempre, con su marcador de punto.
+Cada proyecto aparece en el mapa como un **círculo de color**, en el lugar de sus coordenadas. Además, puede mostrar la **forma real de su terreno** (el contorno del predio) o de una obra (el trazado de un ducto o de un camino). Esa forma se dibuja en **Google Earth** y se sube al sitio como un archivo **KMZ** o **KML**.
 
-> ℹ️ Nota: estas funciones vienen **apagadas de fábrica** y el sitio funciona igual que siempre sin ellas. Para encenderlas (o volver a apagarlas) hay que pedirle al equipo informático que active un interruptor en el servidor y vuelva a publicar el sitio; toma unos minutos y no requiere tocar el panel (vea el Anexo D). Con el interruptor apagado, las capas no se dibujan y los botones de descarga no aparecen, aunque ya haya capas subidas: no se pierde nada.
+> ℹ️ Nota: un archivo KMZ o KML es el archivo en que Google Earth guarda un dibujo hecho sobre el mapa: puntos, líneas o formas, con sus coordenadas. Son lo mismo: el KMZ es la versión comprimida del KML. El sitio acepta los dos.
 
-**Paso 1. Dibujar la forma en Google Earth** (gratis, en `earth.google.com`, o con el programa Google Earth Pro):
+**Qué se ve en el mapa:**
 
-1. Ubique el lugar del proyecto.
-2. Use la herramienta de **polígono** (o de ruta, si es un trazado) y dibuje el contorno.
-3. Clic derecho sobre lo dibujado → **Guardar lugar como...** → elija el formato **KMZ** (o KML).
+| Lo que ve | Qué significa | De dónde sale |
+|---|---|---|
+| **Un círculo** | Dónde está el proyecto. Al hacerle clic se abre su ficha. | De la Latitud y Longitud escritas en el formulario del proyecto. Todo proyecto lo tiene, con o sin archivo KMZ. |
+| **Una forma** (polígono o línea) | Qué superficie ocupa el proyecto, o por dónde pasa una obra. | Del archivo KMZ unido al proyecto. |
 
-**Paso 2. Subir la capa al sitio:**
+Los dos se pintan con el **color de la etapa** del proyecto: anaranjado para Planificación, azul para Pilotaje, morado para Desarrollo y verde para Operación.
 
-1. Menú lateral → **Contenido** → **Capas geográficas (KMZ)** → **Crear nuevo**.
-2. Complete:
+El trabajo tiene cuatro partes: **dibujar** la forma en Google Earth, **subir** el archivo al panel, **unirlo** al proyecto y **comprobar** el resultado en el sitio.
 
-| Campo | Qué escribir | Obligatorio |
+### Parte 1. Dibujar la forma en Google Earth
+
+Se usa Google Earth en el navegador: es gratis, no hay que instalar nada y el archivo queda guardado en su computador.
+
+1. Abra **earth.google.com** en Chrome. Si se lo pide, entre con cualquier cuenta de Google.
+2. Arriba a la izquierda, abra el menú **Archivo** y elija **Nuevo archivo KML local**. Otra forma de llegar: en la pantalla de inicio, botón **Editor de KML local** → **Crear un nuevo archivo KML**.
+3. Escriba el lugar del proyecto en el buscador de arriba (**Buscar en Google Earth**) y acérquese hasta ver bien el terreno.
+4. Abra el menú **Agregar** → **Línea o forma** → **Ruta o polígono**.
+5. Haga clic en cada esquina del terreno, una tras otra. Para cerrar la forma, haga clic otra vez sobre **el primer punto**. Si lo que dibuja es una línea (por ejemplo, un ducto), termínela con doble clic.
+6. Haga clic en **Listo** y luego en **Guardar en el proyecto**. Si le pide un nombre, escriba uno claro, por ejemplo "Predio planta Temuco".
+7. Abra el menú **Archivo** y elija **Exportar como archivo KML**. El archivo queda en la carpeta **Descargas** de su computador.
+
+> 💡 Consejo: si la empresa o alguien del equipo ya le envió el archivo KMZ o KML del proyecto, no necesita dibujar nada: pase directo a la Parte 2. Si usa el programa **Google Earth Pro** (el que se instala), el archivo se obtiene con clic derecho sobre lo dibujado → **Guardar lugar como...** → formato KMZ.
+
+> ⚠️ Atención: Google Earth cambia sus pantallas de vez en cuando. Si un botón aparece con un nombre algo distinto (por ejemplo "Terminar" en vez de "Listo"), use el equivalente.
+
+### Parte 2. Subir el archivo al panel
+
+1. Entre al panel. En el menú de la izquierda, grupo **Contenido**, haga clic en **Capas geográficas (KMZ)**.
+2. Arriba, haga clic en **Crear nuevo**.
+3. Complete el formulario:
+
+| Campo | Qué poner | Obligatorio |
 |---|---|---|
 | **Título de la capa** | Un nombre claro. Ejemplo: "Predio planta Temuco". | Sí |
-| **Tipo de capa** | "Geometría de un proyecto" (el caso normal; para el otro tipo, vea el consejo más abajo). | Sí |
-| **Color** (barra lateral) | Solo si quiere un color distinto; si lo deja vacío, la forma usa el color de la etapa del proyecto. | No |
-| **Archivo** | El .kmz o .kml que guardó desde Google Earth. | Sí |
+| **Tipo de capa** | **Geometría de un proyecto**, que es el caso normal. El otro tipo se explica al final de esta sección. | Sí |
+| **El archivo** | Arrastre el archivo .kmz o .kml a la zona gris, o haga clic ahí y búsquelo en su carpeta Descargas. | Sí |
+| **Descripción** | Una frase sobre qué muestra la capa. | No |
+| **Color** (columna derecha) | Déjelo vacío para usar el color de la etapa del proyecto. Solo si quiere otro color, escriba su código, por ejemplo `#0D7377`. | No |
 
-3. Pulse **Guardar**.
+4. Haga clic en **Guardar**.
+5. Revise el resultado. En unos segundos el formulario muestra lo que el sistema encontró en el archivo: **Resultado del procesamiento** debe decir **"Sin observaciones."** y **N.º de geometrías** indica cuántas formas encontró.
 
-![La capa ya guardada: título (1), tipo (2), el archivo KMZ subido (3), el resultado del procesamiento que completa el sistema (4) y Guardar (5).](13b-capa-kmz.png)
+![La capa ya guardada: título (1), tipo (2), el archivo subido (3), el resultado del procesamiento, que completa el sistema (4), y Guardar (5).](13b-capa-kmz.png)
 
-> ✅ Resultado: al guardar, el sistema valida y simplifica el archivo automáticamente. El campo **"Resultado del procesamiento"** dice "Sin observaciones." (o le avisa qué encontró), y se completan solos el número de geometrías, los vértices y el **centroide** (útil para copiarlo como coordenadas del proyecto si aún no las tiene).
+> ✅ Resultado: la capa queda guardada. Todavía no se ve en el sitio: falta unirla a un proyecto (Parte 3).
 
-> ⚠️ Atención: el archivo puede pesar **hasta 4 MB** (el KMZ de un predio pesa unos pocos KB) y el sitio acepta **hasta 50 capas** en total. Si el archivo viene con algún problema (sin geometrías, mal formado, demasiado grande), el panel se lo explica con un mensaje en español; corrija en Google Earth y vuelva a subirlo.
+Si el archivo tiene un problema, el panel muestra un mensaje rojo y **no lo guarda**. Estos son los mensajes más comunes:
 
-**Paso 3. Asociar la capa al proyecto:**
+| El mensaje dice... | Qué hacer |
+|---|---|
+| "El archivo supera los 4 MB permitidos" | El archivo trae imágenes u otras capas. Exporte solo la forma del proyecto; un predio pesa unos pocos KB. |
+| "El archivo no contiene ninguna geometría" | Se exportó sin dibujo. Vuelva a la Parte 1 y dibuje la forma antes de exportar. |
+| "Este archivo es un enlace a un mapa en línea" | Viene de Google My Maps. Ahí use "Exportar a KML/KMZ" y desmarque "Mantener los datos actualizados". |
+| "El archivo tiene coordenadas fuera de rango" | Probablemente la latitud y la longitud están invertidas. Vuelva a exportarlo desde Google Earth. |
+| "Se alcanzó el máximo de 50 capas" | Elimine alguna capa que ya no se use (vea más abajo). |
+| Cualquier otro mensaje | Vuelva a exportar el archivo desde Google Earth y súbalo de nuevo. |
 
-1. Menú lateral → **Contenido** → **Proyectos** → abra el proyecto (o créelo como se explicó antes).
-2. Al final del formulario, en **"Capa geográfica (KMZ, opcional)"**, elija la capa que subió.
-3. Pulse **Guardar**. La forma queda dibujada en el mapa público, con el color de la etapa del proyecto.
+### Parte 3. Unir el archivo al proyecto
 
-En la barra lateral del proyecto, la casilla **"Mostrar también el marcador de punto"** (marcada de fábrica) controla si el punto se muestra encima de la forma; desmárquela solo si prefiere que se vea únicamente el polígono.
+1. En el menú de la izquierda, grupo **Contenido**, haga clic en **Proyectos** y abra el proyecto. Si todavía no existe, créelo como se explica en "Agregar un proyecto al mapa".
+2. Baje hasta el final del formulario, al campo **Capa geográfica (KMZ, opcional)**.
+3. Haga clic en **Elegir de los existentes** y, en la lista que aparece, haga clic en la capa que subió.
+4. Haga clic en **Guardar**.
 
-![El campo "Capa geográfica (KMZ, opcional)" al final del formulario del proyecto (1).](13c-proyecto-capa.png)
+![El campo "Capa geográfica (KMZ, opcional)" al final del formulario del proyecto (1), ya con la capa elegida.](13c-proyecto-capa.png)
 
-**Qué ve el visitante cuando las funciones están encendidas:** la forma dibujada sobre el mapa y, arriba, los botones **"Descargar todos (KMZ)"** y **"Abrir en Google Earth"** (1), que le permiten llevarse los proyectos y explorarlos en 3D. En el control de capas (2) puede cambiar el mapa base (calles o satélite) y prender las capas de referencia. Todo eso es automático: usted no tiene que hacer nada más.
+> 💡 Consejo: escriba las coordenadas del proyecto (Latitud y Longitud) de un punto **dentro** del terreno dibujado; así el círculo queda sobre la forma. En la columna derecha, la casilla **Mostrar también el marcador de punto** (marcada de fábrica) decide si se ve el círculo; desmárquela si prefiere ver solo la forma.
 
-![El mapa público con la forma del proyecto dibujada, los botones de descarga (1) y el control de capas (2).](46b-web-proyectos-kmz.png)
+### Parte 4. Comprobar en el sitio
 
-> 💡 Consejo: si en vez de la forma de UN proyecto quiere una capa de contexto para toda la región (por ejemplo, todos los proyectos del SEIA en La Araucanía exportados como KMZ), súbala con **Tipo de capa = "Capa de referencia (contexto)"** y no la asocie a ningún proyecto. Aparecerá **apagada** en el control de capas del mapa, y cada visitante decide si la prende.
+1. Abra el sitio y entre a **Proyectos**. Si ya tenía la página abierta, recárguela.
+2. Busque la forma en el lugar del proyecto. Para acercarse, use el filtro **Araucanía** que está bajo el mapa, o los botones **+** y **−** del mapa.
+3. Haga clic sobre la forma o sobre el círculo: se abre la ficha del proyecto.
+
+Sobre el mapa también aparecen los botones **Descargar todos (KMZ)** y **Abrir en Google Earth** (1): con ellos cualquier visitante se lleva los proyectos a Google Earth, sin que usted tenga que hacer nada. El ícono de capas (2), arriba a la derecha del mapa, cambia a la vista satelital.
+
+![El mapa público con la forma del proyecto dibujada, los botones de descarga (1) y el ícono de capas (2).](46b-web-proyectos-kmz.png)
+
+> ℹ️ Nota: si no ve los botones de descarga ni la forma, las funciones de mapa están apagadas. No es un error suyo ni del panel: las enciende el equipo informático (Anexo D). Hoy están encendidas.
+
+### Cambiar o quitar la forma de un proyecto
+
+- **Cambiarla por otra:** suba el archivo nuevo como una capa nueva (Parte 2) y, en el proyecto, elija esa capa nueva (Parte 3). Después puede eliminar la capa antigua.
+- **Quitarla del mapa:** abra el proyecto, en el campo **Capa geográfica (KMZ, opcional)** haga clic en la **X** que está junto a la capa, y guarde. El proyecto vuelve a verse solo con su círculo.
+- **Eliminar una capa del panel** (solo Administrador): primero quítela de los proyectos que la usan; luego ábrala en **Capas geográficas (KMZ)**, haga clic en los tres puntos junto a **Guardar** y elija **Eliminar**.
+
+> 💡 Consejo: una capa también puede servir de **contexto** para toda la región; por ejemplo, todos los proyectos del SEIA en La Araucanía exportados como KMZ. Súbala con **Tipo de capa = "Capa de referencia (contexto)"** y no la una a ningún proyecto. Aparece **apagada** en el ícono de capas del mapa, y cada visitante decide si la enciende.
+
+> ⚠️ Atención: cada archivo puede pesar **hasta 4 MB** y el sitio acepta **hasta 50 capas** en total. El sitio es de difusión: suba formas acotadas al proyecto, no mapas completos.
 
 <<<salto>>>
 
@@ -602,8 +651,8 @@ En **Ayuda → Guía de uso** hay un resumen de este manual, siempre disponible 
 | Rol | Qué puede hacer | Para quién |
 |---|---|---|
 | **Administrador (acceso total)** | Todo: crear y editar contenido, editar las Páginas, la Configuración, crear y eliminar usuarios, eliminar contenido y archivos. | La persona responsable del sitio en la SEREMI (y su respaldo). |
-| **Editor (puede publicar contenido)** | Crear y editar noticias, documentos, eventos, proyectos, miembros y las Páginas. **No** puede eliminar, **no** ve Usuarios ni Configuración. | Quien publica contenido con frecuencia (comunicaciones). Es el rol recomendado para delegar. |
-| **Registrado (puede descargar documentos)** | Solo descargar documentos desde el sitio público. **No entra al panel.** | Visitantes que se registran en el sitio para descargar. |
+| **Editor (puede publicar contenido)** | Crear y editar noticias, documentos, eventos, proyectos, miembros, capas KMZ y los textos de las Páginas. **No** puede eliminar, **no** ve Usuarios y **no** puede cambiar la Configuración. | Quien publica contenido con frecuencia. |
+| **Registrado** | Solo usa el sitio público. **No entra al panel.** | Hoy no se usa: los documentos se descargan sin cuenta y el sitio no permite que los visitantes se registren solos. |
 
 > 🔒 Seguridad: mantenga **al menos dos** cuentas de Administrador (titular y respaldo) y no más de las necesarias. Dé rol Editor a quien solo publica contenido.
 
@@ -612,9 +661,9 @@ En **Ayuda → Guía de uso** hay un resumen de este manual, siempre disponible 
 Solo un Administrador puede crear usuarios.
 
 1. Menú lateral → **Usuarios** (grupo Cuentas y acceso) → **Crear nuevo**.
-2. Complete **Correo electrónico** (1), **Nueva Contraseña** (2) y **Confirmar Contraseña** (3), **Nombre completo** (4) y, en la barra lateral, el **Rol** (5). **Institución** es opcional.
+2. Complete **Correo electrónico** (1); en **Nueva Contraseña** (2) y **Confirmar Contraseña** (3) ponga una contraseña provisional cualquiera, que nadie necesita conocer; luego **Nombre completo** (4) y, en la barra lateral, el **Rol** (5). **Institución** es opcional.
 3. Pulse **Guardar** (6).
-4. Comunique a la persona su correo y contraseña por un canal seguro (nunca en el mismo mensaje por correo electrónico sin cifrar) y pídale que la cambie al entrar por primera vez (Mi cuenta → Cambiar contraseña).
+4. **No le comunique la contraseña.** Pídale que, en la pantalla de entrada, use **¿Olvidaste tu contraseña?** con su correo: recibirá un enlace para crear la suya. Así solo ella la conoce.
 
 ![Lista de usuarios: Crear nuevo (1) y las cuentas existentes (2).](30-usuarios-lista.png)
 
@@ -628,17 +677,55 @@ Solo un Administrador puede crear usuarios.
 - Tras **5 intentos fallidos** la cuenta se bloquea **10 minutos** (o hasta que un Administrador la desbloquee).
 - Si una persona deja la institución, **elimine o cambie el rol de su cuenta el mismo día**.
 
-## Lista de verificación para el traspaso a la SEREMI
+<<<salto>>>
 
-Esta lista resume lo que debe hacerse el día en que la SEREMI toma el control del sitio:
+# Traspaso del sitio a la SEREMI
 
-1. Un Administrador actual crea las cuentas **Administrador** del titular y del respaldo de la SEREMI (correos institucionales) y un **Editor** para comunicaciones, si corresponde.
-2. Cada nueva persona entra, comprueba que ve el Panel de Control completo y **cambia su contraseña**.
-3. La SEREMI revisa **Configuración → Contacto → Datos institucionales** (correo, ubicación, teléfono) y pide al soporte técnico actualizar la variable `CONTACT_EMAIL` si el correo cambia.
-4. La SEREMI revisa **Configuración → Configuración General** (nombre del sitio, textos del pie de página, logos).
-5. Se eliminan o degradan las cuentas de las personas que dejan de administrar el sitio.
-6. Se guarda este manual, junto con la ficha técnica (Anexo D), en la carpeta institucional de la SEREMI.
-7. Se anota la fecha del traspaso en el control de cambios de este manual (Anexo E).
+El sitio se entrega a la SEREMI de Energía **en dos fases**. Así la SEREMI aprende a usar el sitio sin riesgo de dañarlo, y recibe las cuentas de fondo cuando ya tiene práctica y un responsable técnico.
+
+| Fase | Qué se entrega | A quién | Cuándo |
+|---|---|---|---|
+| **Fase 1: el contenido** | Usuarios propios del panel para publicar noticias, eventos, documentos y proyectos. | Dos personas designadas por la SEREMI (titular y respaldo). | Ahora. |
+| **Fase 2: la infraestructura** | Las cuentas de fondo: el correo central, el alojamiento (Vercel), la base de datos (Neon), el código (GitHub) y el envío de correos (Resend). | Un responsable técnico designado por la SEREMI. | Meta: enero de 2027. |
+
+> 🔒 Seguridad: regla de oro para las dos fases. Ninguna contraseña se dicta, se anota en un papel compartido ni se envía por correo o por mensajería. **Cada persona crea la suya**, en el momento, desde su propio computador o teléfono.
+
+El detalle completo, con casillas para marcar cada paso y las hojas para firmar (la constancia de la Fase 1 y el acta final de la Fase 2), está en el documento **Protocolo de entrega del sitio web H2V Araucanía**, que se entrega junto con este manual.
+
+## Fase 1: entrega del contenido
+
+**Antes de la reunión** (lo prepara el responsable del programa):
+
+1. Pedir a la SEREMI el nombre, cargo y correo institucional de **dos personas**: una titular y una de respaldo.
+2. Revisar que el contenido publicado esté listo para ser visto por el público.
+3. Guardar los **códigos de respaldo** de la cuenta central de Google (`h2varaucania@gmail.com`): **Seguridad** → **Verificación en dos pasos** → **Códigos de respaldo**. Imprimirlos y guardarlos en un sobre cerrado. Cada código permite entrar una vez sin teléfono ni huella.
+
+**En la reunión** (unos 45 minutos):
+
+1. El Administrador crea un usuario para cada persona, con rol **Editor** (vea "Crear un usuario"). Como contraseña pone una provisional que nadie necesita conocer.
+2. Cada persona crea su propia contraseña: en la pantalla de entrada del panel, **¿Olvidaste tu contraseña?** → escribe su correo → abre el mensaje que recibe → define su contraseña.
+3. Cada persona entra al panel y comprueba que ve el Panel de Control.
+4. Práctica guiada con este manual: cada persona crea una noticia de prueba, la publica y la ve en el sitio. Después un Administrador la elimina (un Editor no puede eliminar contenido, y eso es a propósito).
+5. Se entrega este manual (PDF y Word) y el protocolo de entrega.
+6. El Administrador del programa cambia su propia contraseña por una nueva y robusta.
+7. Se firma la **constancia de la Fase 1** (está en el protocolo).
+
+> ✅ Resultado: la SEREMI publica el contenido del sitio con sus propios usuarios. El programa sigue a cargo del funcionamiento del sitio y de sus respaldos.
+
+## Fase 2: traspaso de la infraestructura
+
+**Condiciones previas:** la SEREMI usa el panel sin ayuda y designó un responsable técnico (propio o un servicio de mantención). El respaldo diario de la base de datos ya funciona.
+
+**En la reunión** (unos 60 minutos, idealmente presencial, con el responsable técnico):
+
+1. **Cuenta central de Google** (`h2varaucania@gmail.com`), que es la llave maestra: la persona de la SEREMI pone una contraseña nueva elegida por ella, registra su propio teléfono en la verificación en dos pasos, cambia el teléfono y el correo de recuperación por los suyos y genera sus propios códigos de respaldo. Después el programa elimina su teléfono y sus llaves de acceso, y se cierra la sesión en todos los dispositivos.
+2. **Alojamiento (Vercel) y base de datos (Neon):** se entra a ellos con la cuenta central, así que pasan junto con ella. Se comprueba que el responsable técnico puede entrar.
+3. **Código (GitHub):** la cuenta `h2varaucania` se entrega del mismo modo que la cuenta central. Se retira la cuenta de colaborador de la Universidad, salvo que se acuerde mantener soporte.
+4. **Envío de correos (Resend):** se confirma con qué cuenta se creó y se entrega del mismo modo.
+5. **Llave secreta del sitio:** el responsable técnico cambia en Vercel el valor de la variable `PAYLOAD_SECRET` por un texto largo al azar y vuelve a publicar el sitio. Efecto: todas las personas deben iniciar sesión de nuevo.
+6. **Alojamiento definitivo:** el plan gratuito de Vercel está destinado a uso personal y no comercial. Para un sitio institucional corresponde un plan pagado o un servidor propio de la SEREMI.
+7. **Usuarios del panel:** el responsable técnico pasa a ser **Administrador**; las cuentas del programa se eliminan o pasan a Editor.
+8. Se firma el **acta final** (está en el protocolo). Desde esa fecha, la operación del sitio queda a cargo de la SEREMI.
 
 <<<salto>>>
 
@@ -675,7 +762,8 @@ Esta lista resume lo que debe hacerse el día en que la SEREMI toma el control d
 | Crear un evento | Contenido → Eventos → Crear nuevo → Publicar cambios |
 | Subir un documento para descarga | Contenido → Documentos → Crear nuevo → Guardar |
 | Agregar un proyecto al mapa | Contenido → Proyectos → Crear nuevo → Guardar |
-| Dibujar la forma (polígono) de un proyecto en el mapa | Contenido → Capas geográficas (KMZ) → Crear nuevo; luego Contenido → Proyectos → (el proyecto) → Capa geográfica |
+| Dibujar la forma (polígono) de un proyecto en el mapa | Google Earth → Archivo → Exportar como archivo KML; luego Contenido → Capas geográficas (KMZ) → Crear nuevo; luego Contenido → Proyectos → (el proyecto) → Capa geográfica |
+| Quitar la forma de un proyecto del mapa | Contenido → Proyectos → (el proyecto) → Capa geográfica → X → Guardar |
 | Encender o apagar las funciones KMZ del mapa | No se hace desde el panel: lo activa el equipo informático (Anexo D) |
 | Cambiar una persona del Comité Estratégico | Contenido → Miembros de Gobernanza → (la fila del cargo) → cambiar nombre → Guardar |
 | Poner nombre a un cargo "Por definir" de la Unidad de Coordinación | Contenido → Miembros de Gobernanza → (la fila) → cambiar nombre e institución → Guardar |
@@ -694,6 +782,7 @@ Esta lista resume lo que debe hacerse el día en que la SEREMI toma el control d
 | Cambiar mi contraseña | Mi cuenta (círculo superior derecho) → Cambiar contraseña |
 | Ver cuántas veces se descargó un documento | Contenido → Documentos → (el documento) → campo Descargas; o Sistema → Registro de Descargas |
 | Leer la guía rápida dentro del panel | Ayuda → Guía de uso |
+| Entregar el sitio a la SEREMI | Capítulo "Traspaso del sitio a la SEREMI" y el protocolo de entrega |
 
 ## Anexo B. Formatos y tamaños recomendados
 
@@ -730,6 +819,8 @@ Límites de texto más importantes: título de noticia 120 caracteres; resumen 3
 | **Rol** | Nivel de permisos de una cuenta: Administrador, Editor o Registrado. |
 | **KPI** | Cifra destacada de la portada (indicador). |
 | **Kicker / eyebrow** | Palabra o línea pequeña que va encima de un título. |
+| **KMZ / KML** | Archivo en que Google Earth guarda un dibujo sobre el mapa (puntos, líneas o formas). El KMZ es la versión comprimida del KML. |
+| **Capa geográfica** | Un archivo KMZ o KML subido al panel. Se une a un proyecto para dibujar su forma en el mapa. |
 
 ## Anexo D. Ficha técnica de la plataforma (para el equipo informático)
 
@@ -746,14 +837,16 @@ Esta ficha resume la información que el equipo informático de la SEREMI necesi
 | Actualizaciones del esquema | Migraciones disciplinadas que corren en cada despliegue (`payload migrate` en el comando de build de Vercel). No se hacen cambios manuales en la base de datos. | `src/migrations/` en el repositorio. |
 | Pruebas automáticas | Suite e2e (Playwright) que verifica que el panel abre, que los contenidos reales se editan y que los cambios se reflejan en el sitio. | `tests/e2e/` en el repositorio. |
 | Respaldo | La base de datos Neon mantiene respaldos y historial; además, un respaldo diario automatizado (`pg_dump`) se guarda fuera de Neon como artefacto de GitHub Actions, con 90 días de retención (cómo restaurar: `scripts/restore-db.md` del repositorio). El contenido también queda versionado en el panel (noticias y eventos). | Consola de Neon y pestaña Actions del repositorio en GitHub. |
-| Funciones KMZ del mapa (opcional) | El dibujo de capas KMZ y las descargas para Google Earth vienen **apagados**. Se encienden creando la variable `NEXT_PUBLIC_FEAT_MAPA_PLUS` con valor `true` (entorno Production) y **volviendo a publicar**: Deployments → el despliegue más reciente → Redeploy, unos 2–3 minutos. Vercel solo aplica los cambios de variables a las publicaciones nuevas; si no se vuelve a publicar, el cambio no se ve. Se apagan borrándola y volviendo a publicar. Apagadas, el mapa muestra solo los marcadores, como siempre. | Vercel → Settings → Environment Variables. |
-| Accesos a las cuentas de servicio | Vercel, Neon, Resend, GitHub y el registrador del dominio. | Deben traspasarse formalmente a la SEREMI (o a quien esta designe) en el acta de traspaso, con cambio de contraseñas. |
+| Funciones KMZ del mapa | El dibujo de capas KMZ y las descargas para Google Earth están **encendidos** desde el 23 de septiembre de 2026, con la variable `NEXT_PUBLIC_FEAT_MAPA_PLUS` = `true` (entorno Production). Para apagarlos: borrar la variable y volver a publicar (Deployments → tres puntos de la publicación más reciente → **Redeploy**). Vercel solo aplica los cambios de variables a las publicaciones nuevas. | Vercel → Settings → Environment Variables. |
+| Visibilidad en buscadores | Mientras se completa, el sitio está oculto para Google. Se hace visible creando la variable `SITE_INDEXABLE` = `true` y volviendo a publicar. | Vercel → Settings → Environment Variables. |
+| Accesos a las cuentas de servicio | Vercel, Neon, Resend, GitHub y la cuenta central de Google. | Se traspasan a la SEREMI en la Fase 2, según el capítulo "Traspaso del sitio a la SEREMI" y el protocolo de entrega. |
 
 Qué no es editable desde el panel (requiere a un desarrollador): el diseño y la estructura de las páginas, el menú de navegación, el crédito obligatorio a CORFO, las variables de entorno (correo de destino, claves de servicios) y el dominio.
 
 ## Anexo E. Control de cambios de este manual
 
-| Versión | Fecha | Cambios | Autor |
-|---|---|---|---|
-| 1.0 | 21 de agosto de 2026 | Primera versión completa, con capturas del panel en producción (versión del sitio de agosto de 2026). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
-| 1.1 | 28 de agosto de 2026 | Nueva sección "Dibujar la forma de un proyecto en el mapa (con un archivo KMZ)"; anexos A, B y D actualizados (capas KMZ, interruptor de las funciones y respaldo diario automatizado). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
+| Fecha | Cambios | Autor |
+|---|---|---|
+| 21 de agosto de 2026 | Primera versión completa, con capturas del panel en producción (versión del sitio de agosto de 2026). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
+| 28 de agosto de 2026 | Nueva sección sobre archivos KMZ del mapa; anexos A, B y D actualizados (capas KMZ, interruptor de las funciones y respaldo diario automatizado). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
+| 23 de septiembre de 2026 | Sección de archivos KMZ reescrita paso a paso (Google Earth en el navegador, mensajes de error, cambiar o quitar una forma). Nuevo capítulo "Traspaso del sitio a la SEREMI". Usuarios: cada persona crea su propia contraseña. Figuras de noticia y evento actualizadas. | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |

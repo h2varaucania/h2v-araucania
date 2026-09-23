@@ -101,7 +101,8 @@ def parse(path):
                 if not mm or ((mm.group(1) != '-') != ordered):
                     break
                 items.append(mm.group(2).strip()); i += 1
-            blocks.append({'type': 'list', 'ordered': ordered, 'items': items}); continue
+            inicio = int(m.group(1)[:-1]) if ordered else 1
+            blocks.append({'type': 'list', 'ordered': ordered, 'items': items, 'start': inicio}); continue
         para.append(ln); i += 1
     flush()
     return meta, blocks
