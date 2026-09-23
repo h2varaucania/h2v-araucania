@@ -13,9 +13,9 @@ export const Noticias: CollectionConfig = {
     // Borrar es permanente (no hay papelera): reservado a administradores (F9).
     delete: isAdmin,
   },
-  // Borradores y versiones (F4, Auditoria_traspaso.md): el editor ve botones explícitos
-  // "Guardar borrador" / "Publicar" (mucho más claros que una casilla), y cada guardado
-  // deja una versión restaurable desde la pestaña "Versiones".
+  // Borradores y versiones (F4, Auditoria_traspaso.md): con autosave el borrador se guarda
+  // solo (no hay botón "Guardar borrador"); "Publicar cambios" lo hace visible, y cada
+  // guardado deja una versión restaurable desde la pestaña "Versiones".
   versions: {
     drafts: { autosave: true },
     maxPerDoc: 20,
@@ -24,7 +24,7 @@ export const Noticias: CollectionConfig = {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'fecha', 'categoria', '_status'],
     group: 'Contenido',
-    description: 'Publica noticias sobre seminarios, talleres, reuniones de gobernanza, acuerdos y avances del programa. Las noticias aparecen en la sección "Noticias" y en la página de inicio. Usa "Publicar" para que la noticia sea visible; "Guardar borrador" la deja solo aquí en el admin.',
+    description: 'Publica noticias sobre seminarios, talleres, reuniones de gobernanza, acuerdos y avances del programa. Las noticias aparecen en la sección "Noticias" y en la página de inicio. Mientras escribes, el borrador se guarda solo y no se ve en el sitio; pulsa "Publicar cambios" para que la noticia sea visible.',
   },
   fields: [
     {

@@ -13,7 +13,8 @@ export const Eventos: CollectionConfig = {
     // Borrar es permanente (no hay papelera): reservado a administradores (F9).
     delete: isAdmin,
   },
-  // Borradores y versiones (F4): botones "Guardar borrador" / "Publicar" + historial restaurable.
+  // Borradores y versiones (F4): autosave (sin botón "Guardar borrador"), "Publicar cambios"
+  // lo hace visible, e historial restaurable.
   versions: {
     drafts: { autosave: true },
     maxPerDoc: 20,
@@ -22,7 +23,7 @@ export const Eventos: CollectionConfig = {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'fecha', 'lugar', 'tipo', '_status'],
     group: 'Contenido',
-    description: 'Publica eventos del programa: seminarios, talleres, ferias, reuniones y capacitaciones. Aparecen en la sección "Eventos" del sitio. Usa "Publicar" para que el evento sea visible.',
+    description: 'Publica eventos del programa: seminarios, talleres, ferias, reuniones y capacitaciones. Aparecen en la sección "Eventos" del sitio. Mientras escribes, el borrador se guarda solo y no se ve en el sitio; pulsa "Publicar cambios" para que el evento sea visible.',
   },
   fields: [
     {
