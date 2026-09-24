@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sitio web H2V Araucanía
 
-## Getting Started
+Plataforma informativa del Bien Público "Empoderando a los sectores Agroforestal y Productivo con
+Hidrógeno Verde" (CORFO 24BP-269085), del Programa Estratégico Regional de Hidrógeno Verde de La
+Araucanía. Beneficiario: CODESSER. Coejecutor: Universidad de Talca. Se entrega a la SEREMI de
+Energía de La Araucanía.
 
-First, run the development server:
+- Sitio: https://h2v-araucania.vercel.app · Panel de administración: `/admin`
+- Next.js 16 + Payload CMS 3 (una sola aplicación), PostgreSQL en Neon, archivos en Vercel Blob,
+  correos con Resend, alojado en Vercel. Cada cambio en `main` se publica solo.
+
+## Qué documento leer
+
+| Si usted... | Lea |
+|---|---|
+| Publica contenido en el panel | Manual de Usuario: `docs/manual-usuario/Manual_Usuario_H2V_Araucania.pdf` (o `.docx`) |
+| Participa en el traspaso a la SEREMI | Protocolo de entrega: `docs/traspaso/Protocolo_Entrega_H2V_SEREMI.pdf` |
+| Mantiene el sitio (cuentas, respaldos, dominio, actualizaciones) | Guía técnica: `docs/tecnico/Guia_Tecnica_H2V_Araucania.pdf` |
+| Va a programar | Esta página, la Guía técnica y `AGENTS.md` |
+
+Los documentos de `docs/archivo/` están reemplazados; se conservan solo como historia.
+
+## Trabajar en local
+
+Requisitos: Node 22, Docker y git.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env            # valores locales, no los de producción
+docker compose up -d postgres   # PostgreSQL local
+npm ci
+npm run dev                     # http://localhost:3000 y http://localhost:3000/admin
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Antes de proponer un cambio: `npm run lint && npx tsc --noEmit && npm test && npm run build`
+(lo mismo que corre GitHub en `.github/workflows/ci.yml`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Reglas que no se negocian
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Todo texto visible se edita en el panel (`docs/EDITABILIDAD_TOTAL.md`); el código solo lleva
+  diseño y estructura.
+- El esquema de la base cambia **solo** con migraciones (`src/migrations/`), que Vercel aplica al
+  publicar (`vercel.json`). Nunca `PAYLOAD_DB_PUSH` ni SQL a mano en producción.
+- Antes de publicar un cambio, sacar un respaldo: GitHub → Actions → "Respaldo diario de la base
+  de datos" → Run workflow. Restaurar: `scripts/restore-db.md`. Archivos subidos:
+  `scripts/respaldar-archivos.mjs`.
+- Ninguna clave ni contraseña va al repositorio.

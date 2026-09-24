@@ -1,0 +1,453 @@
+% Guía técnica del sitio web H2V Araucanía (para el responsable técnico de la SEREMI).
+% Misma identidad visual que el Protocolo de entrega (docs/traspaso/).
+% Compilar con XeLaTeX:  latexmk -xelatex -output-directory=salida Guia_Tecnica_H2V_Araucania.tex
+\documentclass[11pt,letterpaper]{article}
+\usepackage{fontspec}
+\usepackage[default]{sourcesanspro}
+\usepackage{sourcecodepro}
+\usepackage{polyglossia}\setdefaultlanguage{spanish}
+\usepackage[top=2.3cm,bottom=2.3cm,left=2.4cm,right=2.4cm,headheight=14pt]{geometry}
+\usepackage{graphicx}\graphicspath{{../manual-usuario/figuras/}}
+\usepackage{xcolor}
+\definecolor{h2vazul}{HTML}{1B3A5C}
+\definecolor{h2vverde}{HTML}{0D7377}
+\definecolor{h2voro}{HTML}{F59E0B}
+\definecolor{h2vgris}{HTML}{555F6B}
+\definecolor{h2vlinea}{HTML}{C9D1D9}
+\definecolor{h2vrojo}{HTML}{B42318}
+\definecolor{fondoverde}{HTML}{E3F3F0}
+\definecolor{fondoazul}{HTML}{E8F0FB}
+\definecolor{fondooro}{HTML}{FFF4E0}
+\definecolor{fondogris}{HTML}{F3F5F7}
+\definecolor{fondorojo}{HTML}{FDECEA}
+\usepackage{tikz}\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx,booktabs,array,colortbl}
+\usepackage{enumitem}
+\usepackage{fancyhdr}\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{fvextra}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[colorlinks=true,linkcolor=h2vazul,urlcolor=h2vverde,pdfusetitle]{hyperref}
+\hypersetup{pdftitle={Guía técnica del sitio web H2V Araucanía},pdfauthor={Bien Público H2V Araucanía}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+% Nombres técnicos largos en monoespaciado: dejar que TeX estire la línea antes que desbordar.
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.35}
+
+% ── Encabezado y pie ──────────────────────────────────────────────
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}\renewcommand{\headrule}{\color{h2vlinea}\hrule height 0.3pt}
+\fancyhead[L]{\small\color{h2vgris}Guía técnica · Sitio web H2V Araucanía}
+\fancyhead[R]{\small\color{h2vgris}Para el responsable técnico}
+\fancyfoot[C]{\small\color{h2vgris}Página \thepage\ de \pageref{LastPage}}
+
+% ── Títulos ───────────────────────────────────────────────────────
+\setcounter{secnumdepth}{2}
+\titleformat{\section}{\normalfont\LARGE\bfseries\color{h2vazul}}{\color{h2vverde}\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{18pt}{8pt}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{h2vverde}}{\thesubsection}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{12pt}{4pt}
+
+% ── Elementos propios ─────────────────────────────────────────────
+% Nombres técnicos (variables, cuentas, archivos): monoespaciados y cortables en _ - . / @
+\newcommand{\var}[1]{\nolinkurl{#1}}
+\newcommand{\ruta}[1]{\nolinkurl{#1}}
+% Comandos con espacios (\nolinkurl los eliminaría): monoespaciado, corta en los espacios.
+\newcommand{\cmd}[1]{\texttt{\hyphenchar\font=-1\relax\detokenize{#1}}}
+\newcommand{\circulo}[1]{\tikz[baseline=(n.base)]\node[circle,fill=h2vverde,text=white,inner sep=0pt,
+  minimum size=1.45em,font=\small\bfseries](n){#1};}
+\newlist{pasos}{enumerate}{1}
+\setlist[pasos]{label=\protect\circulo{\arabic*},leftmargin=2.4em,labelsep=0.7em,itemsep=6pt,topsep=4pt}
+\setlist[itemize]{leftmargin=1.4em,itemsep=2pt,topsep=2pt,label={\color{h2vverde}\textbullet}}
+
+\newtcolorbox{recuadro}[3][]{enhanced,colback=#2,colframe=#2,borderline west={3pt}{0pt}{#3},
+  boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=7pt,bottom=7pt,before skip=10pt,after skip=10pt,#1}
+\newcommand{\titulorecuadro}[2]{{\bfseries\color{#1}#2}\par\vspace{2pt}}
+
+\DefineVerbatimEnvironment{codigo}{Verbatim}{breaklines,breakanywhere,samepage=true,fontsize=\small,
+  frame=leftline,framerule=2.5pt,rulecolor=\color{h2vverde},framesep=9pt,xleftmargin=4pt}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\cab}[1]{\textbf{\color{h2vgris}#1}}
+\newcommand{\fila}[1]{\textbf{\color{h2vazul}#1}}
+
+\begin{document}
+
+% ════════════════════════════════════════════════════════════════
+% PORTADA
+% ════════════════════════════════════════════════════════════════
+\thispagestyle{empty}
+\begin{minipage}[c]{0.45\textwidth}\includegraphics[height=2.4cm]{logo-bien-publico.png}\end{minipage}\hfill
+\begin{minipage}[c]{0.5\textwidth}\raggedleft\includegraphics[height=1.8cm]{logo-corfo.png}\hspace{0.5cm}\includegraphics[height=1.8cm]{logo-dps.png}\end{minipage}
+
+\vspace{2.2cm}
+{\color{h2vverde}\bfseries\addfontfeatures{LetterSpace=12}GUÍA TÉCNICA}\par\vspace{8pt}
+{\color{h2vazul}\fontsize{29}{34}\selectfont\bfseries Cómo funciona, se respalda\\ y se mantiene el sitio web\\ H2V Araucanía\par}\vspace{12pt}
+{\color{h2vgris}\Large Para el responsable técnico de la SEREMI de Energía o el servicio de mantención\par}\vspace{10pt}
+{\color{h2vverde}\rule{\textwidth}{1.2pt}}\vspace{0.7cm}
+
+\begin{tabular}{@{}p{3.4cm}p{12.4cm}@{}}
+\textbf{\color{h2vazul}Fecha} & 24 de septiembre de 2026 \\
+\textbf{\color{h2vazul}Destinatario} & Secretaría Regional Ministerial de Energía, Región de La Araucanía \\
+\textbf{\color{h2vazul}Elaborado por} & Bien Público ``Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde'' (código CORFO 24BP-269085). Beneficiario: CODESSER. Coejecutor: Universidad de Talca. \\
+\textbf{\color{h2vazul}Sitio web} & \url{https://h2v-araucania.vercel.app} \\
+\textbf{\color{h2vazul}Código} & \url{https://github.com/h2varaucania/h2v-araucania} (repositorio privado) \\
+\end{tabular}
+
+\vfill
+\begin{recuadro}{fondoazul}{h2vazul}
+\titulorecuadro{h2vazul}{Los tres documentos del sitio, cada uno para un lector}
+\textbf{Manual de Usuario:} para quien publica contenido en el panel. No requiere conocimientos técnicos.\par
+\textbf{Protocolo de entrega:} para la reunión de traspaso, con los pasos y las actas para firmar.\par
+\textbf{Guía técnica (este documento):} para quien mantiene el sitio en línea: cuentas, respaldos, dominio, actualizaciones y qué hacer si algo falla.
+\end{recuadro}
+
+\vspace{0.4cm}
+{\small\color{h2vgris}Proyecto apoyado por CORFO · Programa Desarrollo Productivo Sostenible}
+\newpage
+
+\tableofcontents
+\newpage
+
+% ════════════════════════════════════════════════════════════════
+\section{El sitio en una página}
+% ════════════════════════════════════════════════════════════════
+
+El sitio es \textbf{una sola aplicación} que contiene las páginas públicas y el panel de administración (\ruta{/admin}). El contenido que se edita en el panel se guarda en una base de datos; los archivos subidos (imágenes, PDF, capas KMZ), en un almacén de archivos; y el código, en GitHub. Cada cambio de código que llega a la rama principal de GitHub se publica solo.
+
+\begin{center}
+\begin{tikzpicture}[
+  caja/.style={rounded corners=4pt,draw=#1,line width=0.9pt,fill=white,align=center,inner sep=7pt,font=\small},
+  flecha/.style={-{Stealth[length=6pt]},line width=1pt,h2vgris},
+  nota/.style={font=\scriptsize\color{h2vgris},align=center}]
+\node[caja=h2vazul,text width=3.1cm] (gente) {\textbf{Visitantes}\\ y \textbf{editores}\\ {\scriptsize(navegador)}};
+\node[caja=h2vverde,text width=4.6cm,right=1.5cm of gente] (app) {\textbf{Aplicación del sitio}\\[2pt] Páginas públicas (Next.js 16)\\ Panel \texttt{/admin} (Payload CMS 3)};
+\node[font=\scriptsize\bfseries\color{h2vverde},above=2pt of app] {VERCEL · aloja y publica};
+\node[caja=h2vazul,text width=3.4cm,right=1.5cm of app,yshift=1.45cm] (neon) {\textbf{Base de datos}\\ Neon (PostgreSQL 17)};
+\node[caja=h2vazul,text width=3.4cm,right=1.5cm of app] (blob) {\textbf{Archivos subidos}\\ Vercel Blob};
+\node[caja=h2vazul,text width=3.4cm,right=1.5cm of app,yshift=-1.45cm] (resend) {\textbf{Correos}\\ Resend};
+\node[caja=h2voro,text width=4.6cm,below=1.5cm of app] (git) {\textbf{GitHub}\\ código, pruebas y\\ respaldo diario};
+\draw[flecha] (gente) -- (app);
+\draw[flecha] (app.east) -- (neon.west);
+\draw[flecha] (app) -- (blob);
+\draw[flecha] (app.east) -- (resend.west);
+\draw[flecha] (git) -- node[nota,right=2pt,text width=2.6cm]{cada cambio en \texttt{main} se publica solo} (app);
+\draw[flecha,dashed] (git.east) -| node[nota,pos=0.25,below=1pt]{copia diaria de la base} ([xshift=7mm]neon.east) -- (neon.east);
+\end{tikzpicture}
+\end{center}
+
+\begin{tabularx}{\textwidth}{@{}P{3.6cm}Y@{}}
+\toprule
+\cab{Pieza} & \cab{Detalle}\\
+\midrule
+\fila{Aplicación} & Next.js 16.2 con Payload CMS 3.80 embebido (panel en español), React 19, TypeScript. Salida \texttt{standalone}. \\
+\fila{Base de datos} & PostgreSQL 17 en Neon, proyecto \var{neon-crimson-blanket}, base \var{neondb}, región us-east-1. Todo el contenido editable vive aquí. \\
+\fila{Archivos} & Vercel Blob, almacén \var{h2v-araucania-blob} (público). Imágenes, PDF y capas KMZ subidos desde el panel. \\
+\fila{Correos} & Resend: recuperación de contraseña y aviso de cada mensaje del formulario de Contacto. \\
+\fila{Código} & GitHub, repositorio privado \var{h2varaucania/h2v-araucania}, rama \var{main}. \\
+\bottomrule
+\end{tabularx}
+
+\begin{recuadro}{fondoverde}{h2vverde}
+\titulorecuadro{h2vverde}{La regla de oro, vista desde el lado técnico}
+Todo texto visible se edita en el panel y vive en la base de datos. El código solo tiene el diseño y la estructura. Por eso, el trabajo diario de la SEREMI no toca GitHub ni Vercel: solo el panel. Un informático interviene para respaldos, dominio, actualizaciones o cambios de diseño.
+\end{recuadro}
+
+% ════════════════════════════════════════════════════════════════
+\section{Cuentas, servicios y costos}
+% ════════════════════════════════════════════════════════════════
+
+A Vercel y a Neon se entra con la cuenta de Google \var{h2varaucania@gmail.com}, que es la llave maestra. GitHub tiene su propia cuenta, \var{h2varaucania}. Cómo se traspasan está en el Protocolo de entrega (Fase 2).
+
+\begin{tabularx}{\textwidth}{@{}P{2.1cm}P{4.1cm}P{4.4cm}Y@{}}
+\toprule
+\cab{Servicio} & \cab{Para qué} & \cab{Cuenta y plan} & \cab{Qué falta}\\
+\midrule
+\fila{Google} & Entrada a Vercel y Neon; recibe los avisos de fallas, respaldos y seguridad. & \var{h2varaucania@gmail.com} & Traspasar (Fase 2). Alguien debe leer esa casilla.\\
+\fila{GitHub} & Código, pruebas automáticas y respaldo diario de la base. & Cuenta personal \var{h2varaucania}, plan gratuito. & Traspasar; retirar al colaborador \var{villalobosecon} salvo acuerdo de soporte.\\
+\fila{Vercel} & Aloja y publica el sitio; guarda los archivos (Blob). & Equipo \var{h2varaucania-1077s-projects}, plan Hobby (gratuito). & Decidir plan pagado o servidor propio (ver abajo).\\
+\fila{Neon} & Base de datos. & Proyecto \var{neon-crimson-blanket}, plan gratuito. & Borrar el proyecto viejo \var{h2v-araucania-db} si aún existe: es una copia de abril que confunde.\\
+\fila{Resend} & Correos del sitio. & Por confirmar con qué correo se creó. & Verificar un dominio propio (sección~\ref{sec:dominio}).\\
+\fila{Dominio} & Dirección propia. & No hay. \var{h2varaucania.cl} está registrado por un tercero y vence el 10-10-2026. & Lo decide y registra la institución.\\
+\bottomrule
+\end{tabularx}
+
+\begin{recuadro}{fondooro}{h2voro}
+\titulorecuadro{h2vazul}{El costo real: hoy US\$0, pero el plan gratuito no corresponde a una institución}
+Todo funciona hoy en planes gratuitos. Sin embargo, las condiciones de Vercel restringen el plan Hobby a uso ``personal y no comercial''. Para un sitio institucional corresponde el plan Pro (US\$20 al mes por cada persona que publica código; quienes solo editan en el panel no cuentan) o llevar el sitio a un servidor propio (sección~\ref{sec:mover}). En el plan gratuito, además, no se pueden agregar otras personas al equipo de Vercel: por eso hoy se comparte la cuenta.
+\end{recuadro}
+
+% ════════════════════════════════════════════════════════════════
+\section{Variables de entorno}\label{sec:variables}
+% ════════════════════════════════════════════════════════════════
+
+Se configuran en Vercel → proyecto \var{h2v-araucania} → \textbf{Settings} → \textbf{Environment Variables}, entorno \textbf{Production}. \textbf{Un cambio de variable solo se aplica a las publicaciones nuevas}: después de cambiarla hay que volver a publicar (Deployments → menú de tres puntos de la publicación más reciente → \textbf{Redeploy}).
+
+\begin{tabularx}{\textwidth}{@{}P{4.9cm}YP{3.7cm}@{}}
+\toprule
+\cab{Variable} & \cab{Para qué} & \cab{Si falta}\\
+\midrule
+\var{DATABASE_URI} & Conexión a Neon (con \emph{pooler}). & El sitio no arranca.\\
+\var{PAYLOAD_SECRET} & Firma las sesiones del panel. Cambiarla cierra todas las sesiones. & El sitio no arranca.\\
+\var{BLOB_READ_WRITE_TOKEN} & Guardar archivos en Vercel Blob. La crea Vercel al conectar el almacén. & Las subidas irían al disco temporal y se perderían.\\
+\var{RESEND_API_KEY} & Enviar correos. & No hay correos; los mensajes de Contacto igual quedan en el panel.\\
+\var{EMAIL_FROM} & Remitente con dominio propio (p.~ej. \var{no-responder@dominio}). & Se usa \var{onboarding@resend.dev}, que solo entrega al correo dueño de la cuenta Resend.\\
+\var{CONTACT_EMAIL} & A dónde llegan los avisos del formulario de Contacto. & Se usa \var{h2varaucania@gmail.com}.\\
+\var{NEXT_PUBLIC_SITE_URL} & Dirección oficial (sitemap, robots, metadatos). Hoy: \url{https://h2v-araucania.vercel.app}. & El código usa \var{h2varaucania.cl} (ver pendientes).\\
+\var{SITE_INDEXABLE} & \var{true} muestra el sitio en Google. & El sitio queda oculto a los buscadores (así está hoy).\\
+\var{NEXT_PUBLIC_FEAT_MAPA_PLUS} & \var{true} enciende las funciones KMZ del mapa (encendidas desde el 23-09-2026). & Mapa sin formas KMZ ni descargas.\\
+\var{NEXT_PUBLIC_FEAT_*} (otras) & Funciones opcionales que no están en uso (I18N, DASHBOARD, AI, ENCUESTAS, PWA, API). & No activarlas sin revisar el código.\\
+\var{NEXT_PUBLIC_GA_ID} & Google Analytics. & Hoy no está configurada.\\
+\var{SEED_SECRET} & Carga inicial de datos (\ruta{/api/seed}). & \textbf{No crearla en producción.}\\
+\var{PAYLOAD_DB_PUSH} & Cambios automáticos del esquema. & \textbf{No crearla en producción.}\\
+\bottomrule
+\end{tabularx}
+
+Además, GitHub guarda un secreto del repositorio: \var{DATABASE_URI_UNPOOLED} (Settings → Secrets and variables → Actions), la conexión \emph{directa} a Neon que usa el respaldo diario. Si se cambia la contraseña de la base, hay que actualizarla en \textbf{los dos lugares}: \var{DATABASE_URI} en Vercel y este secreto en GitHub.
+
+% ════════════════════════════════════════════════════════════════
+\section{Cómo se publica un cambio de código}
+% ════════════════════════════════════════════════════════════════
+
+Cada vez que llega un cambio a la rama \var{main}, Vercel compila y publica solo, en unos 2 minutos. El comando de compilación está en \ruta{vercel.json}:
+
+\begin{codigo}
+TSX_TSCONFIG_PATH=./tsconfig.json npx payload migrate && npm run build
+\end{codigo}
+
+Es decir: primero aplica a la base de datos las migraciones pendientes y después compila. En paralelo, GitHub corre las pruebas automáticas (\ruta{.github/workflows/ci.yml}: revisión de estilo, tipos, pruebas unitarias y compilación). Vercel \textbf{no espera} a esas pruebas.
+
+\textbf{Procedimiento recomendado para un cambio:}
+\begin{pasos}
+\item Sacar un respaldo: GitHub → \textbf{Actions} → ``Respaldo diario de la base de datos'' → \textbf{Run workflow}, y esperar que termine en verde.
+\item Trabajar en una rama nueva y probar en local (sección~\ref{sec:local}).
+\item Abrir un \emph{pull request}: las pruebas automáticas corren solas.
+\item Unir a \var{main}. Vercel publica.
+\item Revisar el sitio y el panel.
+\end{pasos}
+
+\begin{recuadro}{fondorojo}{h2vrojo}
+\titulorecuadro{h2vrojo}{Cuidado con las vistas previas y la base de datos}
+Como el comando de compilación aplica migraciones, una vista previa de Vercel (una rama que no es \var{main}) que tenga acceso a \var{DATABASE_URI} de producción \textbf{cambiaría la base de producción} con el código de una rama sin aprobar. Antes de usar ramas con vista previa, confirme en Vercel que \var{DATABASE_URI} solo esté en el entorno \textbf{Production}, o que en \textbf{Preview} apunte a una rama de prueba de Neon.
+\end{recuadro}
+
+\textbf{Volver atrás.} Si una publicación sale mal: Vercel → \textbf{Deployments} → la publicación anterior → \textbf{Instant Rollback}. En el plan gratuito solo se puede volver a la publicación inmediatamente anterior. Volver atrás \textbf{no deshace} los cambios que la migración ya hizo en la base de datos: para eso está el respaldo del paso 1.
+
+% ════════════════════════════════════════════════════════════════
+\section{Base de datos y migraciones}
+% ════════════════════════════════════════════════════════════════
+
+El esquema de la base está versionado en \ruta{src/migrations/}: cada archivo es un cambio, en orden, y la tabla \var{payload_migrations} registra cuáles ya se aplicaron. Se aplican solas al publicar.
+
+\textbf{Reglas:}
+\begin{itemize}
+\item Nunca cambiar el esquema de producción a mano ni con \var{PAYLOAD_DB_PUSH}. Todo cambio va en una migración.
+\item Una migración nueva se genera y después se endurece a mano:
+\end{itemize}
+\begin{codigo}
+set -a; source .env; set +a
+TSX_TSCONFIG_PATH=./tsconfig.json npx payload migrate:create nombre_del_cambio
+\end{codigo}
+\begin{itemize}
+\item Endurecer: \cmd{IF NOT EXISTS} en tablas, columnas e índices; tipos y restricciones dentro de \texttt{\detokenize{DO $$ ... EXCEPTION WHEN duplicate_object THEN null; END $$}}. Dejar el \var{down} vacío si borraría datos (ejemplo: \ruta{src/migrations/20260924_134519_mensajes_contacto.ts}).
+\item Probarla contra una base vacía (todas las migraciones seguidas) y volver a correrla, para confirmar que se puede repetir sin error.
+\end{itemize}
+
+\textbf{Historia que conviene conocer.} La base de producción se creó en junio de 2026 con el modo automático de Payload (\emph{push}), antes de que existieran las migraciones. Por eso tiene algunas diferencias con una base creada solo con migraciones. La conocida (columnas obligatorias que impedían crear noticias) se corrigió con la migración \ruta{20260923_120000_borradores_aceptan_vacios}. Para reproducir fallas de producción, trabajar sobre una copia restaurada de un respaldo, no sobre una base nueva.
+
+% ════════════════════════════════════════════════════════════════
+\section{Respaldos}
+% ════════════════════════════════════════════════════════════════
+
+\begin{tabularx}{\textwidth}{@{}P{2.7cm}YP{3.3cm}P{2.3cm}@{}}
+\toprule
+\cab{Qué} & \cab{Cómo} & \cab{Dónde queda} & \cab{Cuánto dura}\\
+\midrule
+\fila{Base de datos} & Automático, todos los días a las 08:17 UTC, y a mano cuando se quiera (\ruta{.github/workflows/backup-db.yml}). & GitHub → Actions → artefacto \var{h2v-backup-AAAAMMDD-HHMMSS.sql.gz}. & 90 días.\\
+\fila{Base de datos (historial)} & Restauración a un momento reciente. & Consola de Neon. & Unas horas (según el plan).\\
+\fila{Archivos subidos} & A mano, con \ruta{scripts/respaldar-archivos.mjs} (no necesita claves). & Donde se ejecute; ideal: almacenamiento institucional. & Lo que decida la institución.\\
+\fila{Código} & Cada cambio. & GitHub y las copias locales. & Permanente.\\
+\fila{Noticias y eventos} & Cada publicación guarda una versión. & Panel → pestaña Versiones. & Permanente.\\
+\bottomrule
+\end{tabularx}
+
+\begin{recuadro}{fondooro}{h2voro}
+\titulorecuadro{h2vazul}{El punto débil: todo está en la misma cuenta}
+El respaldo diario vive dentro de GitHub, en la misma cuenta que el código. Si se pierde el acceso a esa cuenta, se pierden también los respaldos. Por eso la rutina mensual incluye guardar una copia \textbf{fuera} de GitHub y de Vercel.
+\end{recuadro}
+
+\subsection{Rutina mensual (unos 15 minutos)}
+\begin{pasos}
+\item GitHub → \textbf{Actions}: confirmar que los respaldos diarios del mes terminaron en verde.
+\item Abrir el respaldo más reciente → \textbf{Artifacts} → descargar el archivo y guardarlo en el almacenamiento institucional.
+\item Respaldar los archivos subidos, desde la carpeta institucional donde se quiere dejar la copia:
+\end{pasos}
+\begin{codigo}
+node scripts/respaldar-archivos.mjs https://h2v-araucania.vercel.app
+\end{codigo}
+\begin{pasos}[resume]
+\item En el panel: revisar la lista de \textbf{Usuarios} (que no haya cuentas de personas que ya no están) y los \textbf{Mensajes de contacto} sin atender.
+\end{pasos}
+
+El script deja una carpeta \var{respaldo-archivos-AAAAMMDD/} con las imágenes, los PDF, las capas KMZ y un índice. Se puede repetir: no vuelve a bajar lo que ya está. Probado el 24-09-2026: 50 archivos (unos 85~MB con los tamaños reducidos de las imágenes) y 3 capas KMZ.
+
+\textbf{Restaurar.} Los pasos están en \ruta{scripts/restore-db.md}. La restauración de la base está probada; la de los archivos está descrita, pero no probada.
+
+\begin{recuadro}{fondorojo}{h2vrojo}
+\titulorecuadro{h2vrojo}{Los respaldos contienen datos personales}
+Correos y nombres de usuarios, las contraseñas cifradas y los mensajes del formulario de Contacto. Guárdelos en un lugar con acceso restringido y no los comparta. Desde el 1 de diciembre de 2026 rige la Ley 21.719 de protección de datos personales.
+\end{recuadro}
+
+% ════════════════════════════════════════════════════════════════
+\section{Dirección propia (dominio)}\label{sec:dominio}
+% ════════════════════════════════════════════════════════════════
+
+El dominio lo decide y lo registra \textbf{la institución, a su nombre}: un dominio \var{.cl} en NIC Chile con el RUT de la institución, o una dirección dentro de un dominio que ya tenga (por ejemplo, un subdominio de \var{energia.gob.cl}, que crea su área informática). Hoy \var{h2varaucania.cl} está registrado por un tercero y vence el 10-10-2026.
+
+\textbf{Pasos, una vez decidido el dominio:}
+\begin{pasos}
+\item Vercel → proyecto → \textbf{Settings} → \textbf{Domains} → agregar el dominio. Vercel muestra los registros DNS exactos que hay que crear.
+\item Crear esos registros en el DNS del dominio y esperar a que Vercel lo marque como válido.
+\item Cambiar \var{NEXT_PUBLIC_SITE_URL} a la dirección nueva (con \var{https://}).
+\item Si ya se quiere aparecer en Google: crear \var{SITE_INDEXABLE} con el valor \var{true}.
+\item Resend → \textbf{Domains} → agregar el mismo dominio y crear en el DNS los registros que indica. Cuando Resend lo verifique, crear \var{EMAIL_FROM} con una dirección de ese dominio y, si corresponde, cambiar \var{CONTACT_EMAIL} a un correo institucional.
+\item Volver a publicar (\textbf{Redeploy}).
+\item Probar: \textbf{¿Olvidaste tu contraseña?} con un correo institucional debe llegar; un mensaje de prueba en Contacto debe quedar en el panel con ``Aviso por correo: Enviado''.
+\end{pasos}
+
+La dirección \url{https://h2v-araucania.vercel.app} sigue funcionando después. Vercel puede redirigirla al dominio nuevo (Settings → Domains).
+
+% ════════════════════════════════════════════════════════════════
+\section{Mantención y seguridad}
+% ════════════════════════════════════════════════════════════════
+
+\subsection{Actualizar el software}
+Next.js y Payload publican correcciones de seguridad con frecuencia. Un sitio que nadie actualiza acumula fallas conocidas.
+\begin{itemize}
+\item Activar las alertas de Dependabot en GitHub (repositorio → Settings → Code security → \textbf{Dependabot alerts}). Los avisos llegan al correo de la cuenta.
+\item Cada tres meses, o ante un aviso de seguridad, en una rama nueva:
+\end{itemize}
+\begin{codigo}
+npm outdated          # qué versiones nuevas hay
+npm update            # Payload y @payloadcms/* a la última 3.x, juntos
+npm install next@16   # Next.js va fijado: subirlo a la última 16.x
+npm run lint && npx tsc --noEmit && npm test && npm run build
+\end{codigo}
+\begin{itemize}
+\item Un cambio de versión mayor (Payload 4, Next.js 17) es un proyecto aparte: leer primero sus notas de migración. Probar siempre el panel en local antes de unir a \var{main}.
+\end{itemize}
+
+\subsection{Cómo está protegido}
+\begin{tabularx}{\textwidth}{@{}P{3.8cm}Y@{}}
+\toprule
+\cab{Medida} & \cab{Detalle}\\
+\midrule
+\fila{Roles del panel} & Administrador (todo), Editor (publica, lee mensajes; no borra, no ve usuarios ni configuración). Solo Administradores crean cuentas y borran contenido.\\
+\fila{Bloqueo de entrada} & 5 intentos fallidos bloquean la cuenta 10 minutos. El panel entra solo con correo y contraseña: exigir contraseñas largas.\\
+\fila{Formulario de Contacto} & Máximo 5 mensajes cada 15 minutos por dirección IP. Los mensajes solo los leen Administradores y Editores; nadie puede crearlos por la API.\\
+\fila{Cabeceras de seguridad} & Content-Security-Policy, Strict-Transport-Security, X-Frame-Options (DENY), Referrer-Policy y Permissions-Policy (\ruta{next.config.ts}).\\
+\fila{Buscadores} & Mientras no exista \var{SITE_INDEXABLE}, el sitio pide a Google no indexarlo.\\
+\bottomrule
+\end{tabularx}
+
+\subsection{Cuando una persona deja la institución}
+\begin{itemize}
+\item Eliminar su cuenta del panel o bajarle el rol el mismo día. Mantener siempre dos Administradores.
+\item Si tenía acceso a la cuenta de Google o a GitHub: cambiar la contraseña, reemplazar su teléfono en la verificación en dos pasos y generar códigos de respaldo nuevos.
+\item Si era Administrador y se fue en malos términos: cambiar \var{PAYLOAD_SECRET} y volver a publicar (cierra todas las sesiones).
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════
+\section{Trabajar en local}\label{sec:local}
+% ════════════════════════════════════════════════════════════════
+
+Requisitos: Node~22, Docker y git.
+\begin{codigo}
+git clone https://github.com/h2varaucania/h2v-araucania.git
+cd h2v-araucania
+cp .env.example .env            # valores locales, no los de producción
+docker compose up -d postgres   # PostgreSQL local
+npm ci
+npm run dev                     # sitio y panel en http://localhost:3000
+npm test                        # pruebas unitarias
+\end{codigo}
+
+Para probar como en producción: \cmd{npm run build} y luego \cmd{node .next/standalone/server.js}, después de copiar \ruta{public/} y \ruta{.next/static/} dentro de \ruta{.next/standalone/}. Las pruebas de extremo a extremo (\ruta{tests/e2e/}, Playwright) se corren con \cmd{npm run test:e2e} contra un servidor local; no forman parte de las pruebas automáticas de GitHub.
+
+\textbf{Trampas conocidas:}
+\begin{itemize}
+\item La línea de comandos de Payload necesita \var{TSX_TSCONFIG_PATH=./tsconfig.json}. Los tipos se regeneran con \cmd{npm run payload:generate}, no con \cmd{payload generate:types}.
+\item Los comandos no cargan \ruta{.env} solos: antes, \cmd{set -a; source .env; set +a}.
+\item Con \var{NODE_ENV} distinto de \var{production}, Payload ``arregla'' en silencio el esquema de la base a la que se conecta. Para trabajar con una copia de producción: \cmd{NODE_ENV=production PAYLOAD_DB_PUSH=false}.
+\item Si \var{payload_migrations} tiene una fila llamada \var{dev}, las migraciones piden confirmación: borrar esa fila en la base local.
+\item El mapa de componentes del panel debe generarse con el almacén Blob activo. Lo hace solo, antes de cada compilación, el comando \cmd{npm run payload:importmap}. Si se genera sin él, el panel de producción queda en negro.
+\item Para \var{pg_dump} se usa la conexión directa de Neon (sin \var{-pooler}).
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════
+\section{Llevar el sitio a otro servidor}\label{sec:mover}
+% ════════════════════════════════════════════════════════════════
+
+Si la institución prefiere alojarlo en sus servidores, el repositorio ya trae \ruta{Dockerfile} (Node~22, salida \texttt{standalone}) y \ruta{docker-compose.prod.yml} (aplicación y PostgreSQL). Es trabajo de un informático, del orden de uno a dos días:
+\begin{pasos}
+\item Crear un PostgreSQL 17 y restaurar el último respaldo (\ruta{scripts/restore-db.md}).
+\item Archivos: sin \var{BLOB_READ_WRITE_TOKEN}, el sitio guarda las subidas en disco (\ruta{public/uploads/}, en un volumen persistente). Copiar ahí el contenido de \ruta{media/} y, en \ruta{public/uploads/capas-geo/}, el de \ruta{capas-geo/} del respaldo de archivos. Otra opción es seguir usando Vercel Blob con su token.
+\item Configurar las variables de entorno (sección~\ref{sec:variables}), servir con HTTPS detrás de un proxy y aplicar las migraciones (\cmd{npx payload migrate}) antes de arrancar.
+\item Apuntar el dominio al servidor nuevo y comprobar el panel, las subidas y el formulario de Contacto.
+\end{pasos}
+
+% ════════════════════════════════════════════════════════════════
+\section{Pendientes conocidos}
+% ════════════════════════════════════════════════════════════════
+
+\begin{tabularx}{\textwidth}{@{}YP{6.1cm}@{}}
+\toprule
+\cab{Pendiente} & \cab{Qué hacer}\\
+\midrule
+Los borradores de noticias se pueden leer por la API pública (\ruta{/api/noticias}). & Leer solo publicados para quien no inició sesión.\\
+Desde el 22-09-2026 las imágenes nuevas pierden sus tamaños reducidos (efecto de \var{addRandomSuffix}). El sitio usa el original, así que no se nota. & Revisar la configuración del almacenamiento.\\
+Faltan tildes en textos del código: menú ``Hidrogeno Verde'', tarjetas de la portada, Noticias y Eventos. & Corregir en el código.\\
+Si falta \var{NEXT_PUBLIC_SITE_URL}, el código usa \var{h2varaucania.cl}, dominio de un tercero. & Cambiar ese valor por defecto.\\
+Los correos solo llegan al dueño de la cuenta Resend. & Dominio propio (sección~\ref{sec:dominio}).\\
+El aviso de cookies menciona Google Analytics, que no está configurado. & Configurarlo o ajustar el aviso.\\
+Plan Hobby de Vercel para un sitio institucional. & Plan Pro o servidor propio.\\
+Las pruebas de extremo a extremo no corren en GitHub. & Agregarlas al flujo de pruebas.\\
+\bottomrule
+\end{tabularx}
+
+% ════════════════════════════════════════════════════════════════
+\section*{Anexo. Mapa del repositorio}
+% ════════════════════════════════════════════════════════════════
+\addcontentsline{toc}{section}{Anexo. Mapa del repositorio}
+
+\begin{tabularx}{\textwidth}{@{}P{5.2cm}Y@{}}
+\toprule
+\cab{Carpeta o archivo} & \cab{Qué contiene}\\
+\midrule
+\ruta{src/app/(frontend)/} & Las páginas públicas.\\
+\ruta{src/app/(payload)/} & El panel \ruta{/admin} y la API de Payload.\\
+\ruta{src/app/api/} & Rutas propias: contacto, descargas, mapa KMZ, búsqueda, carga inicial.\\
+\ruta{src/collections/} & Colecciones del panel: noticias, documentos, proyectos, capas KMZ, mensajes, usuarios.\\
+\ruta{src/globals/} & Los textos editables de cada página, Contacto, Configuración y la Guía de uso.\\
+\ruta{src/content/defaults/} & Textos por defecto cuando el panel está vacío.\\
+\ruta{src/migrations/} & Cambios de esquema de la base, en orden.\\
+\ruta{src/lib/} & Utilidades: permisos, correo, mapa y KMZ, límites de envío.\\
+\ruta{tests/} & Pruebas de extremo a extremo y datos de prueba.\\
+\ruta{scripts/} & Respaldo de archivos, restauración y utilidades de base de datos.\\
+\ruta{.github/workflows/} & Pruebas automáticas y respaldo diario.\\
+\ruta{vercel.json} & Comando de compilación (migraciones y compilación).\\
+\ruta{docs/manual-usuario/} & Manual de Usuario (fuente, herramientas, PDF y Word).\\
+\ruta{docs/traspaso/} & Protocolo de entrega.\\
+\ruta{docs/tecnico/} & Esta guía.\\
+\ruta{docs/INTERFAZ_ADMIN_TECNICA.md} & Descripción detallada de cómo está construido el panel.\\
+\ruta{docs/EDITABILIDAD_TOTAL.md} & El estándar que sigue el sitio: todo texto visible se edita en el panel.\\
+\ruta{docs/archivo/} & Documentos antiguos, reemplazados por los tres actuales. Solo como historia.\\
+\bottomrule
+\end{tabularx}
+
+\end{document}

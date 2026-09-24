@@ -60,3 +60,9 @@ next-env.d.ts
 docs/manual-usuario/capturas/*.png
 docs/manual-usuario/salida/
 docs/manual-usuario/herramientas/__pycache__/
+
+# Copias locales de scripts/respaldar-archivos.mjs (datos del sitio; no van al repositorio)
+respaldo-archivos-*/
+
+# Archivos temporales de Word mientras un .docx está abierto
+~$*
