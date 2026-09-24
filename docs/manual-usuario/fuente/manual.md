@@ -1,7 +1,7 @@
 ---
 titulo: Manual de Usuario del Sitio Web H2V Araucanía
 subtitulo: Cómo administrar y editar completamente el sitio desde el panel de administración
-fecha: 23 de septiembre de 2026
+fecha: 24 de septiembre de 2026
 destinatario: Secretaría Regional Ministerial de Energía, Región de La Araucanía
 elaborado: Bien Público "Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde" (código CORFO 24BP-269085). Beneficiario: CODESSER. Coejecutor: Universidad de Talca.
 sitio: https://h2v-araucania.vercel.app
@@ -56,6 +56,7 @@ La siguiente tabla es el "mapa" que conviene tener a mano: qué se ve en el siti
 | Noticias | Contenido → **Noticias** |
 | Comunidad, Transparencia, Mediateca | Páginas → la página del mismo nombre |
 | Contacto: textos, formulario, correo y datos institucionales | Configuración → **Contacto** |
+| Contacto: los mensajes que escriben los visitantes en el formulario | Contenido → **Mensajes de contacto** (solo se leen; vea "Leer los mensajes del formulario de Contacto") |
 | Pie de página (títulos, derechos) y página "no encontrada" (404) | Configuración → **Configuración General** |
 | Política de Privacidad y Accesibilidad | Páginas → **Política de Privacidad** / **Accesibilidad** |
 | Nombre del sitio en la pestaña del navegador y en Google | Configuración → **Configuración General** |
@@ -69,7 +70,7 @@ Hay unas pocas cosas que, a propósito, no se editan desde el panel:
 - **El diseño**: colores, tipografías, disposición de los elementos y animaciones.
 - **El menú de navegación** (Inicio, Programa, Hidrógeno Verde, Proyectos, Recursos, Noticias, Contacto) y la estructura de las páginas.
 - **El crédito obligatorio a CORFO** ("Proyecto apoyado por" con el logo de CORFO y del programa Desarrollo Productivo Sostenible), que exige el Manual de Comunicaciones de CORFO y por eso está fijo, para que no pueda borrarse por error.
-- **La dirección de correo a la que llegan los mensajes del formulario de contacto** (se configura en el servidor, no en el panel; vea el Anexo D).
+- **La dirección de correo a la que llegan los avisos del formulario de contacto** (se configura en el servidor, no en el panel; vea el Anexo D). Los mensajes mismos sí se leen en el panel, en Contenido → Mensajes de contacto.
 
 Para cualquiera de esas cosas hay que pedir el cambio al soporte técnico (vea el Anexo D, "Ficha técnica de la plataforma").
 
@@ -97,17 +98,23 @@ Para cualquiera de esas cosas hay que pedir el cambio al soporte técnico (vea e
 
 ## Olvidé mi contraseña
 
-1. En la pantalla de entrada, haga clic en el enlace **¿Olvidaste tu contraseña?** (4 en la figura anterior).
+Pida a un Administrador que le deje escribir una contraseña nueva, **con usted presente**:
+
+1. El Administrador abre **Usuarios** (grupo Cuentas y acceso), hace clic en su correo y pulsa **Cambiar contraseña**.
+2. Usted escribe la contraseña nueva en **Nueva Contraseña** y otra vez en **Confirmar Contraseña**. El Administrador no mira.
+3. El Administrador pulsa **Guardar**. Usted ya puede entrar con la contraseña nueva.
+
+> ⚠️ Atención: la pantalla de entrada tiene un enlace **¿Olvidaste tu contraseña?** (4 en la figura anterior), que envía un correo para crear una contraseña nueva. Mientras el sitio no tenga dominio propio, **ese correo no llega a los correos institucionales**: solo llega a la dirección con que se creó el servicio de correo del sitio. Cuando el sitio tenga su dominio (Anexo D), cada persona podrá usarlo sola, así:
+
+1. En la pantalla de entrada, haga clic en **¿Olvidaste tu contraseña?**.
 2. Escriba el correo electrónico de su cuenta (1) y haga clic en el botón de enviar (2).
 3. Revise su bandeja de entrada (y la carpeta de correo no deseado). Recibirá un mensaje con un enlace para crear una contraseña nueva. El enlace dura un tiempo limitado; si expiró, repita el procedimiento.
 
 ![Recuperación de contraseña: correo (1) y botón de enviar (2).](02-olvide-clave.png)
 
-> ℹ️ Nota: el correo de recuperación lo envía el sitio automáticamente. Mientras el programa no tenga su propio dominio verificado, el remitente puede ser una dirección genérica del servicio de correo; revise la carpeta de correo no deseado si no lo ve en un par de minutos.
-
 ## Me bloqueé: "demasiados intentos"
 
-Por seguridad, después de **5 intentos fallidos** de contraseña la cuenta se bloquea durante **10 minutos**. No es una falla: espere 10 minutos y vuelva a intentar. Si no recuerda la contraseña, use "¿Olvidaste tu contraseña?". Un Administrador también puede desbloquear la cuenta de inmediato desde Usuarios (botón **Forzar Desbloqueo** en la ficha del usuario).
+Por seguridad, después de **5 intentos fallidos** de contraseña la cuenta se bloquea durante **10 minutos**. No es una falla: espere 10 minutos y vuelva a intentar. Si no recuerda la contraseña, vea "Olvidé mi contraseña". Un Administrador también puede desbloquear la cuenta de inmediato desde Usuarios (botón **Forzar Desbloqueo** en la ficha del usuario).
 
 ## Cambiar mi contraseña y cerrar sesión
 
@@ -518,6 +525,25 @@ En **Sistema → Archivos multimedia** están todos los archivos subidos al siti
 
 > ⚠️ Atención: eliminar un archivo que está en uso (por ejemplo, la portada de una noticia) deja esa noticia sin imagen. Por eso solo los Administradores pueden eliminar archivos; antes de hacerlo, compruebe que no se usa.
 
+## Leer los mensajes del formulario de Contacto
+
+Todo lo que los visitantes escriben en el formulario de la página **Contacto** queda guardado en el panel, aunque el aviso por correo no llegue.
+
+1. Menú lateral → grupo **Contenido** → **Mensajes de contacto** (1). Los mensajes más recientes aparecen primero (2).
+2. La columna **Atendido** (3) muestra cuáles ya se respondieron ("verdadero") y cuáles no ("falso").
+
+![Mensajes de contacto: dónde está en el menú (1), el mensaje más reciente (2) y la columna Atendido (3).](18-mensajes-lista.png)
+
+3. Haga clic en el nombre de la persona para abrir su mensaje (2).
+4. Para responder, escríbale desde su propio correo a la dirección que aparece en **Correo de la persona** (1). El panel no envía respuestas.
+5. Cuando haya respondido, marque **Atendido** (3) y pulse **Guardar** (5).
+
+![Un mensaje abierto: correo de la persona (1), mensaje (2), casilla Atendido (3), si el aviso por correo llegó (4) y Guardar (5).](19-mensaje-detalle.png)
+
+> 💡 Consejo: revise esta sección una o dos veces por semana. Mientras el sitio no tenga dominio propio, el aviso por correo puede no llegar; el campo **Aviso por correo** (4) indica si llegó.
+
+> 🔒 Seguridad: los mensajes contienen datos personales (el nombre y el correo de quien escribe). Úselos solo para responder y no los comparta. Solo un Administrador puede eliminarlos.
+
 <<<salto>>>
 
 # Editar los textos de cada página
@@ -651,19 +677,21 @@ En **Ayuda → Guía de uso** hay un resumen de este manual, siempre disponible 
 | Rol | Qué puede hacer | Para quién |
 |---|---|---|
 | **Administrador (acceso total)** | Todo: crear y editar contenido, editar las Páginas, la Configuración, crear y eliminar usuarios, eliminar contenido y archivos. | La persona responsable del sitio en la SEREMI (y su respaldo). |
-| **Editor (puede publicar contenido)** | Crear y editar noticias, documentos, eventos, proyectos, miembros, capas KMZ y los textos de las Páginas. **No** puede eliminar, **no** ve Usuarios y **no** puede cambiar la Configuración. | Quien publica contenido con frecuencia. |
+| **Editor (puede publicar contenido)** | Crear y editar noticias, documentos, eventos, proyectos, miembros, capas KMZ y los textos de las Páginas; leer los mensajes de contacto. **No** puede eliminar, **no** ve Usuarios y **no** puede cambiar la Configuración. | Quien publica contenido con frecuencia. |
 | **Registrado** | Solo usa el sitio público. **No entra al panel.** | Hoy no se usa: los documentos se descargan sin cuenta y el sitio no permite que los visitantes se registren solos. |
 
 > 🔒 Seguridad: mantenga **al menos dos** cuentas de Administrador (titular y respaldo) y no más de las necesarias. Dé rol Editor a quien solo publica contenido.
 
 ## Crear un usuario
 
-Solo un Administrador puede crear usuarios.
+Solo un Administrador puede crear usuarios. Hágalo **con la persona presente**, frente al mismo computador: ella misma escribirá su contraseña.
 
 1. Menú lateral → **Usuarios** (grupo Cuentas y acceso) → **Crear nuevo**.
-2. Complete **Correo electrónico** (1); en **Nueva Contraseña** (2) y **Confirmar Contraseña** (3) ponga una contraseña provisional cualquiera, que nadie necesita conocer; luego **Nombre completo** (4) y, en la barra lateral, el **Rol** (5). **Institución** es opcional.
-3. Pulse **Guardar** (6).
-4. **No le comunique la contraseña.** Pídale que, en la pantalla de entrada, use **¿Olvidaste tu contraseña?** con su correo: recibirá un enlace para crear la suya. Así solo ella la conoce.
+2. Complete **Correo electrónico** (1), **Nombre completo** (4) y, en la barra lateral, el **Rol** (5). **Institución** es opcional.
+3. Pásele el teclado: **ella misma** escribe su contraseña en **Nueva Contraseña** (2) y otra vez en **Confirmar Contraseña** (3). Usted no mira.
+4. Pulse **Guardar** (6). La persona ya puede entrar con su correo y su contraseña.
+
+> 🔒 Seguridad: nunca dicte ni envíe una contraseña por correo o mensajería. Si la persona no puede estar presente, cree la cuenta cuando pueda estarlo. Cuando el sitio tenga dominio propio, también podrá crear su contraseña a distancia con **¿Olvidaste tu contraseña?** (vea "Olvidé mi contraseña").
 
 ![Lista de usuarios: Crear nuevo (1) y las cuentas existentes (2).](30-usuarios-lista.png)
 
@@ -702,13 +730,12 @@ El detalle completo, con casillas para marcar cada paso y las hojas para firmar 
 
 **En la reunión** (unos 45 minutos):
 
-1. El Administrador crea un usuario para cada persona, con rol **Editor** (vea "Crear un usuario"). Como contraseña pone una provisional que nadie necesita conocer.
-2. Cada persona crea su propia contraseña: en la pantalla de entrada del panel, **¿Olvidaste tu contraseña?** → escribe su correo → abre el mensaje que recibe → define su contraseña.
-3. Cada persona entra al panel y comprueba que ve el Panel de Control.
-4. Práctica guiada con este manual: cada persona crea una noticia de prueba, la publica y la ve en el sitio. Después un Administrador la elimina (un Editor no puede eliminar contenido, y eso es a propósito).
-5. Se entrega este manual (PDF y Word) y el protocolo de entrega.
-6. El Administrador del programa cambia su propia contraseña por una nueva y robusta.
-7. Se firma la **constancia de la Fase 1** (está en el protocolo).
+1. El Administrador crea un usuario para cada persona, con rol **Editor** (vea "Crear un usuario"). Al llegar a la contraseña le pasa el teclado: **cada persona escribe la suya**, sin que nadie la vea.
+2. Cada persona entra al panel con su correo y su contraseña, y comprueba que ve el Panel de Control.
+3. Práctica guiada con este manual: cada persona crea una noticia de prueba, la publica y la ve en el sitio. Después un Administrador la elimina (un Editor no puede eliminar contenido, y eso es a propósito). También revisan juntos **Mensajes de contacto**.
+4. Se entrega este manual (PDF y Word) y el protocolo de entrega.
+5. El Administrador del programa cambia su propia contraseña por una nueva y robusta.
+6. Se firma la **constancia de la Fase 1** (está en el protocolo).
 
 > ✅ Resultado: la SEREMI publica el contenido del sitio con sus propios usuarios. El programa sigue a cargo del funcionamiento del sitio y de sus respaldos.
 
@@ -741,12 +768,12 @@ El detalle completo, con casillas para marcar cada paso y las hojas para firmar 
 | El archivo no se sube o tarda mucho | Es muy pesado | Reduzca el tamaño (imágenes: menos de 5 MB; PDF: comprímalo). |
 | El punto del proyecto aparece en el mar o en otro país | Latitud y longitud invertidas o sin signo negativo | Revise las coordenadas: en Chile ambas son negativas; la latitud va primero. |
 | No puedo entrar: "demasiados intentos" | Bloqueo por 5 intentos fallidos | Espere 10 minutos o pida a un Administrador que use **Forzar Desbloqueo**. |
-| No me llega el correo de recuperación de contraseña | Llegó a correo no deseado, o el correo no es el de la cuenta | Revise la carpeta de no deseado; confirme el correo con un Administrador. |
+| No me llega el correo de "¿Olvidaste tu contraseña?" | Mientras el sitio no tenga dominio propio, ese correo no llega a los correos institucionales | Pida a un Administrador que le deje escribir una contraseña nueva (vea "Olvidé mi contraseña"). |
 | No veo Usuarios ni Configuración en el menú | Su rol es Editor | Es lo esperado. Pida a un Administrador el cambio. |
 | Me equivoqué al editar una noticia o evento | — | Pestaña **Versiones** → elija la versión anterior → **Restaurar**. |
 | Borré algo por error | Eliminar es permanente | No se puede deshacer desde el panel. Contacte al soporte técnico: puede recuperarse desde el respaldo de la base de datos. |
 | La página del panel se ve en blanco o con un error | Falla temporal o cambio técnico | Recargue la página. Si persiste, anote la dirección y la hora y avise al soporte técnico. |
-| Los mensajes del formulario de contacto no llegan | La dirección de destino está en el servidor (`CONTACT_EMAIL`) o el servicio de correo no está activo | Pida al soporte técnico que revise la variable y el servicio de correo (Anexo D). |
+| No me llegan por correo los mensajes del formulario de contacto | El aviso por correo depende de un servicio que aún no tiene dominio propio | Los mensajes no se pierden: léalos en Contenido → **Mensajes de contacto**. Para recibir también el aviso por correo, el soporte técnico debe configurar el dominio (Anexo D). |
 
 <<<salto>>>
 
@@ -774,11 +801,13 @@ El detalle completo, con casillas para marcar cada paso y las hojas para firmar 
 | Agregar una institución participante (con logo) | Configuración → Configuración General → Logos institucionales (portada y pie de página) y Páginas → Quiénes Somos → Instituciones participantes (página Quiénes Somos) |
 | Cambiar el correo o la ubicación de contacto | Configuración → Contacto → Datos institucionales |
 | Cambiar las opciones de asunto del formulario | Configuración → Contacto → Formulario → Opciones de asunto |
+| Leer lo que escriben los visitantes en el formulario de Contacto | Contenido → Mensajes de contacto → (el mensaje) → responder desde su correo → marcar Atendido → Guardar |
 | Cambiar textos del pie de página | Configuración → Configuración General |
 | Cambiar el nombre del sitio (pestaña del navegador) | Configuración → Configuración General → Nombre del sitio |
 | Editar la Hoja de Ruta | Páginas → Hoja de Ruta → Hitos del timeline |
 | Editar el contenido educativo de H2V | Páginas → Hidrógeno Verde |
-| Crear una cuenta para un colega | Cuentas y acceso → Usuarios → Crear nuevo |
+| Crear una cuenta para un colega | Cuentas y acceso → Usuarios → Crear nuevo (con la persona presente: ella escribe su contraseña) |
+| Ponerle una contraseña nueva a quien la olvidó | Cuentas y acceso → Usuarios → (su correo) → Cambiar contraseña (con la persona presente: ella la escribe) → Guardar |
 | Cambiar mi contraseña | Mi cuenta (círculo superior derecho) → Cambiar contraseña |
 | Ver cuántas veces se descargó un documento | Contenido → Documentos → (el documento) → campo Descargas; o Sistema → Registro de Descargas |
 | Leer la guía rápida dentro del panel | Ayuda → Guía de uso |
@@ -832,8 +861,8 @@ Esta ficha resume la información que el equipo informático de la SEREMI necesi
 | Alojamiento (hosting) | Vercel. Cada cambio en la rama principal del repositorio se despliega solo. | Proyecto `h2v-araucania` en Vercel; dirección actual `https://h2v-araucania.vercel.app` (a reemplazar por el dominio institucional cuando se contrate). |
 | Base de datos | PostgreSQL administrado (Neon). Contiene todo el contenido editable. | Conexión configurada en Vercel (variable `DATABASE_URI`). |
 | Archivos subidos | Vercel Blob (almacenamiento de imágenes y PDF subidos desde el panel). | Conectado al proyecto en Vercel (`BLOB_READ_WRITE_TOKEN`). |
-| Correo saliente | Resend: envía la recuperación de contraseña y los mensajes del formulario de contacto. | Variable `RESEND_API_KEY` en Vercel. Pendiente: verificar el dominio institucional en Resend para que el remitente sea del dominio propio. |
-| Destino del formulario de contacto | Variable `CONTACT_EMAIL` en Vercel (si no existe, se usa un correo por defecto). **No se edita desde el panel.** | Vercel → Settings → Environment Variables. |
+| Correo saliente | Resend: envía la recuperación de contraseña y el aviso de cada mensaje del formulario de contacto. Mientras no haya un dominio verificado, usa la dirección de prueba de Resend, que **solo entrega al correo dueño de la cuenta Resend**. | Variable `RESEND_API_KEY` en Vercel. Con un dominio verificado en Resend, crear la variable `EMAIL_FROM` (por ejemplo `no-responder@dominio`) y volver a publicar. |
+| Destino del formulario de contacto | Variable `CONTACT_EMAIL` en Vercel (si no existe, se usa un correo por defecto). **No se edita desde el panel.** Todos los mensajes quedan además guardados en el panel (Contenido → Mensajes de contacto), lleguen o no por correo. | Vercel → Settings → Environment Variables. |
 | Actualizaciones del esquema | Migraciones disciplinadas que corren en cada despliegue (`payload migrate` en el comando de build de Vercel). No se hacen cambios manuales en la base de datos. | `src/migrations/` en el repositorio. |
 | Pruebas automáticas | Suite e2e (Playwright) que verifica que el panel abre, que los contenidos reales se editan y que los cambios se reflejan en el sitio. | `tests/e2e/` en el repositorio. |
 | Respaldo | La base de datos Neon mantiene respaldos y historial; además, un respaldo diario automatizado (`pg_dump`) se guarda fuera de Neon como artefacto de GitHub Actions, con 90 días de retención (cómo restaurar: `scripts/restore-db.md` del repositorio). El contenido también queda versionado en el panel (noticias y eventos). | Consola de Neon y pestaña Actions del repositorio en GitHub. |
@@ -850,3 +879,4 @@ Qué no es editable desde el panel (requiere a un desarrollador): el diseño y l
 | 21 de agosto de 2026 | Primera versión completa, con capturas del panel en producción (versión del sitio de agosto de 2026). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
 | 28 de agosto de 2026 | Nueva sección sobre archivos KMZ del mapa; anexos A, B y D actualizados (capas KMZ, interruptor de las funciones y respaldo diario automatizado). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
 | 23 de septiembre de 2026 | Sección de archivos KMZ reescrita paso a paso (Google Earth en el navegador, mensajes de error, cambiar o quitar una forma). Nuevo capítulo "Traspaso del sitio a la SEREMI". Usuarios: cada persona crea su propia contraseña. Figuras de noticia y evento actualizadas. | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
+| 24 de septiembre de 2026 | Nueva sección "Leer los mensajes del formulario de Contacto": los mensajes quedan guardados en el panel. Contraseñas: cada persona escribe la suya al crear la cuenta, porque el correo de recuperación aún no llega a correos institucionales. | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |

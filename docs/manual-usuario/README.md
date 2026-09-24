@@ -28,7 +28,8 @@ y `pypdfium2`, y TeX Live (XeLaTeX, latexmk).
    `node docs/manual-usuario/herramientas/capturar.mjs`, luego `capturar_extra.mjs` y `capturar_extra2.mjs`
    (esta última crea contenido de muestra en la base LOCAL y toma las páginas públicas desde producción).
    Figuras de la sección KMZ (13b, 13c, 46b): `capturar_kmz.mjs` (requiere el servidor local con
-   `NEXT_PUBLIC_FEAT_MAPA_PLUS=true`). Figuras de noticia y evento (06, 15): `capturar_ayuda_borradores.mjs`.
+   `NEXT_PUBLIC_FEAT_MAPA_PLUS=true`). Figuras de noticia y evento (06, 15): `capturar_ayuda_borradores.mjs`. Figuras de los mensajes de
+   contacto (18, 19): `capturar_mensajes.mjs` (requiere algunos mensajes de ejemplo en la base local).
 2. **Anotar**: `python3 docs/manual-usuario/herramientas/anotar.py` → `figuras/`.
 3. **Texto**: editar `fuente/manual.md`.
 4. **Generar**: `python3 docs/manual-usuario/herramientas/build_docx.py` y

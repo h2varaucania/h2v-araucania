@@ -96,7 +96,7 @@
 {\color{h2vverde}\rule{\textwidth}{1.2pt}}\vspace{0.7cm}
 
 \begin{tabular}{@{}p{3.4cm}p{12.4cm}@{}}
-\textbf{\color{h2vazul}Fecha} & 23 de septiembre de 2026 \\
+\textbf{\color{h2vazul}Fecha} & 24 de septiembre de 2026 \\
 \textbf{\color{h2vazul}Destinatario} & Secretaría Regional Ministerial de Energía, Región de La Araucanía \\
 \textbf{\color{h2vazul}Elaborado por} & Bien Público ``Empoderando a los sectores Agroforestal y Productivo con Hidrógeno Verde'' (código CORFO 24BP-269085). Beneficiario: CODESSER. Coejecutor: Universidad de Talca. \\
 \textbf{\color{h2vazul}Sitio web} & \url{https://h2v-araucania.vercel.app} \\
@@ -170,8 +170,8 @@ En la cuenta de Google \texttt{h2varaucania@gmail.com}, entrar a \textbf{Segurid
 \item \paso{Preparar el Manual de Usuario}{\programa}
 Tener a mano el Manual de Usuario del sitio, en PDF y en Word, para entregarlo.
 
-\item \paso{Acceso al correo institucional}{\seremi}
-Cada persona asiste con acceso a su correo institucional: lo necesitará para crear su contraseña.
+\item \paso{Asistir en persona}{\seremi}
+Cada persona asiste presencialmente: escribirá su propia contraseña en el computador del programa, sin que nadie la vea. Su correo institucional será su nombre de usuario.
 \end{pasos}
 
 % ════════════════════════════════════════════════════════════════
@@ -182,16 +182,16 @@ Cada persona asiste con acceso a su correo institucional: lo necesitará para cr
 
 \begin{pasos}
 \item \paso{Crear un usuario por persona}{\programa}
-En el panel: \textbf{Cuentas y acceso} → \textbf{Usuarios} → \textbf{Crear nuevo}. Completar el correo institucional y el nombre completo, y elegir el rol \textbf{Editor}. Como contraseña, poner una provisional cualquiera que nadie necesita conocer: la persona creará la suya en el paso siguiente.
+En el panel: \textbf{Cuentas y acceso} → \textbf{Usuarios} → \textbf{Crear nuevo}. Completar el correo institucional y el nombre completo, y elegir el rol \textbf{Editor}. Al llegar a la contraseña, pasarle el teclado a la persona.
 
-\item \paso{Cada persona crea su propia contraseña}{\seremi}
-En \url{https://h2v-araucania.vercel.app/admin}, hacer clic en \textbf{¿Olvidaste tu contraseña?}, escribir el correo y enviar. Llega un mensaje con un enlace para definir la contraseña. Si no llega en un par de minutos, revisar la carpeta de correo no deseado.
+\item \paso{Cada persona escribe su propia contraseña}{\ambos}
+Cada persona escribe su contraseña en \textbf{Nueva Contraseña} y otra vez en \textbf{Confirmar Contraseña}, sin que nadie la vea. Luego el programa pulsa \textbf{Guardar}. El enlace \textbf{¿Olvidaste tu contraseña?} todavía no sirve para esto: mientras el sitio no tenga dominio propio, su correo no llega a los correos institucionales.
 
 \item \paso{Primera entrada al panel}{\seremi}
 Cada persona entra con su correo y su contraseña, y comprueba que ve el Panel de Control.
 
 \item \paso{Práctica guiada}{\ambos}
-Con el manual abierto, cada persona crea una noticia de prueba, la publica y la ve en el sitio. Después, el programa la elimina: un Editor no puede eliminar contenido, y eso es a propósito.
+Con el manual abierto, cada persona crea una noticia de prueba, la publica y la ve en el sitio. Después, el programa la elimina: un Editor no puede eliminar contenido, y eso es a propósito. También revisan juntos dónde quedan los mensajes del formulario de Contacto: \textbf{Contenido} → \textbf{Mensajes de contacto}.
 
 \item \paso{Entregar el Manual de Usuario}{\programa}
 Entregar el manual en PDF y en Word. Incluye un capítulo de traspaso que resume este protocolo.
@@ -208,7 +208,7 @@ Completar y firmar la constancia de la página siguiente.
 
 \begin{recuadro}{fondoverde}{h2vverde}
 \titulorecuadro{h2vverde}{Qué puede y qué no puede hacer un Editor}
-\textbf{Puede:} crear, editar y publicar noticias, eventos, documentos y proyectos; editar los textos de las páginas; subir imágenes, documentos y los archivos KMZ del mapa.\par
+\textbf{Puede:} crear, editar y publicar noticias, eventos, documentos y proyectos; editar los textos de las páginas; subir imágenes, documentos y los archivos KMZ del mapa; leer los mensajes del formulario de Contacto.\par
 \textbf{No puede:} eliminar contenido ni archivos; crear o administrar usuarios; cambiar los datos institucionales de contacto ni la configuración general del sitio.\par
 Estas limitaciones protegen el sitio mientras se aprende. En la Fase 2, el responsable técnico pasa a ser Administrador.
 \end{recuadro}
@@ -276,7 +276,7 @@ En Vercel, reemplazar el valor de la variable \texttt{PAYLOAD\_SECRET} por un te
 El plan gratuito de Vercel está destinado, según sus propias condiciones, solo a uso personal y no comercial. Para un sitio institucional corresponde un plan pagado de Vercel o un servidor propio de la SEREMI; el sitio ya incluye la configuración necesaria para esto último.
 
 \item \paso{Dirección propia (si se contrata)}{\ambos}
-Apuntar el dominio al sitio desde Vercel, actualizar la variable \texttt{NEXT\_PUBLIC\_SITE\_URL} con la nueva dirección y volver a publicar.
+Apuntar el dominio al sitio desde Vercel, actualizar la variable \texttt{NEXT\_PUBLIC\_SITE\_URL} con la nueva dirección y volver a publicar. Además, verificar el dominio en Resend y crear en Vercel la variable \texttt{EMAIL\_FROM} con una dirección de ese dominio. Así los correos del sitio (recuperar contraseña y avisos del formulario de Contacto) llegan a cualquier persona.
 
 \item \paso{Ajustar los usuarios del panel}{\programa}
 Dar rol \textbf{Administrador} al responsable técnico de la SEREMI, y retirar o degradar las cuentas del programa.
@@ -323,7 +323,7 @@ Se deja constancia de que todas las contraseñas fueron creadas por la SEREMI du
 \fila{Vercel} & Aloja y publica el sitio; guarda las imágenes y archivos subidos. & Con la cuenta central de Google (equipo \texttt{h2varaucania-1077}). & Fase 2\\
 \fila{Neon} & Base de datos con todo el contenido. & Con la cuenta central de Google. & Fase 2\\
 \fila{GitHub} & Guarda el código y ejecuta el respaldo diario de la base de datos. & Cuenta \texttt{h2varaucania}, con contraseña y verificación en dos pasos. & Fase 2\\
-\fila{Resend} & Envía los correos del sitio. & Por confirmar con qué cuenta se creó. & Fase 2\\
+\fila{Resend} & Envía los correos del sitio. Sin dominio propio, solo entrega al correo dueño de la cuenta. & Por confirmar con qué cuenta se creó. & Fase 2\\
 \fila{Dirección propia} & Dirección definitiva del sitio. & Aún no contratada. & Cuando se contrate\\
 \bottomrule
 \end{tabularx}
@@ -335,7 +335,7 @@ Se deja constancia de que todas las contraseñas fueron creadas por la SEREMI du
 
 \begin{recuadro}{fondogris}{h2vazul}
 \titulorecuadro{h2vazul}{Una persona olvidó su contraseña o quedó bloqueada}
-Usar \textbf{¿Olvidaste tu contraseña?} en la pantalla de entrada. Después de 5 intentos fallidos la cuenta se bloquea 10 minutos: basta esperar, o un Administrador puede usar \textbf{Forzar Desbloqueo} en la ficha del usuario.
+Un Administrador abre la ficha de la persona en \textbf{Usuarios} → \textbf{Cambiar contraseña}, y la persona escribe la nueva sin que nadie la vea. (Mientras el sitio no tenga dominio propio, el correo de \textbf{¿Olvidaste tu contraseña?} no llega a los correos institucionales.) Después de 5 intentos fallidos la cuenta se bloquea 10 minutos: basta esperar, o un Administrador puede usar \textbf{Forzar Desbloqueo} en la ficha del usuario.
 \end{recuadro}
 \begin{recuadro}{fondogris}{h2vazul}
 \titulorecuadro{h2vazul}{Se perdió el teléfono de la cuenta central}
