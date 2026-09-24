@@ -117,7 +117,7 @@ export const PaginaInicio: GlobalConfig = {
       label: 'Sección "Últimas Noticias"',
       fields: [
         { name: 'kicker', type: 'text', maxLength: 30, defaultValue: 'Actualidad', label: 'Kicker', admin: { description: 'Palabra pequeña en verde sobre el título. Ej: "Actualidad"' } },
-        { name: 'titulo', type: 'text', maxLength: 60, defaultValue: 'Ultimas Noticias', label: 'Título', admin: { description: 'Título de la sección de noticias en la portada.' } },
+        { name: 'titulo', type: 'text', maxLength: 60, defaultValue: 'Últimas Noticias', label: 'Título', admin: { description: 'Título de la sección de noticias en la portada.' } },
         { name: 'verTodas', type: 'text', maxLength: 30, defaultValue: 'Ver todas →', label: 'Texto del enlace "ver todas"', admin: { description: 'Enlace a la página de noticias. Ej: "Ver todas →"' } },
       ],
     },

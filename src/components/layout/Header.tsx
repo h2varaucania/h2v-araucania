@@ -18,16 +18,16 @@ const allNavItems: NavItem[] = [
   {
     label: 'Programa', href: '/programa/quienes-somos',
     children: [
-      { label: 'Quienes Somos', href: '/programa/quienes-somos' },
+      { label: 'Quiénes Somos', href: '/programa/quienes-somos' },
       { label: 'Gobernanza', href: '/programa/gobernanza' },
       { label: 'Comunidad', href: '/programa/comunidad', featureFlag: 'comunidad' },
       { label: 'Transparencia', href: '/programa/transparencia', featureFlag: 'transparencia' },
     ],
   },
   {
-    label: 'Hidrogeno Verde', href: '/hidrogeno-verde', featureFlag: 'hidrogenoVerde',
+    label: 'Hidrógeno Verde', href: '/hidrogeno-verde', featureFlag: 'hidrogenoVerde',
     children: [
-      { label: 'Que es el H2V?', href: '/hidrogeno-verde' },
+      { label: '¿Qué es el H2V?', href: '/hidrogeno-verde' },
       { label: 'Sectores Productivos', href: '/hidrogeno-verde/sectores', featureFlag: 'sectores' },
       { label: 'Capital Humano', href: '/hidrogeno-verde/capital-humano', featureFlag: 'capitalHumano' },
       { label: 'Hoja de Ruta', href: '/hidrogeno-verde/hoja-de-ruta', featureFlag: 'hojaDeRuta' },
@@ -222,14 +222,14 @@ export default function Header() {
         </div>
       </div>
     <header className="bg-h2v-blue sticky top-0 z-40 shadow-md" role="banner">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Navegacion principal">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Navegación principal">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center shrink-0" aria-label="H2V Araucania - Inicio">
+          <Link href="/" className="flex items-center shrink-0" aria-label="H2V Araucanía - Inicio">
             <span className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 shadow-sm">
               <Image
                 src="/logos/BP H2V Araucanía - Logo Bien Público.png"
-                alt="H2V Araucania - Bien Publico Agro Productivo Araucania"
+                alt="H2V Araucanía - Bien Público Agro Productivo Araucanía"
                 width={710}
                 height={555}
                 priority
@@ -255,7 +255,7 @@ export default function Header() {
             className="lg:hidden p-2 text-white/80 hover:text-white"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-expanded={mobileOpen}
-            aria-label={mobileOpen ? 'Cerrar menu' : 'Abrir menu'}
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
           >
             {mobileOpen ? (
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">

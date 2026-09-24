@@ -20,12 +20,12 @@ export const metadata: Metadata = {
 };
 
 const defaultCards = [
-  { titulo: "Quienes Somos", descripcion: "Conoce el equipo, el Consejo Directivo y las instituciones que impulsan el hidrogeno verde en La Araucania.", enlace: "/programa/quienes-somos", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
-  { titulo: "Gobernanza", descripcion: "Estructura de gobernanza del programa: niveles estrategico y operativo, actores y roles.", enlace: "/programa/gobernanza", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
-  { titulo: "Mapa de Proyectos", descripcion: "Visualiza proyectos de hidrogeno verde en la region y a nivel nacional.", enlace: "/proyectos", icon: "M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" },
-  { titulo: "Documentos", descripcion: "Accede a estudios, diagnosticos, documentos tecnicos y material de difusion del programa.", enlace: "/recursos/documentos", icon: "M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" },
-  { titulo: "Noticias", descripcion: "Ultimas noticias, seminarios, talleres y avances del programa de hidrogeno verde.", enlace: "/noticias", icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" },
-  { titulo: "Contacto", descripcion: "Escribenos para consultas, colaboraciones o mas informacion sobre el programa.", enlace: "/contacto", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
+  { titulo: "Quiénes Somos", descripcion: "Conoce el equipo, el Consejo Directivo y las instituciones que impulsan el hidrógeno verde en La Araucanía.", enlace: "/programa/quienes-somos", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
+  { titulo: "Gobernanza", descripcion: "Estructura de gobernanza del programa: niveles estratégico y operativo, actores y roles.", enlace: "/programa/gobernanza", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
+  { titulo: "Mapa de Proyectos", descripcion: "Visualiza proyectos de hidrógeno verde en la región y a nivel nacional.", enlace: "/proyectos", icon: "M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" },
+  { titulo: "Documentos", descripcion: "Accede a estudios, diagnósticos, documentos técnicos y material de difusión del programa.", enlace: "/recursos/documentos", icon: "M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" },
+  { titulo: "Noticias", descripcion: "Últimas noticias, seminarios, talleres y avances del programa de hidrógeno verde.", enlace: "/noticias", icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" },
+  { titulo: "Contacto", descripcion: "Escríbenos para consultas, colaboraciones o más información sobre el programa.", enlace: "/contacto", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
 ];
 
 // Financiador Corfo — destacado, con leyenda "Proyecto apoyado por".
@@ -40,16 +40,16 @@ const apoyoCorfo = [
 const defaultParticipantes = [
   { src: "/logos/BP H2V Araucanía - Logo Codesser.png", alt: "CODESSER — Beneficiario del Bien Público" },
   { src: "/logos/BP H2V Araucanía - Logo Utalca.png", alt: "Universidad de Talca" },
-  { src: "/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png", alt: "Seremi de Energia Araucania" },
+  { src: "/logos/BP H2V Araucanía - Logo Seremi Energía Araucanía.png", alt: "Seremi de Energía Araucanía" },
   { src: "/logos/BP H2V Araucanía - Logo CES4.0.png", alt: "CES 4.0" },
   { src: "/logos/BP H2V Araucanía - Corma_logo_color.png", alt: "CORMA" },
-  { src: "/logos/BP H2V Araucanía - Logo Asoc Biomasa-Photoroom.png", alt: "Asociacion de Biomasa" },
+  { src: "/logos/BP H2V Araucanía - Logo Asoc Biomasa-Photoroom.png", alt: "Asociación de Biomasa" },
   { src: "/logos/BP H2V Araucanía - Logo FIA-Photoroom.png", alt: "FIA" },
   { src: "/logos/BP H2V Araucanía - Logo Comasa-Photoroom.png", alt: "Comasa" },
 ];
 
 export default async function Home() {
-  const hero = { titulo: 'Hidrogeno Verde en La Araucania', subtitulo: 'Plataforma informativa sobre los avances, proyectos y oportunidades del hidrogeno verde en la region de La Araucania, Chile.', ctaPrimario: 'Conozca el Programa', ctaSecundario: 'Ver Proyectos en el Mapa' };
+  const hero = { titulo: 'Hidrógeno Verde en La Araucanía', subtitulo: 'Plataforma informativa sobre los avances, proyectos y oportunidades del hidrógeno verde en la región de La Araucanía, Chile.', ctaPrimario: 'Conozca el Programa', ctaSecundario: 'Ver Proyectos en el Mapa' };
   let cards = defaultCards;
   let g: PaginaInicio | null = null;
   let instituciones = defaultParticipantes;

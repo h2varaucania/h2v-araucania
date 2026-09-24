@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import { anyone, isAdmin, isAdminOrEditor } from '@/lib/access';
+import { isAdmin, isAdminOrEditor, publicadosOSesion } from '@/lib/access';
 import { revalidaColeccion, revalidaColeccionAlBorrar } from '@/hooks/revalidate';
 
 export const Noticias: CollectionConfig = {
@@ -7,7 +7,8 @@ export const Noticias: CollectionConfig = {
   hooks: { afterChange: [revalidaColeccion(['/', '/noticias'], '/noticias')], afterDelete: [revalidaColeccionAlBorrar(['/', '/noticias'], '/noticias')] },
   labels: { singular: 'Noticia', plural: 'Noticias' },
   access: {
-    read: anyone,
+    // El público solo ve lo publicado; los borradores, quien inició sesión.
+    read: publicadosOSesion,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     // Borrar es permanente (no hay papelera): reservado a administradores (F9).

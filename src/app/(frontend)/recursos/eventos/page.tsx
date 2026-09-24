@@ -48,8 +48,7 @@ export default async function Eventos() {
               <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <p className="text-gray-400 text-lg">Proximamente se publicaran eventos del programa.</p>
-              <p className="text-gray-300 text-sm mt-2">Los eventos se gestionan desde el panel de administracion.</p>
+              <p className="text-gray-400 text-lg">Próximamente se publicarán eventos del programa.</p>
             </div>
           ) : (
             <div className="space-y-4">

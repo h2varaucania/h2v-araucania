@@ -37,11 +37,11 @@ export const Media: CollectionConfig = {
       'application/vnd.openxmlformats-officedocument.presentationml.presentation',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     ],
-    imageSizes: [
-      { name: 'thumbnail', width: 400, height: 300, position: 'centre' },
-      { name: 'card', width: 768, height: 512, position: 'centre' },
-      { name: 'hero', width: 1920, height: 1080, position: 'centre' },
-    ],
+    // Sin tamaños derivados (imageSizes), a propósito: con addRandomSuffix activo en el plugin
+    // de Vercel Blob (payload.config.ts), cada tamaño subido pisaba el nombre del original y el
+    // sitio terminaba sirviendo una versión recortada (visto el 24-09-2026). El sitio nunca usó
+    // esos tamaños: next/image optimiza el original. Las columnas sizes_* de la base quedan
+    // huérfanas (ver la migración 20260924_155206_sin_tamanos_imagen_y_tildes).
   },
   fields: [
     {

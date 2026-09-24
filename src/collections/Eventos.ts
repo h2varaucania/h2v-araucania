@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import { anyone, isAdmin, isAdminOrEditor } from '@/lib/access';
+import { isAdmin, isAdminOrEditor, publicadosOSesion } from '@/lib/access';
 import { revalidaColeccion, revalidaColeccionAlBorrar } from '@/hooks/revalidate';
 
 export const Eventos: CollectionConfig = {
@@ -7,7 +7,8 @@ export const Eventos: CollectionConfig = {
   hooks: { afterChange: [revalidaColeccion(['/recursos/eventos'])], afterDelete: [revalidaColeccionAlBorrar(['/recursos/eventos'])] },
   labels: { singular: 'Evento', plural: 'Eventos' },
   access: {
-    read: anyone,
+    // El público solo ve lo publicado; los borradores, quien inició sesión.
+    read: publicadosOSesion,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     // Borrar es permanente (no hay papelera): reservado a administradores (F9).

@@ -49,7 +49,7 @@ export default async function Noticias({ searchParams }: { searchParams: SearchP
       <section className="bg-h2v-blue text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-semibold mb-4">Noticias</h1>
-          <p className="text-lg opacity-80">Ultimas noticias y actividades del programa.</p>
+          <p className="text-lg opacity-80">Últimas noticias y actividades del programa.</p>
         </div>
       </section>
 
@@ -60,8 +60,7 @@ export default async function Noticias({ searchParams }: { searchParams: SearchP
               <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
               </svg>
-              <p className="text-gray-400 text-lg">Proximamente se publicaran noticias del programa.</p>
-              <p className="text-gray-300 text-sm mt-2">Las noticias se gestionan desde el panel de administracion.</p>
+              <p className="text-gray-400 text-lg">Próximamente se publicarán noticias del programa.</p>
             </div>
           ) : (
             noticias.map((noticia) => (
