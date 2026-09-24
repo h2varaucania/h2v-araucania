@@ -46,9 +46,9 @@ async function bajar(url, ruta, bytes) {
 const indice = { sitio: BASE, fecha: new Date().toISOString(), colecciones: {} };
 let bajados = 0, iguales = 0;
 const fallas = [];
-// Tamaños derivados que el sitio no encuentra: desde que se activó addRandomSuffix
-// (payload.config.ts), las imágenes nuevas quedan con estos tamaños inaccesibles. El sitio
-// usa el original, así que es un aviso, no una falla del respaldo.
+// Tamaños derivados que el sitio no encuentra. Desde el 24-09-2026 Media ya no genera tamaños
+// reducidos (ver src/collections/Media.ts), así que esto solo aplicaría a registros antiguos:
+// es un aviso, no una falla del respaldo.
 const avisos = [];
 
 for (const coleccion of COLECCIONES) {

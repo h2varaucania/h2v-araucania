@@ -69,9 +69,8 @@ node scripts/respaldar-archivos.mjs https://h2v-araucania.vercel.app
 
 Usa solo la API pública del sitio (no necesita claves). Deja `respaldo-archivos-AAAAMMDD/` con
 `media/`, `capas-geo/` e `indice.json`. Se puede repetir: no vuelve a bajar lo que ya está.
-Probado el 24-09-2026: 50 archivos de media (≈85 MB con sus tamaños reducidos) y 3 capas KMZ.
-El aviso "tamaños reducidos que no existen" es conocido: desde que `addRandomSuffix` está
-activo, las imágenes nuevas pierden el acceso a sus tamaños reducidos; el sitio usa el original.
+Probado el 24-09-2026: 50 archivos de media (≈85 MB) y 3 capas KMZ. Desde esa fecha las imágenes
+se guardan solo en su tamaño original (sin `imageSizes`), así que no hay tamaños reducidos que copiar.
 
 **Restaurar** (solo si se perdió el almacén Blob; procedimiento NO probado): crear o conectar un
 almacén Blob al proyecto y subir cada archivo de `media/` y `capas-geo/` con **el mismo nombre**

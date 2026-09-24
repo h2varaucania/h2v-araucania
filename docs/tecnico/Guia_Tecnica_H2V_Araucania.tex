@@ -294,7 +294,9 @@ node scripts/respaldar-archivos.mjs https://h2v-araucania.vercel.app
 \item En el panel: revisar la lista de \textbf{Usuarios} (que no haya cuentas de personas que ya no están) y los \textbf{Mensajes de contacto} sin atender.
 \end{pasos}
 
-El script deja una carpeta \var{respaldo-archivos-AAAAMMDD/} con las imágenes, los PDF, las capas KMZ y un índice. Se puede repetir: no vuelve a bajar lo que ya está. Probado el 24-09-2026: 50 archivos (unos 85~MB con los tamaños reducidos de las imágenes) y 3 capas KMZ.
+El script deja una carpeta \var{respaldo-archivos-AAAAMMDD/} con las imágenes, los PDF, las capas KMZ y un índice. Se puede repetir: no vuelve a bajar lo que ya está. Probado el 24-09-2026: 50 archivos (unos 85~MB) y 3 capas KMZ.
+
+Las imágenes se guardan en su tamaño original, sin versiones reducidas: el sitio las optimiza al mostrarlas. (Hasta el 24-09-2026 se generaban versiones reducidas y, por un efecto de \var{addRandomSuffix}, algunas imágenes quedaron apuntando a una versión recortada; se corrigen volviendo a subir el original.)
 
 \textbf{Restaurar.} Los pasos están en \ruta{scripts/restore-db.md}. La restauración de la base está probada; la de los archivos está descrita, pero no probada.
 
@@ -351,6 +353,7 @@ npm run lint && npx tsc --noEmit && npm test && npm run build
 \fila{Bloqueo de entrada} & 5 intentos fallidos bloquean la cuenta 10 minutos. El panel entra solo con correo y contraseña: exigir contraseñas largas.\\
 \fila{Formulario de Contacto} & Máximo 5 mensajes cada 15 minutos por dirección IP. Los mensajes solo los leen Administradores y Editores; nadie puede crearlos por la API.\\
 \fila{Cabeceras de seguridad} & Content-Security-Policy, Strict-Transport-Security, X-Frame-Options (DENY), Referrer-Policy y Permissions-Policy (\ruta{next.config.ts}).\\
+\fila{Borradores} & Noticias y eventos en borrador solo los ve quien inició sesión; la API pública entrega solo lo publicado.\\
 \fila{Buscadores} & Mientras no exista \var{SITE_INDEXABLE}, el sitio pide a Google no indexarlo.\\
 \bottomrule
 \end{tabularx}
@@ -409,9 +412,6 @@ Si la institución prefiere alojarlo en sus servidores, el repositorio ya trae \
 \toprule
 \cab{Pendiente} & \cab{Qué hacer}\\
 \midrule
-Los borradores de noticias se pueden leer por la API pública (\ruta{/api/noticias}). & Leer solo publicados para quien no inició sesión.\\
-Desde el 22-09-2026 las imágenes nuevas pierden sus tamaños reducidos (efecto de \var{addRandomSuffix}). El sitio usa el original, así que no se nota. & Revisar la configuración del almacenamiento.\\
-Faltan tildes en textos del código: menú ``Hidrogeno Verde'', tarjetas de la portada, Noticias y Eventos. & Corregir en el código.\\
 Si falta \var{NEXT_PUBLIC_SITE_URL}, el código usa \var{h2varaucania.cl}, dominio de un tercero. & Cambiar ese valor por defecto.\\
 Los correos solo llegan al dueño de la cuenta Resend. & Dominio propio (sección~\ref{sec:dominio}).\\
 El aviso de cookies menciona Google Analytics, que no está configurado. & Configurarlo o ajustar el aviso.\\
