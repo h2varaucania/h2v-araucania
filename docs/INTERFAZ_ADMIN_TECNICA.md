@@ -309,7 +309,7 @@ Sin una línea de React custom, solo con la config declarativa:
   (contadores automáticos, campos de sistema).
 - **Guía embebida:** el global `GuiaAdmin` (grupo *Ayuda*, `readOnly`) lleva el
   manual paso a paso DENTRO del panel — el mismo contenido que el PDF de traspaso
-  (`docs/Guia_Administracion_H2V_Araucania.pdf`).
+  (`docs/archivo/Guia_Administracion_H2V_Araucania.pdf`, hoy reemplazado por el Manual de Usuario en `docs/manual-usuario/`).
 
 ---
 

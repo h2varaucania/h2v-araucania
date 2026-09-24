@@ -394,7 +394,7 @@ entidades externas). Versiones con piso explícito y lockfile commiteado. Tests 
 ### F3. Capas de referencia + pulido (½ día)
 - Overlays conmutables (lazy, color propio), leyenda editable, KMZ SEIA Araucanía como primera capa
   (lo sube Daniel), tope de 50 capas.
-- Guía de administración (`docs/Guia_Administracion_H2V_Araucania.pdf` + `GuiaAdmin`): "Subir un
+- Guía de administración (`docs/archivo/Guia_Administracion_H2V_Araucania.pdf`, hoy el Manual de Usuario, + `GuiaAdmin`): "Subir un
   KMZ" (cómo dibujar en Google Earth y exportar; límites; qué significa cada mensaje; verificar en
   `/proyectos`).
 

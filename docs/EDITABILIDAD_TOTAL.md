@@ -265,7 +265,7 @@ Todo lo demás es contenido y va al panel. En caso de duda: al panel.
    el "hecho". Idealmente, que la primera edición real la haga el dueño mismo (en
    cvillalobos.org fue el propio dueño cambiando su correo: validación y momento "es
    mío" en uno).
-10. **Manual**: actualizar `docs/manual-usuario.md` con el mapa "qué se edita dónde" y
+10. **Manual**: actualizar `docs/manual-usuario/fuente/manual.md` con el mapa "qué se edita dónde" y
     el perímetro honesto de §7.
 
 Trabajar **página por página** (Contacto es el piloto perfecto: global ya existe,
