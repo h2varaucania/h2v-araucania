@@ -29,6 +29,7 @@
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{2em}
 \renewcommand{\arraystretch}{1.35}
 
 % ── Encabezado y pie ──────────────────────────────────────────────
@@ -194,7 +195,7 @@ Cada persona entra con su correo y su contraseña, y comprueba que ve el Panel d
 Con el manual abierto, cada persona crea una noticia de prueba, la publica y la ve en el sitio. Después, el programa la elimina: un Editor no puede eliminar contenido, y eso es a propósito. También revisan juntos dónde quedan los mensajes del formulario de Contacto: \textbf{Contenido} → \textbf{Mensajes de contacto}.
 
 \item \paso{Entregar el Manual de Usuario}{\programa}
-Entregar el manual en PDF y en Word. Incluye un capítulo de traspaso que resume este protocolo.
+Entregar el manual en PDF y en Word. Incluye un capítulo breve sobre el traspaso: quién hace qué después.
 
 \item \paso{Renovar la contraseña del administrador actual}{\programa}
 Cambiar la contraseña de la cuenta de administrador del programa por una nueva y robusta. La usada durante la carga de contenidos deja de ser válida.
@@ -273,10 +274,13 @@ Confirmar con qué cuenta se creó el servicio que envía los correos del sitio 
 En Vercel, reemplazar el valor de la variable \texttt{PAYLOAD\_SECRET} por un texto largo al azar (por ejemplo, generado con un gestor de contraseñas) y volver a publicar. Así nadie fuera de la SEREMI conserva una forma de entrar al panel. Efecto: todas las personas deben iniciar sesión de nuevo.
 
 \item \paso{Definir el alojamiento definitivo}{\seremi}
-El plan gratuito de Vercel está destinado, según sus propias condiciones, solo a uso personal y no comercial. Para un sitio institucional corresponde un plan pagado de Vercel o un servidor propio de la SEREMI; el sitio ya incluye la configuración necesaria para esto último.
+El plan gratuito de Vercel está destinado, según sus propias condiciones, solo a uso personal y no comercial. Para un sitio institucional corresponde un plan pagado de Vercel o un servidor propio de la SEREMI; el sitio ya incluye la configuración necesaria para esto último (Guía técnica, ``Llevar el sitio a otro servidor'').
 
 \item \paso{Dirección propia (si se contrata)}{\ambos}
 Apuntar el dominio al sitio desde Vercel, actualizar la variable \texttt{NEXT\_PUBLIC\_SITE\_URL} con la nueva dirección y volver a publicar. Además, verificar el dominio en Resend y crear en Vercel la variable \texttt{EMAIL\_FROM} con una dirección de ese dominio. Así los correos del sitio (recuperar contraseña y avisos del formulario de Contacto) llegan a cualquier persona.
+
+\item \paso{Entregar la Guía técnica y un respaldo completo}{\programa}
+Entregar al responsable técnico la \textbf{Guía técnica} del sitio (PDF) y un respaldo completo recién hecho, guardado en el almacenamiento institucional de la SEREMI: la base de datos (GitHub → \textbf{Actions} → Respaldo diario → \textbf{Run workflow}, y descargar el archivo) y los archivos subidos (\nolinkurl{scripts/respaldar-archivos.mjs}; los pasos están en la Guía técnica).
 
 \item \paso{Ajustar los usuarios del panel}{\programa}
 Dar rol \textbf{Administrador} al responsable técnico de la SEREMI, y retirar o degradar las cuentas del programa.
@@ -299,6 +303,7 @@ En \linea{4.5cm}, a \linea{1cm} de \linea{3cm} de 20\linea{0.8cm}, el Bien Públ
 \casilla & Servicio de envío de correos (Resend).\\
 \casilla & Panel del sitio, con cuenta de Administrador del responsable técnico de la SEREMI.\\
 \casilla & Llave secreta del sitio renovada por la SEREMI.\\
+\casilla & Guía técnica y respaldo completo (base de datos y archivos) entregados.\\
 \end{tabularx}
 
 Se deja constancia de que todas las contraseñas fueron creadas por la SEREMI durante esta reunión, sin ser comunicadas a terceros. \textbf{A contar de esta fecha, la operación del sitio web y de sus cuentas, así como sus consecuencias, quedan a cargo de la SEREMI de Energía.}

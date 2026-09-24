@@ -49,12 +49,13 @@ inline `**negrita**`, `*cursiva*`, `` `código` ``.
 
 ## Relación con los otros documentos
 
-- `docs/INTERFAZ_ADMIN_TECNICA.md`: descripción técnica de la interfaz (para informáticos).
+- `docs/tecnico/Guia_Tecnica_H2V_Araucania.tex` (+ `.pdf`): la Guía técnica, para el responsable técnico (cuentas, variables, respaldos, dominio, actualizaciones). El Anexo D de este manual la resume.
+- `docs/INTERFAZ_ADMIN_TECNICA.md`: descripción técnica detallada de cómo está construido el panel.
 - `docs/EDITABILIDAD_TOTAL.md`: estándar de editabilidad que cumple el sitio.
-- `docs/Guia_Administracion_H2V_Araucania.pdf`: guía breve anterior (julio 2026); este manual la reemplaza y amplía.
+- `docs/archivo/`: documentos anteriores (guía breve de julio de 2026, manuales de abril y julio), reemplazados por este manual y por la Guía técnica.
 
 ## Documento hermano: protocolo de entrega
 El protocolo de traspaso a la SEREMI (dos fases, con constancia y acta para firmar) está en
 `docs/traspaso/Protocolo_Entrega_H2V_SEREMI.tex` (+ `.pdf`). Usa los logos de `figuras/` y se compila
 desde `docs/traspaso/` con `latexmk -xelatex -output-directory=salida Protocolo_Entrega_H2V_SEREMI.tex`.
-El capítulo 7 del manual lo resume: si cambia uno, revisar el otro.
+Los pasos del traspaso viven **solo** en el protocolo; el capítulo 7 del manual da el panorama (las dos fases, quién hace qué después, qué hacer si alguien se va y dónde están los respaldos). Si cambian las fases, revisar ambos.

@@ -18,12 +18,25 @@ def esc(s):
                  ('~', '\\textasciitilde{}'), ('^', '\\textasciicircum{}')):
         s = s.replace(a, b)
     s = s.replace('→', '$\\rightarrow$').replace('×', '$\\times$')
-    s = s.replace('"', "''")  # comillas rectas → tipográficas de cierre (simple y seguro)
     return s
+
+def comillas(texto):
+    """Comillas rectas → tipográficas: “ al inicio o tras espacio/paréntesis, ” en otro caso.
+    Ignora los asteriscos de negrita al mirar el contexto y no toca el código (`...`)."""
+    out, en_codigo, previo = [], False, ' '
+    for ch in texto:
+        if ch == '`':
+            en_codigo = not en_codigo
+        if ch == '"' and not en_codigo:
+            ch = '“' if (previo.isspace() or previo in '([{—–/“') else '”'
+        out.append(ch)
+        if ch != '*':
+            previo = ch
+    return ''.join(out)
 
 def inline(text):
     out = []
-    for kind, t in parse_inline(text):
+    for kind, t in parse_inline(comillas(text)):
         if kind == 'bold': out.append('\\textbf{' + esc(t) + '}')
         elif kind == 'italic': out.append('\\emph{' + esc(t) + '}')
         elif kind == 'code':
@@ -86,14 +99,14 @@ def portada(meta):
 \vspace{4cm}
 
 {\color{h2vverde}\bfseries MANUAL DE USUARIO}\par\vspace{6pt}
-{\color{h2vazul}\fontsize{30}{34}\selectfont\bfseries """ + esc(meta.get('titulo', '')) + r"""\par}\vspace{10pt}
-{\color{h2vgris}\Large """ + esc(meta.get('subtitulo', '')) + r"""\par}\vspace{8pt}
+{\color{h2vazul}\fontsize{30}{34}\selectfont\bfseries """ + esc(comillas(meta.get('titulo', ''))) + r"""\par}\vspace{10pt}
+{\color{h2vgris}\Large """ + esc(comillas(meta.get('subtitulo', ''))) + r"""\par}\vspace{8pt}
 {\color{h2vverde}\rule{\textwidth}{1.2pt}}\vspace{1.6cm}
 
 \begin{tabular}{@{}p{3.6cm}p{11.5cm}@{}}
-""" + ((r"\textbf{\color{h2vazul}Versión} & " + esc(meta['version']) + r" \\[3pt]" + "\n") if meta.get('version') else '') + r"""\textbf{\color{h2vazul}Fecha} & """ + esc(meta.get('fecha', '')) + r""" \\[3pt]
-\textbf{\color{h2vazul}Destinatario} & """ + esc(meta.get('destinatario', '')) + r""" \\[3pt]
-\textbf{\color{h2vazul}Elaborado por} & """ + esc(meta.get('elaborado', '')) + r""" \\[3pt]
+""" + ((r"\textbf{\color{h2vazul}Versión} & " + esc(meta['version']) + r" \\[3pt]" + "\n") if meta.get('version') else '') + r"""\textbf{\color{h2vazul}Fecha} & """ + esc(comillas(meta.get('fecha', ''))) + r""" \\[3pt]
+\textbf{\color{h2vazul}Destinatario} & """ + esc(comillas(meta.get('destinatario', ''))) + r""" \\[3pt]
+\textbf{\color{h2vazul}Elaborado por} & """ + esc(comillas(meta.get('elaborado', ''))) + r""" \\[3pt]
 \textbf{\color{h2vazul}Sitio web} & \url{""" + meta.get('sitio', '') + r"""} \\
 \end{tabular}
 \vfill

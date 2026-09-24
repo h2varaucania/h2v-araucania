@@ -714,45 +714,36 @@ El sitio se entrega a la SEREMI de Energía **en dos fases**. Así la SEREMI apr
 | Fase | Qué se entrega | A quién | Cuándo |
 |---|---|---|---|
 | **Fase 1: el contenido** | Usuarios propios del panel para publicar noticias, eventos, documentos y proyectos. | Dos personas designadas por la SEREMI (titular y respaldo). | Ahora. |
-| **Fase 2: la infraestructura** | Las cuentas de fondo: el correo central, el alojamiento (Vercel), la base de datos (Neon), el código (GitHub) y el envío de correos (Resend). | Un responsable técnico designado por la SEREMI. | Meta: enero de 2027. |
+| **Fase 2: la infraestructura** | Las cuentas de fondo (el correo central, el alojamiento en Vercel, la base de datos en Neon, el código en GitHub y el envío de correos en Resend), junto con la **Guía técnica** del sitio. | Un responsable técnico designado por la SEREMI. | Meta: enero de 2027. |
 
-> 🔒 Seguridad: regla de oro para las dos fases. Ninguna contraseña se dicta, se anota en un papel compartido ni se envía por correo o por mensajería. **Cada persona crea la suya**, en el momento, desde su propio computador o teléfono.
+Los pasos de cada fase, con casillas para marcar y las hojas para firmar (la constancia de la Fase 1 y el acta final de la Fase 2), están en el **Protocolo de entrega del sitio web H2V Araucanía**. Ese documento se usa en las reuniones; este capítulo resume lo que conviene saber después.
 
-El detalle completo, con casillas para marcar cada paso y las hojas para firmar (la constancia de la Fase 1 y el acta final de la Fase 2), está en el documento **Protocolo de entrega del sitio web H2V Araucanía**, que se entrega junto con este manual.
+> 🔒 Seguridad: regla de oro. Ninguna contraseña se dicta, se anota en un papel compartido ni se envía por correo o por mensajería. **Cada persona escribe la suya**, en el momento.
 
-## Fase 1: entrega del contenido
+## Después del traspaso: quién hace qué
 
-**Antes de la reunión** (lo prepara el responsable del programa):
+| Tarea | Quién | Dónde se explica |
+|---|---|---|
+| Publicar noticias, eventos, documentos y proyectos, y editar las páginas | Editores y Administradores | "Tareas frecuentes, paso a paso" y "Editar los textos de cada página" |
+| Leer y responder los mensajes del formulario de Contacto | Editores y Administradores | "Leer los mensajes del formulario de Contacto" |
+| Crear cuentas, cambiar roles y reponer contraseñas | Administradores | "Usuarios, roles y seguridad" |
+| Revisar que el respaldo diario funcione y guardar una copia mensual | Responsable técnico | Guía técnica, "Respaldos" |
+| Actualizar el software del sitio | Responsable técnico | Guía técnica, "Mantención y seguridad" |
+| Contratar el dominio y decidir el alojamiento definitivo | La SEREMI, con su responsable técnico | Guía técnica, "Dirección propia" |
 
-1. Pedir a la SEREMI el nombre, cargo y correo institucional de **dos personas**: una titular y una de respaldo.
-2. Revisar que el contenido publicado esté listo para ser visto por el público.
-3. Guardar los **códigos de respaldo** de la cuenta central de Google (`h2varaucania@gmail.com`): **Seguridad** → **Verificación en dos pasos** → **Códigos de respaldo**. Imprimirlos y guardarlos en un sobre cerrado. Cada código permite entrar una vez sin teléfono ni huella.
+## Si una persona deja la institución
 
-**En la reunión** (unos 45 minutos):
+1. Ese mismo día, un Administrador elimina su cuenta del panel o le cambia el rol (vea "Usuarios, roles y seguridad").
+2. Si era Administrador, compruebe que siguen quedando **dos** Administradores.
+3. Si tenía acceso a la cuenta central de Google o a GitHub, el responsable técnico cambia la contraseña y reemplaza su teléfono en la verificación en dos pasos (Guía técnica, "Mantención y seguridad").
 
-1. El Administrador crea un usuario para cada persona, con rol **Editor** (vea "Crear un usuario"). Al llegar a la contraseña le pasa el teclado: **cada persona escribe la suya**, sin que nadie la vea.
-2. Cada persona entra al panel con su correo y su contraseña, y comprueba que ve el Panel de Control.
-3. Práctica guiada con este manual: cada persona crea una noticia de prueba, la publica y la ve en el sitio. Después un Administrador la elimina (un Editor no puede eliminar contenido, y eso es a propósito). También revisan juntos **Mensajes de contacto**.
-4. Se entrega este manual (PDF y Word) y el protocolo de entrega.
-5. El Administrador del programa cambia su propia contraseña por una nueva y robusta.
-6. Se firma la **constancia de la Fase 1** (está en el protocolo).
+## Dónde están los respaldos
 
-> ✅ Resultado: la SEREMI publica el contenido del sitio con sus propios usuarios. El programa sigue a cargo del funcionamiento del sitio y de sus respaldos.
+- **Noticias y eventos:** cada publicación guarda una versión, que se recupera desde la pestaña **Versiones** (vea "Borrador, publicado y versiones").
+- **Todo el contenido del panel:** la base de datos se copia sola todos los días y cada copia se guarda 90 días. Si se borró algo por error, el responsable técnico puede recuperarlo.
+- **Fotos, PDF y capas KMZ:** el responsable técnico guarda una copia una vez al mes.
 
-## Fase 2: traspaso de la infraestructura
-
-**Condiciones previas:** la SEREMI usa el panel sin ayuda y designó un responsable técnico (propio o un servicio de mantención). El respaldo diario de la base de datos ya funciona.
-
-**En la reunión** (unos 60 minutos, idealmente presencial, con el responsable técnico):
-
-1. **Cuenta central de Google** (`h2varaucania@gmail.com`), que es la llave maestra: la persona de la SEREMI pone una contraseña nueva elegida por ella, registra su propio teléfono en la verificación en dos pasos, cambia el teléfono y el correo de recuperación por los suyos y genera sus propios códigos de respaldo. Después el programa elimina su teléfono y sus llaves de acceso, y se cierra la sesión en todos los dispositivos.
-2. **Alojamiento (Vercel) y base de datos (Neon):** se entra a ellos con la cuenta central, así que pasan junto con ella. Se comprueba que el responsable técnico puede entrar.
-3. **Código (GitHub):** la cuenta `h2varaucania` se entrega del mismo modo que la cuenta central. Se retira la cuenta de colaborador de la Universidad, salvo que se acuerde mantener soporte.
-4. **Envío de correos (Resend):** se confirma con qué cuenta se creó y se entrega del mismo modo.
-5. **Llave secreta del sitio:** el responsable técnico cambia en Vercel el valor de la variable `PAYLOAD_SECRET` por un texto largo al azar y vuelve a publicar el sitio. Efecto: todas las personas deben iniciar sesión de nuevo.
-6. **Alojamiento definitivo:** el plan gratuito de Vercel está destinado a uso personal y no comercial. Para un sitio institucional corresponde un plan pagado o un servidor propio de la SEREMI.
-7. **Usuarios del panel:** el responsable técnico pasa a ser **Administrador**; las cuentas del programa se eliminan o pasan a Editor.
-8. Se firma el **acta final** (está en el protocolo). Desde esa fecha, la operación del sitio queda a cargo de la SEREMI.
+> ✅ Resultado: desde la Fase 1 la SEREMI publica con sus propios usuarios; desde el acta final de la Fase 2 queda a cargo de todo el sitio.
 
 <<<salto>>>
 
@@ -853,7 +844,7 @@ Límites de texto más importantes: título de noticia 120 caracteres; resumen 3
 
 ## Anexo D. Ficha técnica de la plataforma (para el equipo informático)
 
-Esta ficha resume la información que el equipo informático de la SEREMI necesita conocer. El detalle completo está en el repositorio del proyecto, en el documento `docs/INTERFAZ_ADMIN_TECNICA.md`, y en el estándar `docs/EDITABILIDAD_TOTAL.md`.
+Esta ficha resume lo esencial para el equipo informático de la SEREMI. El detalle completo (cuentas, variables, respaldos, dominio, actualizaciones y cómo llevar el sitio a otro servidor) está en la **Guía técnica del sitio web H2V Araucanía**, que se entrega al responsable técnico; en el repositorio, en `docs/tecnico/`.
 
 | Componente | Qué es | Dónde está |
 |---|---|---|
@@ -865,7 +856,7 @@ Esta ficha resume la información que el equipo informático de la SEREMI necesi
 | Destino del formulario de contacto | Variable `CONTACT_EMAIL` en Vercel (si no existe, se usa un correo por defecto). **No se edita desde el panel.** Todos los mensajes quedan además guardados en el panel (Contenido → Mensajes de contacto), lleguen o no por correo. | Vercel → Settings → Environment Variables. |
 | Actualizaciones del esquema | Migraciones disciplinadas que corren en cada despliegue (`payload migrate` en el comando de build de Vercel). No se hacen cambios manuales en la base de datos. | `src/migrations/` en el repositorio. |
 | Pruebas automáticas | Suite e2e (Playwright) que verifica que el panel abre, que los contenidos reales se editan y que los cambios se reflejan en el sitio. | `tests/e2e/` en el repositorio. |
-| Respaldo | La base de datos Neon mantiene respaldos y historial; además, un respaldo diario automatizado (`pg_dump`) se guarda fuera de Neon como artefacto de GitHub Actions, con 90 días de retención (cómo restaurar: `scripts/restore-db.md` del repositorio). El contenido también queda versionado en el panel (noticias y eventos). | Consola de Neon y pestaña Actions del repositorio en GitHub. |
+| Respaldo | La base de datos Neon mantiene respaldos y historial; además, un respaldo diario automatizado (`pg_dump`) se guarda fuera de Neon como artefacto de GitHub Actions, con 90 días de retención (cómo restaurar: `scripts/restore-db.md` del repositorio). El contenido también queda versionado en el panel (noticias y eventos). Los archivos subidos (Vercel Blob) no entran en ese respaldo: se copian una vez al mes con `scripts/respaldar-archivos.mjs`. | Consola de Neon y pestaña Actions del repositorio en GitHub. |
 | Funciones KMZ del mapa | El dibujo de capas KMZ y las descargas para Google Earth están **encendidos** desde el 23 de septiembre de 2026, con la variable `NEXT_PUBLIC_FEAT_MAPA_PLUS` = `true` (entorno Production). Para apagarlos: borrar la variable y volver a publicar (Deployments → tres puntos de la publicación más reciente → **Redeploy**). Vercel solo aplica los cambios de variables a las publicaciones nuevas. | Vercel → Settings → Environment Variables. |
 | Visibilidad en buscadores | Mientras se completa, el sitio está oculto para Google. Se hace visible creando la variable `SITE_INDEXABLE` = `true` y volviendo a publicar. | Vercel → Settings → Environment Variables. |
 | Accesos a las cuentas de servicio | Vercel, Neon, Resend, GitHub y la cuenta central de Google. | Se traspasan a la SEREMI en la Fase 2, según el capítulo "Traspaso del sitio a la SEREMI" y el protocolo de entrega. |
@@ -879,4 +870,4 @@ Qué no es editable desde el panel (requiere a un desarrollador): el diseño y l
 | 21 de agosto de 2026 | Primera versión completa, con capturas del panel en producción (versión del sitio de agosto de 2026). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
 | 28 de agosto de 2026 | Nueva sección sobre archivos KMZ del mapa; anexos A, B y D actualizados (capas KMZ, interruptor de las funciones y respaldo diario automatizado). | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
 | 23 de septiembre de 2026 | Sección de archivos KMZ reescrita paso a paso (Google Earth en el navegador, mensajes de error, cambiar o quitar una forma). Nuevo capítulo "Traspaso del sitio a la SEREMI". Usuarios: cada persona crea su propia contraseña. Figuras de noticia y evento actualizadas. | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
-| 24 de septiembre de 2026 | Nueva sección "Leer los mensajes del formulario de Contacto": los mensajes quedan guardados en el panel. Contraseñas: cada persona escribe la suya al crear la cuenta, porque el correo de recuperación aún no llega a correos institucionales. | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
+| 24 de septiembre de 2026 | Nueva sección "Leer los mensajes del formulario de Contacto": los mensajes quedan guardados en el panel. Contraseñas: cada persona escribe la suya al crear la cuenta, porque el correo de recuperación aún no llega a correos institucionales. Capítulo de traspaso abreviado (los pasos quedan solo en el protocolo) con un cuadro de quién hace qué; el Anexo D remite a la nueva Guía técnica. | Equipo del Bien Público H2V Araucanía (Universidad de Talca) |
