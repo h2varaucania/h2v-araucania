@@ -27,6 +27,8 @@ import { Downloads } from '@/collections/Downloads';
 import { VideoViews } from '@/collections/VideoViews';
 import { Eventos } from '@/collections/Eventos';
 import { CapasGeo } from '@/collections/CapasGeo';
+import { MensajesContacto } from '@/collections/MensajesContacto';
+import { NOMBRE_REMITENTE, REMITENTE_CORREO } from '@/lib/correo';
 
 // Globals (contenido editable de cada página)
 import { PaginaInicio } from '@/globals/PaginaInicio';
@@ -73,6 +75,7 @@ export default buildConfig({
     VideoViews,
     Eventos,
     CapasGeo,
+    MensajesContacto,
   ],
   globals: [
     SitioGeneral,
@@ -103,13 +106,13 @@ export default buildConfig({
   // producción queda EN NEGRO (error solo visible en los logs de runtime de Vercel).
   // Email transaccional (EDITABILIDAD_TOTAL §5.5): sin esto, "olvidé mi clave"
   // no envía correo. Se activa solo si existe RESEND_API_KEY (Vercel/local).
-  // Remitente onboarding@resend.dev hasta verificar dominio propio en Resend.
+  // Remitente: ver src/lib/correo.ts (el de prueba de Resend solo entrega al dueño de la cuenta).
   ...(process.env.RESEND_API_KEY
     ? {
         email: resendAdapter({
           apiKey: process.env.RESEND_API_KEY,
-          defaultFromAddress: 'onboarding@resend.dev',
-          defaultFromName: 'H2V Araucanía',
+          defaultFromAddress: REMITENTE_CORREO,
+          defaultFromName: NOMBRE_REMITENTE,
         }),
       }
     : {}),

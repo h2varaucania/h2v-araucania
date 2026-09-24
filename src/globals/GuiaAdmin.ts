@@ -33,6 +33,7 @@ CÓMO ESTÁ ORGANIZADO ESTE PANEL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 El menú lateral tiene 4 grupos:
 • CONTENIDO: lo que publicas seguido (Noticias, Documentos, Proyectos, Miembros, Eventos)
+  y los "Mensajes de contacto" que escriben los visitantes desde la página Contacto
 • PÁGINAS: los textos de cada página del sitio (Inicio, Quiénes Somos, Gobernanza, etc.)
 • CONFIGURACIÓN: datos institucionales (solo administradores)
 • SISTEMA / CUENTAS: archivos subidos y usuarios
@@ -206,8 +207,10 @@ comunicaciones de Corfo y no se puede quitar desde el panel.
 • Administrador: puede todo (incluido borrar contenido, gestionar usuarios y configuración).
 • Editor: puede crear y editar contenido, pero NO puede borrar, NO ve "Usuarios"
   y NO puede tocar la Configuración. Es el rol adecuado para delegar publicaciones.
-• Registrado: solo descarga documentos desde el sitio público; no entra a este panel.
+• Registrado: hoy no se usa (los documentos se descargan sin cuenta); no entra a este panel.
 Para crear un editor: Usuarios → Crear nuevo → rol "Editor" (solo un administrador puede).
+Hazlo con la persona presente: ella misma escribe su contraseña en el formulario, así
+nadie más la conoce.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔴 PROBLEMAS COMUNES Y CÓMO SALIR
@@ -219,8 +222,12 @@ Para crear un editor: Usuarios → Crear nuevo → rol "Editor" (solo un adminis
   pueden borrar). Si era importante, se puede recuperar desde el respaldo de la base de
   datos: contacta al soporte técnico.
 • "Puse mal la clave varias veces y no puedo entrar" → por seguridad la cuenta se bloquea
-  tras 5 intentos. ESPERA 10 MINUTOS y vuelve a intentar. Si olvidaste la clave, usa
-  "¿Olvidaste tu contraseña?" en la pantalla de entrada.
+  tras 5 intentos. ESPERA 10 MINUTOS y vuelve a intentar.
+• "Olvidé mi clave" → pide a un administrador que abra tu ficha en Usuarios y te deje
+  escribir una clave nueva. Mientras el sitio no tenga dominio propio, el correo de
+  "¿Olvidaste tu contraseña?" no llega a los correos institucionales.
+• "¿Dónde veo lo que escriben en el formulario de Contacto?" → Contenido → Mensajes de
+  contacto. Todos quedan guardados ahí, aunque el aviso por correo no llegue.
 • "Subí una imagen y no se ve" → verifica que sea JPG, PNG o WebP (no .txt ni .zip).
 • Los cambios publicados se ven en el sitio en segundos: recarga la página del sitio.
   Si no aparecen, revisa que hayas presionado "Publicar cambios" (lo no publicado queda como borrador).

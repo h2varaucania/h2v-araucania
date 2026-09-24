@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { rateLimit, getClientIp } from '@/lib/rateLimit';
+import { getPayload } from '@/lib/payload/getPayload';
+import { NOMBRE_REMITENTE, REMITENTE_CORREO } from '@/lib/correo';
+import { OPCIONES_ASUNTO } from '@/collections/MensajesContacto';
 
 const contactSchema = z.object({
   nombre: z.string().min(2).max(100),
@@ -9,8 +12,38 @@ const contactSchema = z.object({
   mensaje: z.string().min(10).max(5000),
 });
 
+type DatosContacto = z.infer<typeof contactSchema>;
+type EstadoCorreo = 'enviado' | 'fallido' | 'sin-configurar';
+
 // 5 contact submissions per 15 minutes per IP
 const checkLimit = rateLimit('contact', 15 * 60 * 1000, 5);
+
+// Aviso por correo al programa. OJO: el SDK de Resend NO lanza excepciones cuando Resend
+// rechaza el envío: devuelve { error }. Hay que revisarlo, o el fallo pasa en silencio.
+async function avisarPorCorreo(data: DatosContacto): Promise<EstadoCorreo> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey || apiKey === 'your-resend-api-key') return 'sin-configurar';
+
+  const asunto = OPCIONES_ASUNTO.find((o) => o.value === data.asunto)?.label ?? data.asunto;
+  try {
+    const { Resend } = await import('resend');
+    const { error } = await new Resend(apiKey).emails.send({
+      from: `${NOMBRE_REMITENTE} <${REMITENTE_CORREO}>`,
+      to: process.env.CONTACT_EMAIL || 'h2varaucania@gmail.com',
+      replyTo: data.email,
+      subject: `[Contacto Web] ${asunto} - ${data.nombre}`,
+      text: `Nombre: ${data.nombre}\nEmail: ${data.email}\nAsunto: ${asunto}\n\nMensaje:\n${data.mensaje}\n\n(El mensaje también quedó guardado en el panel: Contenido → Mensajes de contacto.)`,
+    });
+    if (error) {
+      console.error('[CONTACT] Resend rechazó el aviso por correo:', error.message);
+      return 'fallido';
+    }
+    return 'enviado';
+  } catch (err) {
+    console.error('[CONTACT] Error al enviar el aviso por correo:', err);
+    return 'fallido';
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,28 +59,34 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const data = contactSchema.parse(body);
 
-    // Send email via Resend if configured
-    if (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 'your-resend-api-key') {
-      const { Resend } = await import('resend');
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      await resend.emails.send({
-        from: 'H2V Araucania <noreply@h2varaucania.cl>',
-        to: process.env.CONTACT_EMAIL || 'h2varaucania@gmail.com',
-        subject: `[Contacto Web] ${data.asunto} - ${data.nombre}`,
-        text: `Nombre: ${data.nombre}\nEmail: ${data.email}\nAsunto: ${data.asunto}\n\nMensaje:\n${data.mensaje}`,
+    // 1) Primero se guarda en el panel (Contenido → Mensajes de contacto): así el mensaje
+    //    no se pierde aunque el correo falle.
+    const payload = await getPayload();
+    let mensajeId: number | string | null = null;
+    try {
+      const doc = await payload.create({
+        collection: 'mensajes-contacto',
+        data: { nombre: data.nombre, correo: data.email, asunto: data.asunto, mensaje: data.mensaje },
+        overrideAccess: true,
       });
-    } else {
-      console.log('[CONTACT][DEV MODE - email not sent, configure RESEND_API_KEY]', data);
+      mensajeId = doc.id;
+    } catch (err) {
+      console.error('[CONTACT] No se pudo guardar el mensaje en la base de datos:', err);
     }
 
-    const isDevMode = !process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'your-resend-api-key';
+    // 2) Después, el aviso por correo; su resultado queda anotado en el mensaje guardado.
+    const estadoCorreo = await avisarPorCorreo(data);
+    if (mensajeId !== null) {
+      await payload
+        .update({ collection: 'mensajes-contacto', id: mensajeId, data: { estadoCorreo }, overrideAccess: true })
+        .catch((err) => console.error('[CONTACT] No se pudo anotar el estado del correo:', err));
+    }
 
-    return NextResponse.json({
-      success: true,
-      message: isDevMode
-        ? 'Mensaje recibido (modo desarrollo: el email no se envio. Configure RESEND_API_KEY en produccion).'
-        : 'Mensaje enviado correctamente. Responderemos a la brevedad.',
-    });
+    // Solo es un error si el mensaje no quedó en ninguna parte.
+    if (mensajeId === null && estadoCorreo !== 'enviado') {
+      return NextResponse.json({ error: 'No se pudo enviar el mensaje.' }, { status: 500 });
+    }
+    return NextResponse.json({ success: true, message: 'Mensaje enviado correctamente. Responderemos a la brevedad.' });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: 'Datos invalidos', details: error.issues }, { status: 400 });

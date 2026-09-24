@@ -77,6 +77,7 @@ export interface Config {
     'video-views': VideoView;
     eventos: Evento;
     'capas-geo': CapasGeo;
+    'mensajes-contacto': MensajesContacto;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     'video-views': VideoViewsSelect<false> | VideoViewsSelect<true>;
     eventos: EventosSelect<false> | EventosSelect<true>;
     'capas-geo': CapasGeoSelect<false> | CapasGeoSelect<true>;
+    'mensajes-contacto': MensajesContactoSelect<false> | MensajesContactoSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -634,6 +636,32 @@ export interface Evento {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Los mensajes que envían los visitantes desde la página Contacto. Todos quedan guardados aquí, aunque el aviso por correo no llegue. Para responder, escriba a la persona desde su propio correo y después marque «Atendido».
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mensajes-contacto".
+ */
+export interface MensajesContacto {
+  id: number;
+  nombre: string;
+  /**
+   * Responda a esta dirección desde su propio correo.
+   */
+  correo: string;
+  asunto: 'consulta' | 'colaboracion' | 'prensa' | 'otro';
+  mensaje: string;
+  /**
+   * Márquelo cuando haya respondido el mensaje.
+   */
+  atendido?: boolean | null;
+  /**
+   * Si el aviso llegó al correo del programa. El mensaje queda guardado aquí de todas formas.
+   */
+  estadoCorreo?: ('enviado' | 'fallido' | 'sin-configurar') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -696,6 +724,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'capas-geo';
         value: number | CapasGeo;
+      } | null)
+    | ({
+        relationTo: 'mensajes-contacto';
+        value: number | MensajesContacto;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -974,6 +1006,20 @@ export interface CapasGeoSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mensajes-contacto_select".
+ */
+export interface MensajesContactoSelect<T extends boolean = true> {
+  nombre?: T;
+  correo?: T;
+  asunto?: T;
+  mensaje?: T;
+  atendido?: T;
+  estadoCorreo?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
