@@ -12,7 +12,7 @@ entrega formal. Ambos salen de UNA fuente única (`fuente/manual.md`).
 | `Manual_Usuario_H2V_Araucania.docx` | Manual en Word (índice generado por Word, figuras incrustadas). |
 | `Manual_Usuario_H2V_Araucania.tex` | Fuente LaTeX (XeLaTeX) del manual; usa `figuras/`. |
 | `Manual_Usuario_H2V_Araucania.pdf` | PDF compilado desde el .tex. |
-| `figuras/` | Las 43 capturas anotadas (globos numerados) + logos oficiales. |
+| `figuras/` | Las capturas anotadas (globos numerados) y los logos oficiales. |
 | `fuente/manual.md` | **Fuente única** del texto (Markdown con convenciones propias). Edite aquí y regenere. |
 | `herramientas/` | Scripts de captura (Playwright), anotación (PIL) y generación (DOCX/TeX). |
 | `capturas/` | Capturas crudas a 2x + `marcas.json` (regenerables; las PNG no se versionan). |
